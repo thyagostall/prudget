@@ -13,6 +13,18 @@ def test_new_account_balance_is_zero():
 
 def test_account_deposit():
     value_deposited = 10
+    
     account = Account()
     account.deposit(value_deposited)
     assert account.balance == value_deposited
+    account.deposit(value_deposited)
+    assert account.balance == value_deposited * 2
+
+def test_account_withdraw():
+    value_withdrawn = 10
+    value_balance = 30
+
+    account = Account()
+    account.deposit(value_balance)
+    account.withdraw(value_withdrawn)
+    assert account.balance == value_balance - value_withdrawn
