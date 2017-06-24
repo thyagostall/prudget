@@ -10,6 +10,10 @@ class Transaction:
     def inject(self, account):
         pass
 
+    @property
+    def value(self):
+        return self._value
+
 class DebitTransaction(Transaction):
     def inject(self, account):
         account.withdraw(self._value)
