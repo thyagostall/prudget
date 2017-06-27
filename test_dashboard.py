@@ -34,7 +34,7 @@ def test_create_credit_transaction_dashboard():
     dashboard.add_account(account)
     dashboard.add_transaction(transaction)
 
-    return total_balance == dashboard.total_balance
+    assert total_balance == dashboard.total_balance
 
 def test_create_debit_transaction_dashboard():
     account = create_fake_account()
@@ -45,4 +45,33 @@ def test_create_debit_transaction_dashboard():
     dashboard.add_account(account)
     dashboard.add_transaction(transaction)
 
-    return total_balance == dashboard.total_balance * -1
+    assert total_balance == dashboard.total_balance
+
+def test_get_all_transactions_dashboard():
+    account1 = Account()
+    account2 = Account()
+
+    transactions = [
+            create_fake_credit_transaction(account1),
+            create_fake_credit_transaction(account2)
+            ]
+
+    dashboard = Dashboard()
+    for transaction in transactions:
+        dashboard.add_transaction(transaction)
+
+    assert dashboard.transactions == transactions
+
+def test_get_all_accounts_dashboard():
+    accounts = [
+            Account(),
+            Account(),
+            Account(),
+            Account()
+            ]
+
+    dashboard = Dashboard()
+    for account in accounts:
+        dashboard.add_account(account)
+
+    assert dashboard.accounts == accounts

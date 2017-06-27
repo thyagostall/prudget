@@ -1,9 +1,9 @@
-class Dashboard:
-    _accounts = []
-    _transactions = []
+from functools import reduce
 
-    def create(self):
-        pass
+class Dashboard:
+    def __init__(self):
+        self._accounts = []
+        self._transactions = []
 
     def add_transaction(self, transaction):
         self._transactions += [transaction]
@@ -13,7 +13,12 @@ class Dashboard:
 
     @property
     def total_balance(self):
-        result = 0
-        for account in self._accounts:
-            result += account.balance
-        return result
+        return reduce(lambda previous, account: account.balance + previous, self._accounts, 0)
+
+    @property
+    def transactions(self):
+        return self._transactions
+
+    @property
+    def accounts(self):
+        return self._accounts
