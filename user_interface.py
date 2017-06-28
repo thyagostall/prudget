@@ -1,0 +1,28 @@
+import argparse
+import shlex
+
+def create_transaction(args):
+    print(args_to_dictionary(args))
+
+def create_account(args):
+    print(args_to_dictionary(args))
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-s', '--status', action='store_true', help='shows the status of the dashboard')
+    parser.add_argument('-t', '--transaction', type=str, nargs='*', help='create a transaction')
+    parser.add_argument('-a', '--account', type=str, nargs='*', help='create an account')
+
+    args = parser.parse_args()
+        
+    if args.status:
+        print('Here it should print the dashboard status')
+    elif args.transaction:
+        create_transaction(args.transaction)
+    elif args.account:
+        create_account(args.account)
+    else:
+        print(args)
+
+if __name__ == '__main__':
+    main()
