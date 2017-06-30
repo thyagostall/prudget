@@ -31,8 +31,9 @@ def test_args_to_dictionary():
     keys = ['date', 'name', 'value']
     result = args_to_dictionary(result)
     result = infer_dictionary(result, keys)
+    result = result.keys()
 
-    assert set(keys) == set(result.keys())
+    assert set(keys) == set(result)
 
 def test_is_partial_arg():
     candidates = {
@@ -63,9 +64,7 @@ def test_match_dict_keys_with_exact_values():
     keys_actual = infer_dictionary(actual, keys_expected)
     keys_actual = keys_actual.keys()
 
-    assert keys_actual == False
-    for expected, actual in zip(keys_expected, keys_actual):
-        assert actual == expected
+    assert set(keys_actual) == set(keys_expected)
 
 def test_match_dict_keys_with_partial_values():
     keys_expected = [
@@ -82,5 +81,4 @@ def test_match_dict_keys_with_partial_values():
     keys_actual = infer_dictionary(actual, keys_expected)
     keys_actual = keys_actual.keys()
 
-    for expected, actual in zip(keys_expected, keys_actual):
-        assert actual == expected
+    assert set(keys_actual) == set(keys_expected)
