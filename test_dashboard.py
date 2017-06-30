@@ -7,7 +7,7 @@ from .account import *
 from .transaction import *
 
 def create_fake_account():
-    return Account()
+    return Account('Bradesco')
 
 def create_fake_credit_transaction(account):
     today = datetime.now()
@@ -48,8 +48,8 @@ def test_create_debit_transaction_dashboard():
     assert total_balance == dashboard.total_balance
 
 def test_get_all_transactions_dashboard():
-    account1 = Account()
-    account2 = Account()
+    account1 = Account('Account 1')
+    account2 = Account('Account 2')
 
     transactions = [
             create_fake_credit_transaction(account1),
@@ -64,10 +64,10 @@ def test_get_all_transactions_dashboard():
 
 def test_get_all_accounts_dashboard():
     accounts = [
-            Account(),
-            Account(),
-            Account(),
-            Account()
+            Account('Carteira'),
+            Account('Poupança'),
+            Account('Conta Corrente'),
+            Account('Investimentos')
             ]
 
     dashboard = Dashboard()

@@ -5,7 +5,7 @@ from .transaction import *
 from .account import Account
 
 def test_create_a_valid_debit_transaction():
-    account = Account()
+    account = Account('Conta Corrente')
 
     today = datetime.now()
 
@@ -15,7 +15,7 @@ def test_create_a_valid_debit_transaction():
     assert account.balance == transaction_value * -1
 
 def test_create_a_valid_credit_transaction():
-    account = Account()
+    account = Account('Carteira')
     
     today = datetime.now()
 

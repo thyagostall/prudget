@@ -1,25 +1,8 @@
 import pytest
 
-from collections import OrderedDict
+from decimal import Decimal
 
-def is_partial_arg(partial, arg):
-    partial = partial.strip()
-    if partial == '':
-        return False
-
-    return arg.startswith(partial)
-
-def infer_dictionary(dictionary, keys):
-    keys.sort()
-    dictionary = OrderedDict(dictionary)
-
-    result = {}
-    for candidate in dictionary.keys():
-        for key in keys:
-            if is_partial_arg(candidate, key):
-                result[key] = dictionary[candidate]
-
-    return result
+from .account import Account
 
 def args_to_dictionary(args):
     result = [arg.split('=') for arg in args]
@@ -28,57 +11,17 @@ def args_to_dictionary(args):
 
 def test_args_to_dictionary():
     result = ['d=2017/01/01', 'v=10.00', 'n="Hello World"']
-    keys = ['date', 'name', 'value']
+    keys = ['d', 'n', 'v']
     result = args_to_dictionary(result)
-    result = infer_dictionary(result, keys)
     result = result.keys()
 
     assert set(keys) == set(result)
 
-def test_is_partial_arg():
-    candidates = {
-            ''              : False,
-            'n'             : True,
-            'na'            : True,
-            'nam'           : True,
-            'name'          : True,
-            'names'         : False,
-            'somethingelse' : False
-            }
+def test_create_account_from_command_line_args():
+    dictionary = args_to_dictionary(['n=Itaú', 'b=3000.00'])
 
-    for arg, result in candidates.items():
-        assert is_partial_arg(arg, 'name') == result
+    result = Account.create_from_dictionary(dictionary)
 
-def test_match_dict_keys_with_exact_values():
-    keys_expected = [
-            'name',
-            'value',
-            'other',
-            ]
+    assert result.balance == Decimal(dictionary['b'])
+    assert result.name == dictionary['n']
 
-    actual = {
-            'name': None, 
-            'value': None, 
-            'other': None
-            }
-    keys_actual = infer_dictionary(actual, keys_expected)
-    keys_actual = keys_actual.keys()
-
-    assert set(keys_actual) == set(keys_expected)
-
-def test_match_dict_keys_with_partial_values():
-    keys_expected = [
-            'name',
-            'value',
-            'other',
-            ]
-
-    actual = {
-            'n': None, 
-            'o': None, 
-            'v': None
-            }
-    keys_actual = infer_dictionary(actual, keys_expected)
-    keys_actual = keys_actual.keys()
-
-    assert set(keys_actual) == set(keys_expected)
