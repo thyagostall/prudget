@@ -3,11 +3,7 @@ import pytest
 from decimal import Decimal
 
 from .account import Account
-
-def args_to_dictionary(args):
-    result = [arg.split('=') for arg in args]
-    result = {key: value for key, value in result}
-    return result
+from .user_interface import *
 
 def test_args_to_dictionary():
     result = ['d=2017/01/01', 'v=10.00', 'n="Hello World"']
@@ -24,4 +20,3 @@ def test_create_account_from_command_line_args():
 
     assert result.balance == Decimal(dictionary['b'])
     assert result.name == dictionary['n']
-

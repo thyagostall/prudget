@@ -1,11 +1,19 @@
 import argparse
 import shlex
 
+from .account import Account
+
+def args_to_dictionary(args):
+    result = [arg.split('=') for arg in args]
+    result = {key: value for key, value in result}
+    return result
+
 def create_transaction(args):
     print(args_to_dictionary(args))
 
 def create_account(args):
-    print(args_to_dictionary(args))
+    dictionary = args_to_dictionary(args)
+    Account.create_account_from_dictionary(dictionary)
 
 def main():
     parser = argparse.ArgumentParser()
@@ -23,6 +31,3 @@ def main():
         create_account(args.account)
     else:
         print(args)
-
-if __name__ == '__main__':
-    main()
