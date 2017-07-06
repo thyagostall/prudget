@@ -8,7 +8,7 @@ class Transaction:
         self.inject(account)
 
     def inject(self, account):
-        pass
+        raise NotImplementedError
 
     @property
     def value(self):

@@ -4,6 +4,19 @@ from datetime import datetime
 from .transaction import * 
 from .account import Account
 
+def test_transaction_is_abstract():
+    account = Account('Conta Corrente')
+    today = datetime.now()
+    transaction_value = 100
+
+    exception_thrown = False
+    try:
+        transaction = Transaction(transaction_value, 'Abstract Transaction?', account, today)
+    except NotImplementedError:
+        exception_thrown = True
+    
+    assert exception_thrown
+
 def test_create_a_valid_debit_transaction():
     account = Account('Conta Corrente')
 
