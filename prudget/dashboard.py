@@ -1,5 +1,6 @@
 from functools import reduce
 
+
 class Dashboard:
     def __init__(self):
         self._accounts = []

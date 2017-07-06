@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from .object_utils import infer_dictionary
 
+
 class Account:
     def __init__(self, name):
         self._balance = Decimal(0)
@@ -25,7 +26,7 @@ class Account:
     def create_from_dictionary(dictionary):
         keys = ['name', 'balance']
         dictionary = infer_dictionary(dictionary, keys)
-        
+
         result = Account(dictionary['name'])
         result._balance = Decimal(dictionary['balance'])
         return result

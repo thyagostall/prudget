@@ -13,6 +13,7 @@ def test_args_to_dictionary():
 
     assert set(keys) == set(result)
 
+
 def test_create_account_from_command_line_args():
     dictionary = args_to_dictionary(['n=Itaú', 'b=3000.00'])
 

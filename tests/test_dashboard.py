@@ -6,8 +6,10 @@ from prudget.account import *
 from prudget.dashboard import *
 from prudget.transaction import *
 
+
 def create_fake_account():
     return Account('Bradesco')
+
 
 def create_fake_credit_transaction(account):
     today = datetime.now()
@@ -17,6 +19,7 @@ def create_fake_credit_transaction(account):
 
     return transaction
 
+
 def create_fake_debit_transaction(account):
     today = datetime.now()
 
@@ -24,6 +27,7 @@ def create_fake_debit_transaction(account):
     transaction = DebitTransaction(transaction_value, 'Something I bought', account, today)
 
     return transaction
+
 
 def test_create_credit_transaction_dashboard():
     account = create_fake_account()
@@ -36,6 +40,7 @@ def test_create_credit_transaction_dashboard():
 
     assert total_balance == dashboard.total_balance
 
+
 def test_create_debit_transaction_dashboard():
     account = create_fake_account()
     transaction = create_fake_debit_transaction(account)
@@ -47,14 +52,15 @@ def test_create_debit_transaction_dashboard():
 
     assert total_balance == dashboard.total_balance
 
+
 def test_get_all_transactions_dashboard():
     account1 = Account('Account 1')
     account2 = Account('Account 2')
 
     transactions = [
-            create_fake_credit_transaction(account1),
-            create_fake_credit_transaction(account2)
-            ]
+        create_fake_credit_transaction(account1),
+        create_fake_credit_transaction(account2)
+    ]
 
     dashboard = Dashboard()
     for transaction in transactions:
@@ -62,13 +68,14 @@ def test_get_all_transactions_dashboard():
 
     assert dashboard.transactions == transactions
 
+
 def test_get_all_accounts_dashboard():
     accounts = [
-            Account('Carteira'),
-            Account('Poupança'),
-            Account('Conta Corrente'),
-            Account('Investimentos')
-            ]
+        Account('Carteira'),
+        Account('Poupança'),
+        Account('Conta Corrente'),
+        Account('Investimentos')
+    ]
 
     dashboard = Dashboard()
     for account in accounts:

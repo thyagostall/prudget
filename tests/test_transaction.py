@@ -5,6 +5,7 @@ from datetime import datetime
 from prudget.account import Account
 from prudget.transaction import *
 
+
 def test_transaction_is_abstract():
     account = Account('Conta Corrente')
     today = datetime.now()
@@ -15,8 +16,9 @@ def test_transaction_is_abstract():
         transaction = Transaction(transaction_value, 'Abstract Transaction?', account, today)
     except NotImplementedError:
         exception_thrown = True
-    
+
     assert exception_thrown
+
 
 def test_create_a_valid_debit_transaction():
     account = Account('Conta Corrente')
@@ -28,9 +30,10 @@ def test_create_a_valid_debit_transaction():
 
     assert account.balance == transaction_value * -1
 
+
 def test_create_a_valid_credit_transaction():
     account = Account('Carteira')
-    
+
     today = datetime.now()
 
     transaction_value = 100

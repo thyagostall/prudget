@@ -14,9 +14,11 @@ class Transaction:
     def value(self):
         return self._value
 
+
 class DebitTransaction(Transaction):
     def inject(self, account):
         account.withdraw(self._value)
+
 
 class CreditTransaction(Transaction):
     def inject(self, account):

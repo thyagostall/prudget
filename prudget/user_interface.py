@@ -2,17 +2,21 @@ import argparse
 
 from .account import Account
 
+
 def args_to_dictionary(args):
     result = [arg.split('=') for arg in args]
     result = {key: value for key, value in result}
     return result
 
+
 def create_transaction(args):
     print(args_to_dictionary(args))
 
+
 def create_account(args):
     dictionary = args_to_dictionary(args)
-    Account.create_account_from_dictionary(dictionary)
+    Account.create_from_dictionary(dictionary)
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -21,7 +25,7 @@ def main():
     parser.add_argument('-a', '--account', type=str, nargs='*', help='create an account')
 
     args = parser.parse_args()
-        
+
     if args.status:
         print('Here it should print the dashboard status')
     elif args.transaction:
