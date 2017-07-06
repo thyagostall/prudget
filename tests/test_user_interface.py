@@ -1,9 +1,9 @@
-import pytest
+# -*- coding: utf-8 -*-
 
 from decimal import Decimal
 
-from .account import Account
-from .user_interface import *
+from prudget.user_interface import *
+
 
 def test_args_to_dictionary():
     result = ['d=2017/01/01', 'v=10.00', 'n="Hello World"']

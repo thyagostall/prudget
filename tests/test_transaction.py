@@ -1,8 +1,9 @@
-import pytest
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
 
-from .transaction import * 
-from .account import Account
+from prudget.account import Account
+from prudget.transaction import *
 
 def test_transaction_is_abstract():
     account = Account('Conta Corrente')

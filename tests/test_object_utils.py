@@ -1,4 +1,6 @@
-from .object_utils import *
+# -*- coding: utf-8 -*-
+
+from prudget.object_utils import *
 
 def test_is_partial_arg():
     candidates = {

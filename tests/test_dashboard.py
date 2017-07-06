@@ -1,10 +1,10 @@
-import pytest
+# -*- coding: utf-8 -*-
 
 from datetime import datetime
 
-from .dashboard import *
-from .account import *
-from .transaction import *
+from prudget.account import *
+from prudget.dashboard import *
+from prudget.transaction import *
 
 def create_fake_account():
     return Account('Bradesco')

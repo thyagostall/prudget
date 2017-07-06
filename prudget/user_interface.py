@@ -1,5 +1,4 @@
 import argparse
-import shlex
 
 from .account import Account
 

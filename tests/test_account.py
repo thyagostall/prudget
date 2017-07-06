@@ -1,8 +1,8 @@
-import pytest
+# -*- coding: utf-8 -*-
 
 from decimal import Decimal
 
-from .account import Account
+from prudget.account import Account
 
 def test_decimal_equals_integer():
     assert Decimal('0.5') == 0.5
