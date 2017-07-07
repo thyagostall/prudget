@@ -3,6 +3,10 @@ from decimal import Decimal
 from .object_utils import infer_dictionary
 
 
+class InvalidAccountParametersError(Exception):
+    pass
+
+
 class Account:
     def __init__(self, name):
         self._balance = Decimal(0)
@@ -27,6 +31,12 @@ class Account:
         keys = ['name', 'balance']
         dictionary = infer_dictionary(dictionary, keys)
 
-        result = Account(dictionary['name'])
-        result._balance = Decimal(dictionary['balance'])
+        try:
+            result = Account(dictionary['name'])
+        except KeyError:
+            raise InvalidAccountParametersError
+
+        if 'balance' in dictionary:
+            result._balance = Decimal(dictionary['balance'])
+
         return result

@@ -1,6 +1,7 @@
 import argparse
 
-from .account import Account
+from prudget.account import Account
+from prudget.transaction import Transaction
 
 
 def args_to_dictionary(args):
@@ -10,12 +11,13 @@ def args_to_dictionary(args):
 
 
 def create_transaction(args):
-    print(args_to_dictionary(args))
+    dictionary = args_to_dictionary(args)
+    return Transaction.create_from_dictionary(dictionary)
 
 
 def create_account(args):
     dictionary = args_to_dictionary(args)
-    Account.create_from_dictionary(dictionary)
+    return Account.create_from_dictionary(dictionary)
 
 
 def main():
@@ -31,6 +33,6 @@ def main():
     elif args.transaction:
         create_transaction(args.transaction)
     elif args.account:
-        create_account(args.account)
+        print(create_account(args.account))
     else:
         print(args)
