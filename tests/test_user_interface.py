@@ -19,7 +19,8 @@ def test_args_to_dictionary():
 def test_create_account_from_command_line_args():
     dictionary = args_to_dictionary(['n=Itaú', 'b=3000.00'])
 
-    result = Account.create_from_dictionary(dictionary)
+    parser = Parser()
+    result = parser.create_account(dictionary)
 
     assert result.balance == Decimal(dictionary['b'])
     assert result.name == dictionary['n']
