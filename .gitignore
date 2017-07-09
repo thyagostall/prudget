@@ -5,3 +5,4 @@ env
 .cache
 .coverage
 .idea/
+data
