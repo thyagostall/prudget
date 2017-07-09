@@ -49,13 +49,17 @@ class UITransactionPrinter(UIPrinter):
         return cls.LINE_FORMAT.format(
             cls._get_credit_or_debit(transaction),
             transaction.description,
-            transaction.date,
+            cls.format_date(transaction),
             transaction.value,
-            transaction.account.name,
+            transaction.account.name[:10],
             description_length=cls.DESCRIPTION_LENGTH,
             currency_length=cls.CURRENCY_LENGTH,
             account_length=cls.ACCOUNT_LENGTH,
         )
+
+    @classmethod
+    def format_date(cls, transaction):
+        return transaction.date.strftime('%Y-%m-%d')
 
     def print(self, transactions):
         transaction_length = self._get_length(transactions)
