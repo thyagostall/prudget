@@ -3,6 +3,7 @@ import pickle
 
 from prudget.dashboard import Dashboard
 from prudget.parser import Parser
+from prudget.uiprinter import UIPrinter
 
 
 def args_to_dictionary(args):
@@ -12,9 +13,9 @@ def args_to_dictionary(args):
 
 
 def print_dashboard(dashboard):
-    print('Accounts')
-    for account in dashboard.accounts:
-        print(str(account.balance) + ' = ' + account.name)
+    printer = UIPrinter()
+    result = printer.print_accounts(dashboard.accounts)
+    print(result)
 
 
 def load_dashboard():
