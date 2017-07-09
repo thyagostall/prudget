@@ -51,7 +51,11 @@ def main():
     elif args.transaction:
         transaction = args_to_dictionary(args.transaction)
         transaction = parser.create_transaction(transaction)
-        dashboard.add_transaction(transaction)
+        printer = UITransactionPrinter()
+        print(printer.print_transaction(transaction))
+        answer = input('Is it correct? [y/N]: ')
+        if answer.lower().startswith('y'):
+            dashboard.add_transaction(transaction)
     elif args.account:
         account = args_to_dictionary(args.account)
         account = parser.create_account(account)

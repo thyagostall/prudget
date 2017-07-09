@@ -68,3 +68,12 @@ class UITransactionPrinter(UIPrinter):
 
         result += self._get_separator(transaction_length)
         return result
+
+    def print_transaction(self, transaction):
+        transaction_length = self._get_length([transaction])
+
+        result = self._get_separator(transaction_length)
+        result += self._print_transaction(transaction) + '\n'
+        result += self._get_separator(transaction_length)
+
+        return result
