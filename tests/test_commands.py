@@ -27,7 +27,7 @@ def test_create_account_from_command_line_args():
 
 
 def test_create_debit_transaction_from_command_line_args():
-    dictionary = args_to_dictionary(['t=d', 'v=10.00', 'de=Comida', 'da=2017-12-31', 'a=It'])
+    dictionary = args_to_dictionary(['t=d', 'v=10.00', 'n=Comida', 'd=2017-12-31', 'a=It'])
 
     itau_account = Account('Itaú')
     accounts = [itau_account]
@@ -45,7 +45,7 @@ def test_create_debit_transaction_from_command_line_args():
 
 
 def test_create_credit_transaction_from_command_line_args():
-    dictionary = args_to_dictionary(['t=c', 'v=1000000.01', 'de=Salário', 'da=2017-12-31', 'a=It'])
+    dictionary = args_to_dictionary(['t=c', 'v=1000000.01', 'n=Salário', 'd=2017-12-31', 'a=It'])
 
     itau_account = Account('Itaú')
     accounts = [itau_account]

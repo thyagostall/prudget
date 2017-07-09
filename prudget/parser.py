@@ -33,11 +33,11 @@ class Parser:
         raise InvalidAccountError
 
     def create_transaction(self, dictionary):
-        dictionary = infer_dictionary(dictionary, ['account', 'date', 'description', 'value', 'type'])
+        dictionary = infer_dictionary(dictionary, ['account', 'date', 'name', 'value', 'type'])
 
         type = dictionary['type']
         value = Decimal(dictionary['value'])
-        description = dictionary['description']
+        description = dictionary['name']
         account = self._find_account(dictionary['account'])
         date = self._parse_date(dictionary['date'])
 
