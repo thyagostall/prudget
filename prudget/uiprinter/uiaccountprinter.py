@@ -48,8 +48,18 @@ class UIAccountPrinter(UIPrinter):
         result = self._get_separator(account_length)
         result += self._get_title(account_length)
         result += self._get_separator(account_length)
+
+        total = 0
         for account in accounts:
             result += self._print_account(account, account_length) + '\n'
+            total += account.balance
 
+        result += self._get_separator(account_length)
+        result += self.LINE_FORMAT.format(
+            'Total',
+            total,
+            account_length=account_length,
+            currency_length=self.CURRENCY_LENGTH
+        ) + '\n'
         result += self._get_separator(account_length)
         return result

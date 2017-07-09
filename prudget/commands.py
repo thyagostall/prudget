@@ -4,6 +4,7 @@ import pickle
 from prudget.dashboard import Dashboard
 from prudget.parser import Parser
 from prudget.uiprinter.uiaccountprinter import UIAccountPrinter
+from prudget.uiprinter.uitransactionprinter import UITransactionPrinter
 
 
 def args_to_dictionary(args):
@@ -15,6 +16,10 @@ def args_to_dictionary(args):
 def print_dashboard(dashboard):
     printer = UIAccountPrinter()
     result = printer.print(dashboard.accounts)
+    print(result)
+
+    printer = UITransactionPrinter()
+    result = printer.print(dashboard.transactions)
     print(result)
 
 

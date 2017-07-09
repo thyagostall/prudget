@@ -34,6 +34,8 @@ def test_print_account():
     expected += '------------------------------------------\n'
     expected += '| Itaú                      |      10.00 |\n'
     expected += '------------------------------------------\n'
+    expected += '| Total                     |      10.00 |\n'
+    expected += '------------------------------------------\n'
 
     assert expected == result
 
