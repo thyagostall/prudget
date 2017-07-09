@@ -1,11 +1,11 @@
 from decimal import Decimal
 
 from prudget.account import Account
-from prudget.uiprinter import UIPrinter
+from prudget.uiprinter import UIAccountPrinter
 
 
 def create_printer():
-    return UIPrinter()
+    return UIAccountPrinter()
 
 
 def test_print_account():
@@ -16,7 +16,10 @@ def test_print_account():
 
     result = printer.print_accounts([account])
 
-    expected = '------------------------------------------\n'
+    expected = ''
+    expected += '------------------------------------------\n'
+    expected += '|                ACCOUNTS                |\n'
+    expected += '------------------------------------------\n'
     expected += '| Itaú                      |      10.00 |\n'
     expected += '------------------------------------------\n'
 
