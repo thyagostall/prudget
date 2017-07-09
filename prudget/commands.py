@@ -1,10 +1,14 @@
 import argparse
+import os
 import pickle
 
 from prudget.dashboard import Dashboard
 from prudget.parser import Parser
 from prudget.uiprinter.account import UIAccountPrinter
 from prudget.uiprinter.transaction import UITransactionPrinter
+
+
+filename = os.environ['PRUDGET_FILE_NAME']
 
 
 def args_to_dictionary(args):
@@ -25,14 +29,14 @@ def print_dashboard(dashboard):
 
 def load_dashboard():
     try:
-        with open('data', 'rb') as file:
+        with open(filename, 'rb') as file:
             return pickle.load(file)
     except FileNotFoundError:
         return Dashboard()
 
 
 def save_dashboard(dashboard):
-    with open('data', 'wb') as file:
+    with open(filename, 'wb') as file:
         return pickle.dump(dashboard, file)
 
 
