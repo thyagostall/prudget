@@ -3,8 +3,8 @@ import pickle
 
 from prudget.dashboard import Dashboard
 from prudget.parser import Parser
-from prudget.uiprinter.uiaccountprinter import UIAccountPrinter
-from prudget.uiprinter.uitransactionprinter import UITransactionPrinter
+from prudget.uiprinter.account import UIAccountPrinter
+from prudget.uiprinter.transaction import UITransactionPrinter
 
 
 def args_to_dictionary(args):

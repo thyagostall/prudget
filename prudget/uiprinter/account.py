@@ -1,4 +1,4 @@
-from prudget.uiprinter.uiaccount import UIPrinter
+from prudget.uiprinter.base import UIPrinter
 
 
 class UIAccountPrinter(UIPrinter):

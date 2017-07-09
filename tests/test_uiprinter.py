@@ -4,8 +4,8 @@ import datetime
 
 from prudget.account import Account
 from prudget.transaction import CreditTransaction
-from prudget.uiprinter.uiaccountprinter import UIAccountPrinter
-from prudget.uiprinter.uitransactionprinter import UITransactionPrinter
+from prudget.uiprinter.account import UIAccountPrinter
+from prudget.uiprinter.transaction import UITransactionPrinter
 
 
 def create_account_printer():
