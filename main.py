@@ -1,4 +1,4 @@
-from prudget import user_interface
+from prudget import commands
 
 if __name__ == '__main__':
-    user_interface.main()
+    commands.main()

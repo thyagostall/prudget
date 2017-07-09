@@ -2,9 +2,9 @@
 import datetime
 from decimal import Decimal
 
-from prudget.parser import Parser
+from prudget.account import Account
+from prudget.commands import *
 from prudget.transaction import *
-from prudget.user_interface import *
 
 
 def test_args_to_dictionary():
