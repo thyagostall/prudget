@@ -1,16 +1,29 @@
-class UIAccountPrinter:
+from prudget.uiprinter.uiaccount import UIPrinter
+
+
+class UIAccountPrinter(UIPrinter):
     ACCOUNT_LENGTH = 25
     CURRENCY_LENGTH = 10
 
-    ACCOUNT_LINE_FORMAT = '| {: <{account_length}} | {: >{currency_length}.2f} |'
+    LINE_FORMAT = '| {: <{account_length}} | {: >{currency_length}.2f} |'
 
     @classmethod
     def _print_account(cls, account, length):
-        return cls.ACCOUNT_LINE_FORMAT.format(account.name, account.balance, account_length=length, currency_length=cls.CURRENCY_LENGTH)
+        return cls.LINE_FORMAT.format(
+            account.name,
+            account.balance,
+            account_length=length,
+            currency_length=cls.CURRENCY_LENGTH
+        )
 
     @classmethod
     def _get_line_length(cls, account_length):
-        return len(cls.ACCOUNT_LINE_FORMAT.format('', 0, account_length=account_length, currency_length=cls.CURRENCY_LENGTH))
+        line = cls.LINE_FORMAT.format(
+            '', 0,
+            account_length=account_length,
+            currency_length=cls.CURRENCY_LENGTH
+        )
+        return len(line)
 
     @classmethod
     def _get_length(cls, accounts):
@@ -29,7 +42,7 @@ class UIAccountPrinter:
         length = cls._get_line_length(account_length)
         return '|{:^{length}}|\n'.format('ACCOUNTS', length=length - 2)
 
-    def print_accounts(self, accounts):
+    def print(self, accounts):
         account_length = self._get_length(accounts)
 
         result = self._get_separator(account_length)

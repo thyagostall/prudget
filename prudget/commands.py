@@ -3,7 +3,7 @@ import pickle
 
 from prudget.dashboard import Dashboard
 from prudget.parser import Parser
-from prudget.uiprinter import UIAccountPrinter
+from prudget.uiprinter.uiaccountprinter import UIAccountPrinter
 
 
 def args_to_dictionary(args):
@@ -14,7 +14,7 @@ def args_to_dictionary(args):
 
 def print_dashboard(dashboard):
     printer = UIAccountPrinter()
-    result = printer.print_accounts(dashboard.accounts)
+    result = printer.print(dashboard.accounts)
     print(result)
 
 
