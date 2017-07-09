@@ -40,6 +40,16 @@ def test_print_account():
     assert expected == result
 
 
+def test_print_account_with_no_accounts():
+    printer = create_account_printer()
+
+    result = printer.print([])
+
+    expected = 'No Accounts.'
+
+    assert expected == result
+
+
 def test_print_transaction():
     value = Decimal(1000)
     transaction = CreditTransaction(value, 'Salário', create_account(), datetime.date(2017, 12, 31))
@@ -53,6 +63,16 @@ def test_print_transaction():
     expected += '------------------------------------------------------------------------\n'
     expected += '| C | Salário                   | 2017-12-31 |    1000.00 | Itaú       |\n'
     expected += '------------------------------------------------------------------------\n'
+
+    assert expected == result
+
+
+def test_print_transaction_with_no_transactions():
+    printer = create_transaction_printer()
+
+    result = printer.print([])
+
+    expected = 'No Transactions.'
 
     assert expected == result
 

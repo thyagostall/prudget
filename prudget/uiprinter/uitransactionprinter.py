@@ -62,6 +62,9 @@ class UITransactionPrinter(UIPrinter):
         return transaction.date.strftime('%Y-%m-%d')
 
     def print(self, transactions):
+        if not transactions:
+            return 'No Transactions.'
+
         transaction_length = self._get_length(transactions)
 
         result = self._get_separator(transaction_length)

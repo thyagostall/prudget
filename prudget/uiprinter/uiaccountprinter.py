@@ -43,6 +43,9 @@ class UIAccountPrinter(UIPrinter):
         return '|{:^{length}}|\n'.format('ACCOUNTS', length=length - 2)
 
     def print(self, accounts):
+        if not accounts:
+            return 'No Accounts.'
+
         account_length = self._get_length(accounts)
 
         result = self._get_separator(account_length)
