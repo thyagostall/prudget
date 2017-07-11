@@ -8,7 +8,8 @@ from prudget.uiprinter.account import UIAccountPrinter
 from prudget.uiprinter.transaction import UITransactionPrinter
 
 
-filename = os.environ['PRUDGET_FILE_NAME']
+def get_filename():
+    return os.environ['PRUDGET_FILE_NAME']
 
 
 def args_to_dictionary(args):
