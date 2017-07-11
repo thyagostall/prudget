@@ -2,6 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from prudget.account import Account
+from prudget.envelope import Envelope
 from prudget.object_utils import infer_dictionary
 from prudget.transaction import *
 
@@ -15,6 +16,10 @@ class InvalidTransactionTypeError(Exception):
 
 
 class InvalidAccountError(Exception):
+    pass
+
+
+class InvalidEnvelopeParametersError(Exception):
     pass
 
 
@@ -68,6 +73,19 @@ class Parser:
             result = Account(dictionary['name'])
         except KeyError:
             raise InvalidAccountParametersError
+
+        if 'balance' in dictionary:
+            result._balance = Decimal(dictionary['balance'])
+
+        return result
+
+    def create_envelope(self, dictionary):
+        dictionary = infer_dictionary(dictionary, ['name', 'balance'])
+
+        try:
+            result = Envelope(dictionary['name'])
+        except KeyError:
+            raise InvalidEnvelopeParametersError
 
         if 'balance' in dictionary:
             result._balance = Decimal(dictionary['balance'])

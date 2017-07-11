@@ -1,13 +1,19 @@
 class Transaction:
-    def __init__(self, value, description, account, date):
+    def __init__(self, value, description, account, date, envelope=None):
         self._value = value
         self._description = description
         self._account = account
         self._date = date
+        self._envelope = envelope
 
-        self.inject(account)
+        self.inject_account(account)
+        if envelope:
+            self.inject_envelope(envelope)
 
-    def inject(self, account):
+    def inject_account(self, account):
+        raise NotImplementedError
+
+    def inject_envelope(self, envelope):
         raise NotImplementedError
 
     @property
@@ -28,10 +34,16 @@ class Transaction:
 
 
 class DebitTransaction(Transaction):
-    def inject(self, account):
+    def inject_account(self, account):
         account.withdraw(self._value)
+
+    def inject_envelope(self, envelope):
+        envelope.withdraw(self._value)
 
 
 class CreditTransaction(Transaction):
-    def inject(self, account):
+    def inject_account(self, account):
         account.deposit(self._value)
+
+    def inject_envelope(self, envelope):
+        envelope.deposit(self._value)

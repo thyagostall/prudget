@@ -5,6 +5,7 @@ import pickle
 from prudget.dashboard import Dashboard
 from prudget.parser import Parser
 from prudget.uiprinter.account import UIAccountPrinter
+from prudget.uiprinter.envelope import UIEnvelopePrinter
 from prudget.uiprinter.transaction import UITransactionPrinter
 
 
@@ -21,6 +22,10 @@ def args_to_dictionary(args):
 def print_dashboard(dashboard):
     printer = UIAccountPrinter()
     result = printer.print(dashboard.accounts)
+    print(result)
+
+    printer = UIEnvelopePrinter()
+    result = printer.print(dashboard.envelopes)
     print(result)
 
     printer = UITransactionPrinter()
@@ -48,6 +53,7 @@ def main():
     parser.add_argument('-s', '--status', action='store_true', help='shows the status of the dashboard')
     parser.add_argument('-t', '--transaction', type=str, nargs='*', help='create a transaction')
     parser.add_argument('-a', '--account', type=str, nargs='*', help='create an account')
+    parser.add_argument('-e', '--envelope', type=str, nargs='*', help='create an envelope')
 
     args = parser.parse_args()
     dashboard = load_dashboard()
@@ -68,6 +74,10 @@ def main():
         account = args_to_dictionary(args.account)
         account = parser.create_account(account)
         dashboard.add_account(account)
+    elif args.envelope:
+        envelope = args_to_dictionary(args.envelope)
+        envelope = parser.create_envelope(envelope)
+        dashboard.add_envelope(envelope)
     else:
         print(args)
 
