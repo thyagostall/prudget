@@ -42,7 +42,11 @@ class UITransactionPrinter(UIPrinter):
 
     @classmethod
     def _get_credit_or_debit(cls, transaction):
-        return type(transaction).__name__[0]
+        result = type(transaction).__name__[0]
+        if result == 'C':
+            return '\033[92m' + result + '\033[0m'
+        else:
+            return '\033[91m' + result + '\033[0m'
 
     @classmethod
     def _print_transaction(cls, transaction):

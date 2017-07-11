@@ -30,6 +30,7 @@ def print_dashboard(dashboard):
 
 def load_dashboard():
     try:
+        filename = get_filename()
         with open(filename, 'rb') as file:
             return pickle.load(file)
     except FileNotFoundError:
@@ -37,6 +38,7 @@ def load_dashboard():
 
 
 def save_dashboard(dashboard):
+    filename = get_filename()
     with open(filename, 'wb') as file:
         return pickle.dump(dashboard, file)
 
