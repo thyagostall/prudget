@@ -7,36 +7,42 @@ class UIEnvelopePrinter(UIPrinter):
 
     LINE_FORMAT = '| {: <{description_length}} | {: >{currency_length}.2f} |'
 
-    @classmethod
-    def _get_length(cls, envelopes):
-        result = cls.DESCRIPTION_LENGTH
-        for envelope in envelopes:
+    def __init__(self, envelopes):
+        self._envelopes = envelopes
+        self._length = self.DESCRIPTION_LENGTH
+
+    def _get_length(self):
+        result = self.DESCRIPTION_LENGTH
+        for envelope in self._envelopes:
             result = max(result, len(envelope.name))
 
         return result
 
     def _print_envelope(self, envelope):
+        return self._format_line(envelope.balance, envelope.name)
+
+    def _format_line(self, balance, name):
         return self.LINE_FORMAT.format(
-            envelope.name,
-            envelope.balance,
-            description_length=self.DESCRIPTION_LENGTH,
+            name,
+            balance,
+            description_length=self._length,
             currency_length=self.CURRENCY_LENGTH
         )
 
-    def _get_line_length(self, widest_item_length):
-        return len(self.LINE_FORMAT.format('', 0, description_length=self.DESCRIPTION_LENGTH, currency_length=self.CURRENCY_LENGTH))
+    def _get_line_length(self, length):
+        return len(self._format_line(0, ''))
 
-    def print(self, envelopes):
-        if not envelopes:
+    def print(self):
+        if not self._envelopes:
             return 'No Envelopes.'
 
-        envelope_length = self._get_length(envelopes)
+        self._length = self._get_length()
 
-        result = self._get_separator(envelope_length)
-        result += self._get_title('ENVELOPES', envelope_length)
-        result += self._get_separator(envelope_length)
-        for envelope in envelopes:
+        result = self._get_separator(self._length)
+        result += self._get_title('ENVELOPES', self._length)
+        result += self._get_separator(self._length)
+        for envelope in self._envelopes:
             result += self._print_envelope(envelope) + '\n'
 
-        result += self._get_separator(envelope_length)
+        result += self._get_separator(self._length)
         return result

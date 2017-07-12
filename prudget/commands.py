@@ -24,8 +24,8 @@ def print_dashboard(dashboard):
     result = printer.print(dashboard.accounts)
     print(result)
 
-    printer = UIEnvelopePrinter()
-    result = printer.print(dashboard.envelopes)
+    printer = UIEnvelopePrinter(dashboard.envelopes)
+    result = printer.print()
     print(result)
 
     printer = UITransactionPrinter()
