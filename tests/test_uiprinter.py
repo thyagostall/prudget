@@ -10,12 +10,12 @@ from prudget.uiprinter.envelope import UIEnvelopePrinter
 from prudget.uiprinter.transaction import UITransactionPrinter
 
 
-def create_account_printer():
-    return UIAccountPrinter()
+def create_account_printer(accounts):
+    return UIAccountPrinter(accounts)
 
 
-def create_transaction_printer():
-    return UITransactionPrinter()
+def create_transaction_printer(transactions):
+    return UITransactionPrinter(transactions)
 
 
 def create_envelope_printer(envelopes):
@@ -30,9 +30,9 @@ def create_account():
 
 
 def test_print_account():
-    printer = create_account_printer()
+    printer = create_account_printer([create_account()])
 
-    result = printer.print([create_account()])
+    result = printer.print()
 
     expected = ''
     expected += '------------------------------------------\n'
@@ -47,9 +47,9 @@ def test_print_account():
 
 
 def test_print_account_with_no_accounts():
-    printer = create_account_printer()
+    printer = create_account_printer([])
 
-    result = printer.print([])
+    result = printer.print()
 
     expected = 'No Accounts.'
 
@@ -60,8 +60,8 @@ def test_print_transaction():
     value = Decimal(1000)
     transaction = CreditTransaction(value, 'Salário', create_account(), datetime.date(2017, 12, 31))
 
-    printer = create_transaction_printer()
-    result = printer.print([transaction])
+    printer = create_transaction_printer([transaction])
+    result = printer.print()
 
     expected = ''
     expected += '------------------------------------------------------------------------\n'
@@ -76,8 +76,8 @@ def test_print_transaction():
 def test_print_transaction_with_no_transactions():
     expected = 'No Transactions.'
 
-    printer = create_transaction_printer()
-    result = printer.print([])
+    printer = create_transaction_printer([])
+    result = printer.print()
 
     assert expected == result
 

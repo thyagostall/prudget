@@ -20,16 +20,16 @@ def args_to_dictionary(args):
 
 
 def print_dashboard(dashboard):
-    printer = UIAccountPrinter()
-    result = printer.print(dashboard.accounts)
+    printer = UIAccountPrinter(dashboard.accounts)
+    result = printer.print()
     print(result)
 
     printer = UIEnvelopePrinter(dashboard.envelopes)
     result = printer.print()
     print(result)
 
-    printer = UITransactionPrinter()
-    result = printer.print(dashboard.transactions)
+    printer = UITransactionPrinter(dashboard.transactions)
+    result = printer.print()
     print(result)
 
 

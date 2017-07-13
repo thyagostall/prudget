@@ -9,23 +9,25 @@ class UITransactionPrinter(UIPrinter):
 
     LINE_FORMAT = '| {} | {: <{description_length}} | {} | {: >{currency_length}.2f} | {: <{account_length}} |'
 
-    def _get_line_length(self, transaction_length):
-        line = self.LINE_FORMAT.format(
+    def __init__(self, transactions):
+        super().__init__()
+        self._transactions = transactions
+        self._length = self.DESCRIPTION_LENGTH
+
+    def _get_line_length(self):
+        line = self._get_formatted_line(
             'C',
             '',
             '9999-99-99',
             0,
-            '',
-            description_length=transaction_length,
-            currency_length=self.CURRENCY_LENGTH,
-            account_length=self.ACCOUNT_LENGTH,
+            self._length,
+            ''
         )
         return len(line)
 
-    @classmethod
-    def _get_length(cls, transactions):
-        result = cls.DESCRIPTION_LENGTH
-        for transaction in transactions:
+    def _get_length(self):
+        result = self.DESCRIPTION_LENGTH
+        for transaction in self._transactions:
             result = max(result, len(transaction.description))
 
         return result
@@ -38,43 +40,48 @@ class UITransactionPrinter(UIPrinter):
         else:
             return '\033[91m' + result + '\033[0m'
 
-    @classmethod
-    def _print_transaction(cls, transaction):
-        return cls.LINE_FORMAT.format(
-            cls._get_credit_or_debit(transaction),
-            transaction.description,
-            cls.format_date(transaction),
-            transaction.value,
-            transaction.account.name[:10],
-            description_length=cls.DESCRIPTION_LENGTH,
-            currency_length=cls.CURRENCY_LENGTH,
-            account_length=cls.ACCOUNT_LENGTH,
+    def _print_transaction(self, transaction):
+        return self._get_formatted_line(self._get_credit_or_debit(transaction), transaction.description,
+                                        self.format_date(transaction), transaction.value,
+                                        self._length,
+                                        transaction.account.name[:10])
+
+    def _get_formatted_line(self, credit_or_debit, description, date, value, transaction_length, account_first10):
+        return self.LINE_FORMAT.format(
+            credit_or_debit,
+            description,
+            date,
+            value,
+            account_first10,
+            description_length=transaction_length,
+            currency_length=self.CURRENCY_LENGTH,
+            account_length=self.ACCOUNT_LENGTH,
         )
 
     @classmethod
     def format_date(cls, transaction):
         return transaction.date.strftime('%Y-%m-%d')
 
-    def print(self, transactions):
-        if not transactions:
+    def print(self):
+        super().print()
+
+        if not self._transactions:
             return 'No Transactions.'
 
-        transaction_length = self._get_length(transactions)
-
-        result = self._get_separator(transaction_length)
-        result += self._get_title('TRANSACTIONS', transaction_length)
-        result += self._get_separator(transaction_length)
-        for transaction in transactions:
+        result = self._get_separator()
+        result += self._get_title('TRANSACTIONS')
+        result += self._get_separator()
+        for transaction in self._transactions:
             result += self._print_transaction(transaction) + '\n'
 
-        result += self._get_separator(transaction_length)
+        result += self._get_separator()
         return result
 
     def print_transaction(self, transaction):
-        transaction_length = self._get_length([transaction])
+        self._length = max(self.DESCRIPTION_LENGTH, len(transaction.description))
 
-        result = self._get_separator(transaction_length)
+        result = self._get_separator()
         result += self._print_transaction(transaction) + '\n'
-        result += self._get_separator(transaction_length)
+        result += self._get_separator()
 
         return result

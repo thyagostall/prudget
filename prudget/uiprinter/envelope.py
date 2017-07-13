@@ -8,8 +8,8 @@ class UIEnvelopePrinter(UIPrinter):
     LINE_FORMAT = '| {: <{description_length}} | {: >{currency_length}.2f} |'
 
     def __init__(self, envelopes):
+        super().__init__()
         self._envelopes = envelopes
-        self._length = self.DESCRIPTION_LENGTH
 
     def _get_length(self):
         result = self.DESCRIPTION_LENGTH
@@ -29,20 +29,20 @@ class UIEnvelopePrinter(UIPrinter):
             currency_length=self.CURRENCY_LENGTH
         )
 
-    def _get_line_length(self, length):
+    def _get_line_length(self):
         return len(self._format_line(0, ''))
 
     def print(self):
+        super().print()
+
         if not self._envelopes:
             return 'No Envelopes.'
 
-        self._length = self._get_length()
-
-        result = self._get_separator(self._length)
-        result += self._get_title('ENVELOPES', self._length)
-        result += self._get_separator(self._length)
+        result = self._get_separator()
+        result += self._get_title('ENVELOPES')
+        result += self._get_separator()
         for envelope in self._envelopes:
             result += self._print_envelope(envelope) + '\n'
 
-        result += self._get_separator(self._length)
+        result += self._get_separator()
         return result
