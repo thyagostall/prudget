@@ -3,8 +3,10 @@ from decimal import Decimal
 import datetime
 
 from prudget.account import Account
+from prudget.envelope import Envelope
 from prudget.transaction import CreditTransaction
 from prudget.uiprinter.account import UIAccountPrinter
+from prudget.uiprinter.envelope import UIEnvelopePrinter
 from prudget.uiprinter.transaction import UITransactionPrinter
 
 
@@ -14,6 +16,10 @@ def create_account_printer():
 
 def create_transaction_printer():
     return UITransactionPrinter()
+
+
+def create_envelope_printer(envelopes):
+    return UIEnvelopePrinter(envelopes)
 
 
 def create_account():
@@ -68,14 +74,34 @@ def test_print_transaction():
 
 
 def test_print_transaction_with_no_transactions():
-    printer = create_transaction_printer()
-
-    result = printer.print([])
-
     expected = 'No Transactions.'
+
+    printer = create_transaction_printer()
+    result = printer.print([])
 
     assert expected == result
 
 
-def test_print_transaction_details():
-    pass
+def test_print_envelope_with_no_envelopes():
+    expected = 'No Envelopes.'
+
+    printer = create_envelope_printer([])
+    result = printer.print()
+
+    assert expected == result
+
+
+def test_print_envelope_with_envelopes():
+    expected = '------------------------------------------\n'
+    expected += '|               ENVELOPES                |\n'
+    expected += '------------------------------------------\n'
+    expected += '| Comida                    |     100.00 |\n'
+    expected += '------------------------------------------\n'
+
+    envelope = Envelope('Comida')
+    envelope.deposit(100.00)
+
+    printer = create_envelope_printer([envelope])
+    result = printer.print()
+
+    assert expected == result
