@@ -9,6 +9,8 @@ class DashboardEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Dashboard):
             result = {}
+            if obj.accounts:
+                result.update({'accounts': obj.accounts})
             return result
         elif isinstance(obj, Account):
             result = {'name': obj.name, 'balance': obj.balance}
@@ -30,8 +32,9 @@ def serialize_account(account):
 def test_serialize_empty_dashboard():
     dashboard = Dashboard()
     result = serialize_dashboard(dashboard)
+    result = json.loads(result)
 
-    assert result == '{}'
+    assert result == {}
 
 
 def test_serialize_account():
@@ -44,13 +47,14 @@ def test_serialize_account():
     assert result == {'balance': '100', 'name': 'Some account'}
 
 
-# def test_serialize_dashboard_with_one_account():
-#     account = Account('Some account')
-#     account.deposit(100)
-#
-#     dashboard = Dashboard()
-#     dashboard.add_account(account)
-#
-#     result = serialize_dashboard(dashboard)
-#
-#     assert result == '{"accounts": [{"name":"Some account","balance":100}]}'
+def test_serialize_dashboard_with_one_account():
+    account = Account('Some account')
+    account.deposit(100)
+
+    dashboard = Dashboard()
+    dashboard.add_account(account)
+
+    result = serialize_dashboard(dashboard)
+    result = json.loads(result)
+
+    assert result == {'accounts': [{'name': 'Some account', 'balance': '100'}]}
