@@ -12,6 +12,9 @@ class UserModel(models.Model):
 class Currency(UserModel):
     code = models.CharField(max_length=5)
 
+    class Meta:
+        verbose_name_plural = 'currencies'
+
 
 class Account(UserModel):
     name = models.CharField(max_length=30)
