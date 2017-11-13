@@ -6,3 +6,4 @@ env
 .coverage
 .idea/
 data
+*.sqlite3
