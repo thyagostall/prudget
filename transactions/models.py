@@ -30,5 +30,5 @@ class Transaction(UserModel):
     date = models.DateField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     account = models.ForeignKey(Account)
-    bucket = models.ForeignKey(Bucket)
-    type_code = models.CharField(max_length=50)
+    bucket = models.ForeignKey(Bucket, blank=True, null=True)
+    group_id = models.CharField(max_length=50)
