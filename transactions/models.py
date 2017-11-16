@@ -31,11 +31,4 @@ class Transaction(UserModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     account = models.ForeignKey(Account)
     bucket = models.ForeignKey(Bucket)
-
-
-class Transfer(UserModel):
-    source = models.ForeignKey(Account, related_name='+')
-    destination = models.ForeignKey(Account, related_name='+')
-    amount_source = models.DecimalField(max_digits=10, decimal_places=2)
-    amount_destination = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateField()
+    type_code = models.CharField(max_length=50)
