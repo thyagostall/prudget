@@ -1,3 +1,5 @@
+from django.db.models import Sum
+
 from transactions.models import Transaction
 from transactions.transaction import create_group_id
 
@@ -15,3 +17,8 @@ def transfer_to_account(transaction, destination):
                                                       owner=transaction.owner,
                                                       )
     return transaction, transfer_transaction
+
+
+def get_account_balance(account):
+    result = account.transaction_set.aggregate(balance=Sum('amount'))
+    return result['balance']
