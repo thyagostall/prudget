@@ -15,14 +15,23 @@ class Currency(UserModel):
     class Meta:
         verbose_name_plural = 'currencies'
 
+    def __str__(self):
+        return self.code
+
 
 class Account(UserModel):
     name = models.CharField(max_length=30)
     currency = models.ForeignKey(Currency)
 
+    def __str__(self):
+        return '%s (%s)' % (self.name, self.currency)
+
 
 class Bucket(UserModel):
     name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
 
 
 class Transaction(UserModel):
