@@ -24,3 +24,7 @@ class LoggedUserModelAdmin(admin.ModelAdmin):
 admin.site.register(Account, LoggedUserModelAdmin)
 admin.site.register(Bucket, LoggedUserModelAdmin)
 admin.site.register(Currency, LoggedUserModelAdmin)
+
+admin.site.site_header = 'Prudget'
+admin.site.site_title = 'Prudget'
+admin.site.index_title = 'Prudget'

@@ -19,9 +19,9 @@ class TransactionsView(FormView):
         context['transactions'] = Transaction.objects.filter(owner=self.logged_user)
         return context
 
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         self.logged_user = request.user
-        return super().post(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         transaction = form.save(commit=False)

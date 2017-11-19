@@ -1,6 +1,6 @@
 <h1>Transactions</h1>
 
-<p>Logged: {{ user }}</p>
+<p>User: {{ user }}</p>
 
 <form action="{% url 'transactions' %}" method="post">
     {% csrf_token %}
