@@ -1,7 +1,7 @@
 from django.db.models import Sum
 
 from transactions.models import Transaction
-from transactions.transaction import create_group_id
+from transactions.transactions import create_group_id
 
 
 def transfer_to_account(transaction, destination):

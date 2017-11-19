@@ -4,9 +4,9 @@ from decimal import Decimal
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from transactions.account import transfer_to_account, get_account_balance
+from transactions.accounts import transfer_to_account, get_account_balance
 from transactions.models import Account, Currency, Transaction
-from transactions.transaction import create_group_id
+from transactions.transactions import create_group_id
 
 
 class TransferTestCase(TestCase):
