@@ -30,6 +30,8 @@ class TransferTestCase(TestCase):
         self.assertEqual(transaction.date, transfer_transaction.date)
         self.assertEqual(transaction.amount, transfer_transaction.amount)
 
+
+class AccountTestCase(TestCase):
     def test_get_account_balance(self):
         user = create_user()
 
