@@ -9,7 +9,7 @@ class UserModel(models.Model):
         abstract = True
 
 
-class Currency(UserModel):
+class Currency(models.Model):
     code = models.CharField(max_length=5)
 
     class Meta:

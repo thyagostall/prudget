@@ -1,30 +1,42 @@
-<h1>Transactions</h1>
+{% extends "transactions/base.html" %}
 
-<p>User: {{ user }}</p>
+{% load bootstrap4 %}
 
-<form action="{% url 'transactions' %}" method="post">
-    {% csrf_token %}
-    <table>
-        {{ form }}
-    </table>
-    <input type="submit" value="Save"/>
-</form>
+{% block content %}
 
-<table>
-    <tr>
-        <th>Description</th>
-        <th>Date</th>
-        <th>Amount</th>
-        <th>Account</th>
-        <th>Bucket</th>
-    </tr>
-    {% for transaction in transactions %}
+    <h1>Transactions</h1>
+
+    <p>User: {{ user }}</p>
+
+    <form action="{% url 'transactions' %}" method="post" class="form">
+        {% csrf_token %}
+        <table>
+            {% bootstrap_form form %}
+        </table>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
         <tr>
-            <td>{{ transaction.description }}</td>
-            <td>{{ transaction.date }}</td>
-            <td>{{ transaction.amount }}</td>
-            <td>{{ transaction.account }}</td>
-            <td>{{ transaction.bucket }}</td>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Account</th>
+            <th>Bucket</th>
         </tr>
-    {% endfor %}
-</table>
+        </thead>
+        <tbody>
+        {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.description }}</td>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.account }}</td>
+                <td>{{ transaction.bucket }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}
