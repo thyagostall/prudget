@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Sum
 
 
 class UserModel(models.Model):
@@ -22,6 +23,10 @@ class Currency(models.Model):
 class Account(UserModel):
     name = models.CharField(max_length=30)
     currency = models.ForeignKey(Currency)
+
+    def balance(self):
+        result = self.transaction_set.aggregate(balance=Sum('amount'))
+        return result['balance']
 
     def __str__(self):
         return '%s (%s)' % (self.name, self.currency)

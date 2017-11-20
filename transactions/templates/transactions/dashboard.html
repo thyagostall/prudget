@@ -1,0 +1,10 @@
+{% extends 'transactions/base.html' %}
+
+{% block content %}
+
+    <h1>Balance</h1>
+    {% for account in accounts %}
+        <p>{{ account.name }}: {{ account.balance }}</p>
+    {% endfor %}
+
+{% endblock content %}
