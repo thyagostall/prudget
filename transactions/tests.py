@@ -4,7 +4,7 @@ from decimal import Decimal
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from transactions.accounts import transfer_to_account, get_account_balance
+from transactions.accounts import transfer_to_account
 from transactions.models import Account, Currency, Transaction
 from transactions.transactions import create_group_id
 
@@ -41,7 +41,7 @@ class AccountTestCase(TestCase):
         create_transaction(user, account, amount=first_amount)
         create_transaction(user, account, amount=second_amount)
 
-        balance = get_account_balance(account)
+        balance = account.balance()
 
         self.assertEqual(first_amount + second_amount, balance)
 
@@ -51,20 +51,16 @@ def create_user():
 
 
 def create_account(user, account_name, currency_code):
-    currency, _ = Currency.objects.get_or_create(code=currency_code,
-                                                 owner=user,
-                                                 )
+    currency, _ = Currency.objects.get_or_create(code=currency_code)
     return Account.objects.create(name=account_name,
                                   currency=currency,
                                   owner=user,
                                   )
 
 
-def create_transaction(user, source, amount):
+def create_transaction(user, source, amount=Decimal('129.99')):
     description = 'Some transaction'
     date = datetime.today()
-    if not amount:
-        amount = Decimal('129.99')
     account = source
     group_id = create_group_id()
 
