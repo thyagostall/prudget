@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView as AuthLoginView
 from django.views.generic import FormView
 
 from transactions import transactions
@@ -5,7 +7,9 @@ from transactions.forms import TransactionForm
 from transactions.models import Transaction
 
 
-class TransactionsView(FormView):
+class TransactionsView(LoginRequiredMixin, FormView):
+    login_url = '/finance/login/'
+
     form_class = TransactionForm
     template_name = 'transactions/transactions.html'
     success_url = '.'
@@ -41,3 +45,7 @@ class TransactionsView(FormView):
     def post(self, request, *args, **kwargs):
         self.logged_user = request.user
         return super().post(request, *args, **kwargs)
+
+
+class LoginView(AuthLoginView):
+    template_name = 'transactions/login.html'

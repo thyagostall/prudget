@@ -1,10 +1,13 @@
 import os
+from os.path import join
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.getenv('SECRET_KEY', '')
 
 DEBUG = False
+
+LOGIN_REDIRECT_URL = '/finance/dashboard'
 
 ALLOWED_HOSTS = [
     'prudget.thyago.com',
