@@ -15,37 +15,25 @@ class TransactionsView(LoginRequiredMixin, FormView):
     template_name = 'transactions/transactions.html'
     success_url = '.'
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.logged_user = None
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['transactions'] = Transaction.objects.filter(owner=self.logged_user).order_by('-id')
+        context['transactions'] = Transaction.objects.filter(owner=self.request.user).order_by('-id')
         return context
 
     def get_form_kwargs(self):
         form_kwargs = super().get_form_kwargs()
         form_kwargs.update({
-            'user': self.logged_user
+            'user': self.request.user
         })
         return form_kwargs
 
     def form_valid(self, form):
         print('save')
         transaction = form.save(commit=False)
-        transaction.owner = self.logged_user
+        transaction.owner = self.request.user
         transaction.group_id = transactions.create_group_id('COMMON')
         transaction.save()
         return super().form_valid(form)
-
-    def get(self, request, *args, **kwargs):
-        self.logged_user = request.user
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        self.logged_user = request.user
-        return super().post(request, *args, **kwargs)
 
 
 class LoginView(AuthLoginView):

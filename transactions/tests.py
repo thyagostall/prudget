@@ -3,6 +3,7 @@ from decimal import Decimal
 
 from django.contrib.auth.models import User
 from django.test import TestCase
+from django.urls import reverse
 
 from transactions.accounts import transfer_to_account
 from transactions.models import Account, Currency, Transaction
@@ -46,8 +47,30 @@ class AccountTestCase(TestCase):
         self.assertEqual(first_amount + second_amount, balance)
 
 
+class TransactionsViewTestCase(TestCase):
+    def test_without_user_should_redirect_to_login(self):
+        response = self.client.get(reverse('transactions'))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.url.startswith(reverse('login')))
+
+    def test_with_user_should_show_transactions(self):
+        create_user()
+
+        logged_successfully = self.client.login(username='username', password='password')
+        response = self.client.get(reverse('transactions'))
+
+        self.assertTrue(logged_successfully)
+        self.assertEqual(response.status_code, 200)
+
+
 def create_user():
-    return User.objects.create(username='Someone')
+    user = User()
+    user.username = 'username'
+    user.email = 'any@email.com'
+    user.set_password('password')
+    user.save()
+    return user
 
 
 def create_account(user, account_name, currency_code):
