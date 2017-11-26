@@ -9,6 +9,8 @@ DEBUG = False
 
 LOGIN_REDIRECT_URL = '/finance/dashboard'
 
+USE_THOUSAND_SEPARATOR = True
+
 ALLOWED_HOSTS = [
     'prudget.thyago.com',
     'prudget.herokuapp.com'
