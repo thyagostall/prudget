@@ -28,7 +28,6 @@ class TransactionsView(LoginRequiredMixin, FormView):
         return form_kwargs
 
     def form_valid(self, form):
-        print('save')
         transaction = form.save(commit=False)
         transaction.owner = self.request.user
         transaction.group_id = transactions.create_group_id('COMMON')
