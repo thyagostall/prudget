@@ -8,10 +8,10 @@
 
     <p>User: {{ user }}</p>
 
-    <form action="{% url 'transactions' %}" method="post" class="form">
+    <form action="{% url 'transactions' %}" method="post" class="form-inline">
         {% csrf_token %}
         <table>
-            {% bootstrap_form form %}
+            {% bootstrap_form form layout='inline' %}
         </table>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
