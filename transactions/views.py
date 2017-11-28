@@ -1,4 +1,5 @@
-from django.contrib.auth.views import LoginView as AuthLoginView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView as AuthLoginView, LogoutView as AuthLogoutView
 from django.shortcuts import render
 
 from transactions.forms import TransactionForm
@@ -6,10 +7,15 @@ from transactions.models import Transaction, Account
 from transactions.transactions import create_group_id
 
 
-def login(request):
-    return render(request, 'transactions/login.html')
+class LoginView(AuthLoginView):
+    template_name = 'transactions/login.html'
 
 
+class LogoutView(AuthLogoutView):
+    template_name = 'transactions/logout.html'
+
+
+@login_required
 def dashboard(request):
     form = TransactionForm(request.user, request.POST or None)
 
