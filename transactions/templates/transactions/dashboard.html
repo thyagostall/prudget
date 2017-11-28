@@ -4,6 +4,57 @@
 
     <h1>Balance</h1>
 
+    <table>
+        <thead>
+        <tr>
+            <th>Account</th>
+            <th>Balance</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        {% for account in accounts %}
+            <tr>
+                <td>{{ account.name }} ({{ account.currency.code }})</td>
+                <td>{{ account.balance | floatformat:2 }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
     <h1>Transactions</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Account</th>
+            <th>Bucket</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.description }}</td>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.account }}</td>
+                <td>{{ transaction.bucket }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>New transaction</h2>
+
+    <form action="{% url 'dashboard' %}" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <button type="submit">Save</button>
+    </form>
 
 {% endblock content %}
