@@ -7,7 +7,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', '')
 
 DEBUG = False
 
-LOGIN_REDIRECT_URL = '/finance/dashboard'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'
 
 USE_THOUSAND_SEPARATOR = True
 

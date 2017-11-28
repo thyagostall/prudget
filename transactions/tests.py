@@ -55,7 +55,7 @@ class LoginTestCase(TestCase):
 
 class TransactionsViewTestCase(TestCase):
     def test_without_user_should_redirect_to_login(self):
-        response = self.client.get(reverse('transactions'))
+        response = self.client.get(reverse('dashboard'))
 
         self.assertEqual(response.status_code, 302)
         self.assertTrue(response.url.startswith(reverse('login')))
@@ -64,7 +64,7 @@ class TransactionsViewTestCase(TestCase):
         create_user()
 
         logged_successfully = self.client.login(username='username', password='password')
-        response = self.client.get(reverse('transactions'))
+        response = self.client.get(reverse('dashboard'))
 
         self.assertTrue(logged_successfully)
         self.assertEqual(response.status_code, 200)
@@ -83,7 +83,7 @@ class TransactionsViewTestCase(TestCase):
 
         logged_successfully = self.client.login(username='first', password='password')
 
-        response = self.client.get(reverse('transactions'))
+        response = self.client.get(reverse('dashboard'))
 
         self.assertTrue(logged_successfully)
         self.assertContains(response, '129.99')

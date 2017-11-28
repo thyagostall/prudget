@@ -29,7 +29,7 @@ class Account(UserModel):
         return result['balance']
 
     def __str__(self):
-        return '%s (%s)' % (self.name, self.currency)
+        return self.name
 
 
 class Bucket(UserModel):
