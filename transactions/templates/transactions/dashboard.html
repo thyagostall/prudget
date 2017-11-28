@@ -4,22 +4,6 @@
 
     <h1>Balance</h1>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Account</th>
-            <th class="text-right">Balance</th>
-        </tr>
-
-        </thead>
-        <tbody>
-        {% for account in accounts %}
-            <tr>
-                <td>{{ account.name }} ({{ account.currency.code }})</td>
-                <td class="text-right">{{ account.balance | floatformat:2 }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <h1>Transactions</h1>
 
 {% endblock content %}

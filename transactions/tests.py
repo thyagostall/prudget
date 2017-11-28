@@ -44,6 +44,15 @@ class AccountTestCase(TestCase):
         self.assertEqual(first_amount + second_amount, balance)
 
 
+class LoginTestCase(TestCase):
+    def test_render_login(self):
+        response = self.client.get(reverse('login'))
+
+        self.assertContains(response, 'Username:')
+        self.assertContains(response, 'Password:')
+        self.assertContains(response, 'Login')
+
+
 class TransactionsViewTestCase(TestCase):
     def test_without_user_should_redirect_to_login(self):
         response = self.client.get(reverse('transactions'))

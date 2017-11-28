@@ -1,18 +1,13 @@
 {% extends 'transactions/base.html' %}
 
-{% load bootstrap4 %}
-
 {% block content %}
 
     <h1>Login</h1>
 
     <form action="{% url 'login' %}" method="post" class="form">
         {% csrf_token %}
-
-        {% bootstrap_form form %}
-        {% buttons %}
-            <button type="submit" class="btn btn-primary">Login</button>
-        {% endbuttons %}
+        {{ form }}
+        <button type="submit">Login</button>
     </form>
 
 {% endblock content %}

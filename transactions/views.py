@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView as AuthLoginView
+from django.shortcuts import render
 from django.views.generic import FormView
 from django.views.generic import TemplateView
 
@@ -39,10 +40,14 @@ class LoginView(AuthLoginView):
     template_name = 'transactions/login.html'
 
 
-class DashboardView(LoginRequiredMixin, TemplateView):
+class AccountListView(LoginRequiredMixin, TemplateView):
     login_url = '/finance/login/'
-    template_name = 'transactions/dashboard.html'
+    template_name = 'transactions/account_list.html'
 
     def get_context_data(self, **kwargs):
         accounts = Account.objects.filter(owner=self.request.user)
         return dict(accounts=accounts)
+
+
+def dashboard(request):
+    return render(request, 'transactions/dashboard.html')
