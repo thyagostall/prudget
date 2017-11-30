@@ -1,5 +1,21 @@
+import hashlib
+import time
+
 from transactions.models import Transaction
-from transactions.transactions import create_group_id
+
+
+def create_group_id(prefix=''):
+    if prefix:
+        prefix += '-'
+
+    microseconds = int(time.time() * 100000)
+    microseconds = str(microseconds)
+    microseconds = microseconds.encode('utf-8')
+
+    digest = hashlib.md5()
+    digest.update(microseconds)
+    group_id = digest.hexdigest()
+    return prefix + group_id.upper()
 
 
 def transfer_to_account(transaction, destination):

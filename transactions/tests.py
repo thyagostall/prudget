@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.test import TestCase
 from django.urls import reverse
 
-from transactions.accounts import transfer_to_account
+from transactions.services import transfer_to_account
 from transactions.testdata import create_user, create_account, create_transaction
 
 
@@ -53,7 +53,7 @@ class LoginTestCase(TestCase):
         self.assertContains(response, 'Login')
 
 
-class TransactionsViewTestCase(TestCase):
+class DashboardViewTestCase(TestCase):
     def test_without_user_should_redirect_to_login(self):
         response = self.client.get(reverse('dashboard'))
 

@@ -4,7 +4,7 @@ from decimal import Decimal
 from django.contrib.auth.models import User
 
 from transactions.models import Currency, Account, Transaction
-from transactions.transactions import create_group_id
+from transactions.services import create_group_id
 
 
 def create_user(username='username', email='any@email.com', password='password'):

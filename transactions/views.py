@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from transactions.forms import TransactionForm
 from transactions.models import Transaction, Account
-from transactions.transactions import create_group_id
+from transactions.services import create_group_id
 
 
 class LoginView(AuthLoginView):
