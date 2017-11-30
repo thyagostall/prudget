@@ -17,7 +17,6 @@ ALLOWED_HOSTS = [
     'prudget.herokuapp.com'
 ]
 
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
