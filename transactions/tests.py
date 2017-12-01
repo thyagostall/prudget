@@ -54,6 +54,16 @@ class LoginTestCase(TestCase):
 
 
 class DashboardViewTestCase(TestCase):
+    def test_to_index_should_redirect_to_dashboard(self):
+        create_user()
+
+        self.client.login(username='username', password='password')
+
+        response = self.client.get('/')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.url.startswith(reverse('dashboard')))
+
     def test_without_user_should_redirect_to_login(self):
         response = self.client.get(reverse('dashboard'))
 
