@@ -1,5 +1,4 @@
 import os
-from os.path import join
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -11,6 +10,8 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 
 USE_THOUSAND_SEPARATOR = True
+
+APPEND_SLASH = True
 
 ALLOWED_HOSTS = [
     'prudget.thyago.com',

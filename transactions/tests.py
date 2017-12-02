@@ -98,3 +98,20 @@ class DashboardViewTestCase(TestCase):
         self.assertTrue(logged_successfully)
         self.assertContains(response, '129.99')
         self.assertNotContains(response, '-75.77')
+
+
+class TransactionViewTestCase(TestCase):
+    def test_form_is_being_displayed_correctly(self):
+        password = 'password'
+        user = create_user(password=password)
+
+        self.client.login(username=user.username, password=password)
+
+        response = self.client.get(reverse('new_transaction'))
+
+        self.assertContains(response, 'Description')
+        self.assertContains(response, 'Amount')
+        self.assertContains(response, 'Date')
+        self.assertContains(response, 'Bucket')
+        self.assertContains(response, 'Account')
+        self.assertContains(response, 'Save')

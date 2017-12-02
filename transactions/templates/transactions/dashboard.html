@@ -47,16 +47,4 @@
         </tbody>
     </table>
 
-    <h2>New transaction</h2>
-
-    <form action="{% url 'dashboard' %}" method="post">
-        {% csrf_token %}
-        <table>
-            {{ form }}
-        </table>
-        <button type="submit">Save</button>
-    </form>
-
-    <p>Logged user: {{ user }}</p>
-
 {% endblock content %}

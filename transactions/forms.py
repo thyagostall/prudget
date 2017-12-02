@@ -14,9 +14,8 @@ class TransactionForm(forms.ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.logged_user = user
-        self.fields['bucket'].queryset = Bucket.objects.filter(owner=self.logged_user)
-        self.fields['account'].queryset = Account.objects.filter(owner=self.logged_user)
+        self.fields['bucket'].queryset = Bucket.objects.filter(owner=user)
+        self.fields['account'].queryset = Account.objects.filter(owner=user)
 
     class Meta:
         model = Transaction
