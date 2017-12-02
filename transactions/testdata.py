@@ -16,9 +16,9 @@ def create_user(username='username', email='any@email.com', password='password')
     return user
 
 
-def create_account(user, account_name, currency_code):
+def create_account(user, name, currency_code):
     currency, _ = Currency.objects.get_or_create(code=currency_code)
-    return Account.objects.create(name=account_name,
+    return Account.objects.create(name=name,
                                   currency=currency,
                                   owner=user,
                                   )
@@ -30,10 +30,10 @@ def create_bucket(user, name):
                                  )
 
 
-def create_transaction(user, source, amount=Decimal('129.99')):
+def create_transaction(user, account, amount=Decimal('129.99')):
     description = 'Some transaction'
     date = datetime.today()
-    account = source
+    account = account
     group_id = create_group_id()
 
     return Transaction.objects.create(description=description,

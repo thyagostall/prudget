@@ -121,7 +121,7 @@ class TransactionViewTestCase(TestCase):
         user = create_user(password=password)
         self.client.login(username=user.username, password=password)
 
-        account = create_account(user, account_name='Account', currency_code='BRL')
+        account = create_account(user, name='Account', currency_code='BRL')
         bucket = create_bucket(user, name='Bucket')
 
         name = 'Some transaction'
@@ -136,6 +136,37 @@ class TransactionViewTestCase(TestCase):
         }
 
         response_form = self.client.post(reverse('new_transaction'), data)
+        response_dasboard = self.client.get(reverse('dashboard'))
+
+        self.assertEqual(response_form.status_code, 302)
+
+        self.assertContains(response_dasboard, name)
+        self.assertContains(response_dasboard, amount)
+        self.assertContains(response_dasboard, 'Feb. 12, 2017')
+        self.assertContains(response_dasboard, bucket.name)
+        self.assertContains(response_dasboard, account.name)
+
+    def test_form_can_edit_correctly(self):
+        password = 'password'
+        user = create_user(password=password)
+        self.client.login(username=user.username, password=password)
+
+        account = create_account(user, name='Account', currency_code='BRL')
+        bucket = create_bucket(user, name='Bucket')
+        transaction = create_transaction(user, account)
+
+        name = 'Another transaction'
+        amount = '-90.00'
+        date = '02/12/2017'
+        data = {
+            'description': name,
+            'amount': amount,
+            'date': date,
+            'bucket': bucket.id,
+            'account': account.id,
+        }
+
+        response_form = self.client.post(reverse('edit_transaction', kwargs={'pk': transaction.id}), pk=transaction.id, data=data)
         response_dasboard = self.client.get(reverse('dashboard'))
 
         self.assertEqual(response_form.status_code, 302)
