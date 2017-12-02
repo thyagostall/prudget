@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from transactions.services import transfer_to_account
-from transactions.testdata import create_user, create_account, create_transaction
+from transactions.testdata import create_user, create_account, create_transaction, create_bucket
 
 
 class TransferTestCase(TestCase):
@@ -115,3 +115,33 @@ class TransactionViewTestCase(TestCase):
         self.assertContains(response, 'Bucket')
         self.assertContains(response, 'Account')
         self.assertContains(response, 'Save')
+
+    def test_form_save_date_correctly(self):
+        password = 'password'
+        user = create_user(password=password)
+        self.client.login(username=user.username, password=password)
+
+        account = create_account(user, account_name='Account', currency_code='BRL')
+        bucket = create_bucket(user, name='Bucket')
+
+        name = 'Some transaction'
+        amount = '-90.00'
+        date = '02/12/2017'
+        data = {
+            'description': name,
+            'amount': amount,
+            'date': date,
+            'bucket': bucket.id,
+            'account': account.id,
+        }
+
+        response_form = self.client.post(reverse('new_transaction'), data)
+        response_dasboard = self.client.get(reverse('dashboard'))
+
+        self.assertEqual(response_form.status_code, 302)
+
+        self.assertContains(response_dasboard, name)
+        self.assertContains(response_dasboard, amount)
+        self.assertContains(response_dasboard, 'Feb. 12, 2017')
+        self.assertContains(response_dasboard, bucket.name)
+        self.assertContains(response_dasboard, account.name)

@@ -3,7 +3,7 @@ from datetime import datetime
 from decimal import Decimal
 from django.contrib.auth.models import User
 
-from transactions.models import Currency, Account, Transaction
+from transactions.models import Currency, Account, Transaction, Bucket
 from transactions.services import create_group_id
 
 
@@ -22,6 +22,12 @@ def create_account(user, account_name, currency_code):
                                   currency=currency,
                                   owner=user,
                                   )
+
+
+def create_bucket(user, name):
+    return Bucket.objects.create(name=name,
+                                 owner=user
+                                 )
 
 
 def create_transaction(user, source, amount=Decimal('129.99')):
