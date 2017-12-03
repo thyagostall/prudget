@@ -9,5 +9,8 @@ urlpatterns = [
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
     url(r'^transaction/$', views.new_transaction, name='new_transaction'),
     url(r'^transaction/(?P<pk>\d+)/$', views.edit_transaction, name='edit_transaction'),
+    url(r'^accounts/$', views.ListAccountView.as_view(), name='account-list'),
+    url(r'^account/$', views.CreateAccountView.as_view(), name='create-account'),
+    url(r'^account/(?P<pk>\d+)/$', views.UpdateAccountView.as_view(), name='update-account'),
     url(r'^$', RedirectView.as_view(pattern_name='dashboard'))
 ]

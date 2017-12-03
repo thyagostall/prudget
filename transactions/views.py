@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView as AuthLoginView, LogoutView as AuthLogoutView
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView, ListView
 
 from transactions.forms import TransactionForm
 from transactions.models import Transaction, Account
@@ -13,6 +16,32 @@ class LoginView(AuthLoginView):
 
 class LogoutView(AuthLogoutView):
     template_name = 'transactions/logout.html'
+
+
+class ListAccountView(LoginRequiredMixin, ListView):
+    model = Account
+
+    def get_queryset(self):
+        return Account.objects.filter(owner=self.request.user)
+
+
+class CreateAccountView(LoginRequiredMixin, CreateView):
+    model = Account
+    fields = ['name', 'currency']
+    success_url = reverse_lazy('account-list')
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+
+class UpdateAccountView(LoginRequiredMixin, UpdateView):
+    model = Account
+    fields = ['name', 'currency']
+    success_url = reverse_lazy('account-list')
+
+    def get_queryset(self):
+        return Account.objects.filter(owner=self.request.user)
 
 
 @login_required
