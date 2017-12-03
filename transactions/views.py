@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 
 from transactions.forms import TransactionForm
-from transactions.models import Transaction, Account
+from transactions.models import Transaction, Account, Bucket
 from transactions.services import create_group_id
 
 
@@ -42,6 +42,32 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         return Account.objects.filter(owner=self.request.user)
+
+
+class ListBucketView(LoginRequiredMixin, ListView):
+    model = Bucket
+
+    def get_queryset(self):
+        return self.model.objects.filter(owner=self.request.user)
+
+
+class CreateBucketView(LoginRequiredMixin, CreateView):
+    model = Bucket
+    fields = ['name']
+    success_url = reverse_lazy('bucket-list')
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+
+class UpdateBucketView(LoginRequiredMixin, UpdateView):
+    model = Bucket
+    fields = ['name']
+    success_url = reverse_lazy('bucket-list')
+
+    def get_queryset(self):
+        return self.model.objects.filter(owner=self.request.user)
 
 
 @login_required
