@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Sum
@@ -26,7 +27,7 @@ class Account(UserModel):
 
     def balance(self):
         result = self.transaction_set.aggregate(balance=Sum('amount'))
-        return result['balance']
+        return result['balance'] or Decimal(0)
 
     def __str__(self):
         return self.name

@@ -30,6 +30,12 @@ class TransferTestCase(TestCase):
 
 
 class AccountTestCase(TestCase):
+    def test_get_account_balance_empty_should_return_zero(self):
+        user = create_user()
+        account = create_account(user, 'Any account', 'BRL')
+
+        self.assertEqual(Decimal(0), account.balance())
+
     def test_get_account_balance(self):
         user = create_user()
 
