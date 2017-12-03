@@ -5,6 +5,15 @@
     <title>Prudget</title>
 </head>
 <body>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'dashboard' %}">Home</a></li>
+            <li><a href="{% url 'account-list' %}">Accounts</a></li>
+            <li><a href="{% url 'bucket-list' %}">Buckets</a></li>
+        </ul>
+    </nav>
+
     {% block content %}
     {% endblock content %}
 </body>
