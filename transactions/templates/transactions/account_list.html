@@ -1,0 +1,29 @@
+{% extends 'transactions/base.html' %}
+
+{% block content %}
+
+    <h1>Accounts</h1>
+
+    <a href="{% url 'create-account' %}">New</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Account</th>
+            <th>Balance</th>
+            <th>Edit</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        {% for account in object_list %}
+            <tr>
+                <td>{{ account }}</td>
+                <td>{{ account.balance }}</td>
+                <td><a href="{% url 'update-account' pk=account.id %}" >Edit</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
