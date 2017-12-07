@@ -7,3 +7,8 @@ install:
 
 script:
   - python manage.py test --settings=prudget.settings.local
+
+deploy:
+  provider: heroku
+  api_key: $DEPLOY_API_KEY
+  all_branches: true
