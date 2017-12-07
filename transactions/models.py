@@ -23,7 +23,7 @@ class Currency(models.Model):
 
 class Account(UserModel):
     name = models.CharField(max_length=30)
-    currency = models.ForeignKey(Currency)
+    currency = models.ForeignKey(Currency, on_delete=models.DO_NOTHING)
 
     def balance(self):
         result = self.transaction_set.aggregate(balance=Sum('amount'))
@@ -44,6 +44,6 @@ class Transaction(UserModel):
     description = models.CharField(max_length=50)
     date = models.DateField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    account = models.ForeignKey(Account)
-    bucket = models.ForeignKey(Bucket, blank=True, null=True)
+    account = models.ForeignKey(Account, on_delete=models.DO_NOTHING)
+    bucket = models.ForeignKey(Bucket, blank=True, null=True, on_delete=models.DO_NOTHING)
     group_id = models.CharField(max_length=50)
