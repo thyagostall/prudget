@@ -11,4 +11,3 @@ script:
 deploy:
   provider: heroku
   api_key: $DEPLOY_API_KEY
-  all_branches: true
