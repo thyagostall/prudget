@@ -47,3 +47,10 @@ class Transaction(UserModel):
     account = models.ForeignKey(Account, on_delete=models.DO_NOTHING)
     bucket = models.ForeignKey(Bucket, blank=True, null=True, on_delete=models.DO_NOTHING)
     group_id = models.CharField(max_length=50)
+
+
+class InboxAccount(UserModel):
+    account = models.ForeignKey(Account, on_delete=models.DO_NOTHING)
+
+    class Meta:
+        unique_together = ("owner", "account")

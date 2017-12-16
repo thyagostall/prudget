@@ -3,7 +3,8 @@ from decimal import Decimal
 from django.test import TestCase
 from django.urls import reverse
 
-from transactions.services import transfer_to_account
+from transactions.models import InboxAccount
+from transactions.services import transfer_to_account, transfer_to_user
 from transactions.testdata import create_user, create_account, create_transaction, create_bucket
 
 
@@ -27,6 +28,31 @@ class TransferTestCase(TestCase):
         self.assertEqual(transaction.description, transfer_transaction.description)
         self.assertEqual(transaction.date, transfer_transaction.date)
         self.assertEqual(transaction.amount, transfer_transaction.amount)
+
+    def test_transfer_to_another_user_transaction(self):
+        source_user = create_user('source.user', 'source@email.com')
+        account = create_account(source_user, 'Itaú', 'BRL')
+
+        destination_user = create_user('destination.user', 'destination@email.com')
+        destination_account = create_account(destination_user, 'Inbox Account', 'BRL')
+        InboxAccount.objects.create(owner=destination_user, account=destination_account)
+
+        transaction = create_transaction(source_user, account)
+
+        transaction, expected_transaction = transfer_to_user(transaction, destination_user)
+
+        self.assertEqual(transaction.amount, -expected_transaction.amount)
+
+    def test_transfer_when_not_inbox_account_for_user_should_raise(self):
+        source_user = create_user('source.user', 'source@email.com')
+        account = create_account(source_user, 'Itaú', 'BRL')
+        destination_user = create_user('destination.user', 'destination@email.com')
+
+        transaction = create_transaction(source_user, account)
+
+        with self.assertRaises(Exception):
+            transfer_to_user(transaction, destination_user)
+            self.fail('Should raise exception')
 
 
 class AccountTestCase(TestCase):
