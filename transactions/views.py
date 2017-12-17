@@ -6,8 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 
 from transactions.forms import TransactionForm
-from transactions.models import Transaction, Account, Bucket
-from transactions.services import create_group_id
+from transactions.models import Transaction, Account, Bucket, InboxAccount
+from transactions.services import create_group_id, get_inbox_account
 
 
 class LoginView(AuthLoginView):
@@ -23,6 +23,11 @@ class ListAccountView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Account.objects.filter(owner=self.request.user)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['inbox_account'] = self.request.user.inboxaccount_set.first()
+        return context
 
 
 class CreateAccountView(LoginRequiredMixin, CreateView):
@@ -42,6 +47,15 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         return Account.objects.filter(owner=self.request.user)
+
+
+class UpdateInboxAccountView(LoginRequiredMixin, UpdateView):
+    model = InboxAccount
+    fields = ['account']
+    success_url = reverse_lazy('account-list')
+
+    def get_queryset(self):
+        return self.model.objects.filter(owner=self.request.user)
 
 
 class ListBucketView(LoginRequiredMixin, ListView):

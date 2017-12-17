@@ -26,4 +26,10 @@
         </tbody>
     </table>
 
+    <h2>Inbox Account</h2>
+
+
+    {{ inbox_account.account }} <a href="{% url 'update-inbox-account' pk=inbox_account.id %}" >Change</a>
+
+
 {% endblock %}
