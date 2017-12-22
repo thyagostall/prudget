@@ -27,7 +27,7 @@ def transfer_to_account(transaction, destination):
 
     transfer_transaction = Transaction.objects.create(description=transaction.description,
                                                       date=transaction.date,
-                                                      amount=transaction.amount,
+                                                      amount=-transaction.amount,
                                                       account=destination,
                                                       group_id=group_id,
                                                       owner=transaction.owner,

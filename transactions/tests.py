@@ -27,7 +27,7 @@ class TransferTestCase(TestCase):
 
         self.assertEqual(transaction.description, transfer_transaction.description)
         self.assertEqual(transaction.date, transfer_transaction.date)
-        self.assertEqual(transaction.amount, transfer_transaction.amount)
+        self.assertEqual(transaction.amount, -transfer_transaction.amount)
 
     def test_transfer_to_another_user_transaction(self):
         source_user = create_user('source.user', 'source@email.com')
