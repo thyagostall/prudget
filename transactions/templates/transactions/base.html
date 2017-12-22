@@ -7,13 +7,17 @@
 </head>
 <body>
 
+    {% if not user.is_anonymous %}
     <nav>
         <ul>
             <li><a href="{% url 'dashboard' %}">Home</a></li>
             <li><a href="{% url 'account-list' %}">Accounts</a></li>
             <li><a href="{% url 'bucket-list' %}">Buckets</a></li>
         </ul>
+
+        <p>Logged user: {{ user }}</p>
     </nav>
+    {% endif %}
 
     {% block content %}
     {% endblock content %}
