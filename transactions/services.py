@@ -21,6 +21,10 @@ def create_group_id(prefix=''):
 
 
 def transfer_to_account(transaction, destination):
+    source = transaction.account
+    if source.currency != destination.currency:
+        raise ValueError('Same currency type required')
+
     group_id = create_group_id(prefix='TRANSF-ACCOUNT-')
     transaction.group_id = group_id
     transaction.save()
@@ -36,6 +40,11 @@ def transfer_to_account(transaction, destination):
 
 
 def transfer_to_user(transaction: Transaction, receiver: User) -> (Transaction, Transaction):
+    destination_account = get_inbox_account(receiver)
+    source_account = transaction.account
+    if destination_account.currency != source_account.currency:
+        raise ValueError('Same currency type required')
+
     description = transaction.description + ' ({})'
 
     group_id = create_group_id(prefix='TRANSF-USER')

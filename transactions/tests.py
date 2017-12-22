@@ -3,13 +3,12 @@ from decimal import Decimal
 from django.test import TestCase
 from django.urls import reverse
 
-from transactions.models import InboxAccount
 from transactions.services import transfer_to_account, transfer_to_user
 from transactions.testdata import create_user, create_account, create_transaction, create_bucket
 
 
 class TransferTestCase(TestCase):
-    def test_transfer_transaction(self):
+    def test_transfer_between_accounts(self):
         user = create_user()
 
         source = create_account(user, 'Itaú', 'BRL')
@@ -28,6 +27,16 @@ class TransferTestCase(TestCase):
         self.assertEqual(transaction.description, transfer_transaction.description)
         self.assertEqual(transaction.date, transfer_transaction.date)
         self.assertEqual(transaction.amount, -transfer_transaction.amount)
+
+    def test_transfer_between_accounts_of_different_currencies_should_raise(self):
+        user = create_user()
+
+        source = create_account(user, 'Cartão Nacional', 'BRL')
+        destination = create_account(user, 'International Card', 'USD')
+        transaction = create_transaction(user, source)
+
+        with self.assertRaises(ValueError):
+            transfer_to_account(transaction, destination)
 
     def test_transfer_to_another_user_transaction(self):
         source_user = create_user('source.user', 'source@email.com')
@@ -50,6 +59,19 @@ class TransferTestCase(TestCase):
         transaction = create_transaction(source_user, account)
 
         with self.assertRaises(Exception):
+            transfer_to_user(transaction, destination_user)
+            self.fail('Should raise exception')
+
+    def test_transfer_user_when_different_currencies_should_raise(self):
+        source_user = create_user('source.user', 'source@email.com')
+        account = create_account(source_user, 'Conta Corrente', 'BRL')
+
+        destination_user = create_user('destination.user', 'destination@email.com')
+        create_account(destination_user, 'Inbox Account', 'USD')
+
+        transaction = create_transaction(source_user, account)
+
+        with self.assertRaises(ValueError):
             transfer_to_user(transaction, destination_user)
             self.fail('Should raise exception')
 
