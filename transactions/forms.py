@@ -20,3 +20,11 @@ class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
         fields = ['description', 'date', 'amount', 'bucket', 'account']
+
+
+class TransferBetweenUserForm(TransactionForm):
+    destination_user = forms.CharField(max_length=150)
+
+    class Meta:
+        model = Transaction
+        fields = ['description', 'date', 'amount', 'bucket', 'account', 'destination_user']

@@ -36,13 +36,16 @@ def transfer_to_account(transaction, destination):
 
 
 def transfer_to_user(transaction: Transaction, receiver: User) -> (Transaction, Transaction):
+    description = transaction.description + ' ({})'
+
     group_id = create_group_id(prefix='TRANSF-USER')
     transaction.group_id = group_id
+    transaction.description = description.format(receiver)
     transaction.save()
 
     destination_account = get_inbox_account(receiver)
 
-    transfer_transaction = Transaction.objects.create(description=transaction.description,
+    transfer_transaction = Transaction.objects.create(description=description.format(transaction.owner),
                                                       date=transaction.date,
                                                       amount=-transaction.amount,
                                                       account=destination_account,

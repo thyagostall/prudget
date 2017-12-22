@@ -26,10 +26,11 @@
         </tbody>
     </table>
 
-    <h2>Inbox Account</h2>
+    {% if inbox_account %}
+        <h2>Inbox Account</h2>
 
-
-    {{ inbox_account.account }} <a href="{% url 'update-inbox-account' pk=inbox_account.id %}" >Change</a>
+        {{ inbox_account.account }} <a href="{% url 'update-inbox-account' pk=inbox_account.id %}" >Change</a>
+    {% endif %}
 
 
 {% endblock %}

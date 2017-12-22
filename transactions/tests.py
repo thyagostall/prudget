@@ -34,8 +34,7 @@ class TransferTestCase(TestCase):
         account = create_account(source_user, 'Itaú', 'BRL')
 
         destination_user = create_user('destination.user', 'destination@email.com')
-        destination_account = create_account(destination_user, 'Inbox Account', 'BRL')
-        InboxAccount.objects.create(owner=destination_user, account=destination_account)
+        create_account(destination_user, 'Inbox Account', 'BRL')
 
         transaction = create_transaction(source_user, account)
 
