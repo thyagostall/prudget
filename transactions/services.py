@@ -2,6 +2,7 @@ import hashlib
 import time
 
 from django.contrib.auth.models import User
+from django.db import transaction
 
 from transactions.models import Transaction, Account
 
@@ -20,6 +21,7 @@ def create_group_id(prefix=''):
     return prefix + group_id.upper()
 
 
+@transaction.atomic
 def transfer_to_account(transaction, destination):
     source = transaction.account
     if source.currency != destination.currency:
@@ -34,11 +36,13 @@ def transfer_to_account(transaction, destination):
                                                       amount=-transaction.amount,
                                                       account=destination,
                                                       group_id=group_id,
+                                                      bucket=transaction.bucket,
                                                       owner=transaction.owner,
                                                       )
     return transaction, transfer_transaction
 
 
+@transaction.atomic
 def transfer_to_user(transaction: Transaction, receiver: User) -> (Transaction, Transaction):
     destination_account = get_inbox_account(receiver)
     source_account = transaction.account
