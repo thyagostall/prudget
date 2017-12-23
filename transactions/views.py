@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 
 from transactions import services
-from transactions.forms import TransactionForm, TransferToUserForm
+from transactions.forms import TransactionForm, TransferToUserForm, TransferToAccountForm
 from transactions.models import Transaction, Account, Bucket, InboxAccount
 from transactions.services import create_group_id
 
@@ -120,6 +120,25 @@ def new_transfer_to_user(request):
         user = get_object_or_404(User, username=destination_username)
 
         services.transfer_to_user(transaction, user)
+        return redirect('dashboard')
+
+    return render(request, 'transactions/generic_form.html', context={
+        'form': form,
+    })
+
+
+@login_required
+def new_transfer_to_account(request):
+    form = TransferToAccountForm(request.user, request.POST or None)
+
+    if form.is_valid():
+        destination_account = form.cleaned_data.pop('destination_account')
+        print(destination_account)
+
+        transaction = Transaction(**form.cleaned_data)
+        transaction.owner = request.user
+
+        services.transfer_to_account(transaction, destination_account)
         return redirect('dashboard')
 
     return render(request, 'transactions/generic_form.html', context={

@@ -28,3 +28,15 @@ class TransferToUserForm(TransactionForm):
     class Meta:
         model = Transaction
         fields = ['description', 'date', 'amount', 'bucket', 'account', 'destination_user']
+
+
+class TransferToAccountForm(TransactionForm):
+    destination_account = forms.ModelChoiceField(queryset=Account.objects.none())
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(user, *args, **kwargs)
+        self.fields['destination_account'].queryset = Account.objects.filter(owner=user)
+
+    class Meta:
+        model = Transaction
+        fields = ['description', 'date', 'amount', 'bucket', 'account', 'destination_account']
