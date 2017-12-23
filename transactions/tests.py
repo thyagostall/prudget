@@ -27,6 +27,7 @@ class TransferTestCase(TestCase):
         self.assertEqual(transaction.description, transfer_transaction.description)
         self.assertEqual(transaction.date, transfer_transaction.date)
         self.assertEqual(transaction.amount, -transfer_transaction.amount)
+        self.assertEqual(transaction.bucket, transfer_transaction.bucket)
 
     def test_transfer_between_accounts_of_different_currencies_should_raise(self):
         user = create_user()

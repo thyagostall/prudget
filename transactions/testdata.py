@@ -30,11 +30,13 @@ def create_bucket(user, name):
                                  )
 
 
-def create_transaction(user, account, amount=Decimal('129.99')):
+def create_transaction(user, account, amount=Decimal('129.99'), bucket=None):
     description = 'Some transaction'
     date = datetime.today()
     account = account
     group_id = create_group_id()
+    if not bucket:
+        bucket = create_bucket(user, 'Some bucket')
 
     return Transaction.objects.create(description=description,
                                       date=date,
@@ -42,4 +44,5 @@ def create_transaction(user, account, amount=Decimal('129.99')):
                                       account=account,
                                       group_id=group_id,
                                       owner=user,
+                                      bucket=bucket,
                                       )
