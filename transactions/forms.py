@@ -22,7 +22,7 @@ class TransactionForm(forms.ModelForm):
         fields = ['description', 'date', 'amount', 'bucket', 'account']
 
 
-class TransferBetweenUserForm(TransactionForm):
+class TransferToUserForm(TransactionForm):
     destination_user = forms.CharField(max_length=150)
 
     class Meta:

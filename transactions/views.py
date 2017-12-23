@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 
 from transactions import services
-from transactions.forms import TransactionForm, TransferBetweenUserForm
+from transactions.forms import TransactionForm, TransferToUserForm
 from transactions.models import Transaction, Account, Bucket, InboxAccount
 from transactions.services import create_group_id
 
@@ -108,16 +108,14 @@ def new_transaction(request):
 
 
 @login_required
-def new_transfer_transaction(request):
-    form = TransferBetweenUserForm(request.user, request.POST or None)
+def new_transfer_to_user(request):
+    form = TransferToUserForm(request.user, request.POST or None)
 
     if form.is_valid():
         destination_username = form.cleaned_data.pop('destination_user')
 
         transaction = Transaction(**form.cleaned_data)
         transaction.owner = request.user
-
-        print(destination_username)
 
         user = get_object_or_404(User, username=destination_username)
 
