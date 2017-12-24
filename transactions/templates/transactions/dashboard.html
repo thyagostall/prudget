@@ -2,57 +2,61 @@
 
 {% block content %}
 
-    <h1>Balance</h1>
+    <div class="container">
 
-    <table>
-        <thead>
-        <tr>
-            <th>Account</th>
-            <th>Balance</th>
-        </tr>
+        <h1>Balance</h1>
 
-        </thead>
-        <tbody>
-        {% for account in accounts %}
+        <table class="table-half-width">
+            <thead>
             <tr>
-                <td>{{ account }}</td>
-                <td>{{ account.balance }}</td>
+                <th class="table-cell-title">Account</th>
+                <th class="table-cell-currency">Balance</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <h1>Transactions</h1>
+            </thead>
+            <tbody>
+            {% for account in accounts %}
+                <tr>
+                    <td class="table-cell-title">{{ account }}</td>
+                    <td class="table-cell-currency">{{ account.balance }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{% url 'new_transaction' %}">New Transaction</a>
+        <h1>Transactions</h1>
 
-    <a href="{% url 'transfer-user' %}">New Transfer (to user)</a>
+        <a href="{% url 'new_transaction' %}">New Transaction</a>
 
-    <a href="{% url 'transfer-account' %}">New Transfer (to account)</a>
+        <a href="{% url 'transfer-user' %}">New Transfer (to user)</a>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Bucket</th>
-            <th>Account</th>
-            <th>Edit</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for transaction in transactions %}
+        <a href="{% url 'transfer-account' %}">New Transfer (to account)</a>
+
+        <table class="table-full-width">
+            <thead>
             <tr>
-                <td>{{ transaction.date }}</td>
-                <td>{{ transaction.description }}</td>
-                <td>{{ transaction.amount }}</td>
-                <td>{{ transaction.bucket }}</td>
-                <td>{{ transaction.account }}</td>
-                <td><a href="{% url 'edit_transaction' transaction.id %}">Edit</a></td>
+                <th class="table-cell-title">Date</th>
+                <th class="table-cell-title">Description</th>
+                <th class="table-cell-currency">Amount</th>
+                <th class="table-cell-title">Bucket</th>
+                <th class="table-cell-title">Account</th>
+                <th class="table-cell-actions">Edit</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for transaction in transactions %}
+                <tr>
+                    <td class="table-cell-title">{{ transaction.date }}</td>
+                    <td class="table-cell-title">{{ transaction.description }}</td>
+                    <td class="table-cell-currency">{{ transaction.amount }}</td>
+                    <td class="table-cell-title">{{ transaction.bucket }}</td>
+                    <td class="table-cell-title">{{ transaction.account }}</td>
+                    <td class="table-cell-actions"><a href="{% url 'edit_transaction' transaction.id %}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
 
 {% endblock content %}

@@ -2,16 +2,20 @@
 
 {% block content %}
 
-    {% if title %}
-        <h1>{{ title }}</h1>
-    {% endif %}
+    <div class="container">
 
-    <form action="" method="post">
-        {% csrf_token %}
-        <table>
-            {{ form }}
-        </table>
-        <button type="submit">Save</button>
-    </form>
+        {% if title %}
+            <h1>{{ title }}</h1>
+        {% endif %}
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <table>
+                {{ form }}
+            </table>
+            <button type="submit">Save</button>
+        </form>
+
+    </div>
 
 {% endblock %}
