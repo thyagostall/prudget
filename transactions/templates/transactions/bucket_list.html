@@ -6,6 +6,8 @@
 
     <a href="{% url 'create-bucket' %}">New</a>
 
+    <h2>Balance</h2>
+
     <table>
         <thead>
         <tr>
@@ -17,11 +19,35 @@
         </thead>
         <tbody>
         {% for bucket in object_list %}
-            <tr>
-                <td>{{ bucket }}</td>
-                <td>{{ bucket.balance }}</td>
-                <td><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
-            </tr>
+            {% if bucket.show_balance %}
+                <tr>
+                    <td>{{ bucket }}</td>
+                    <td>{{ bucket.balance }}</td>
+                    <td><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Other buckets</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Bucket</th>
+            <th>Edit</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        {% for bucket in object_list %}
+            {% if not bucket.show_balance %}
+                <tr>
+                    <td>{{ bucket }}</td>
+                    <td><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
+                </tr>
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>

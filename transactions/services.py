@@ -79,3 +79,7 @@ def get_inbox_account(user: User) -> Account:
 
 def create_bucket_value(bucket, amount_per_month):
     BucketValue.objects.create(bucket=bucket, amount=amount_per_month, start_period=datetime.date.today(), owner=bucket.owner)
+
+
+def get_bucket_value(bucket):
+    return BucketValue.objects.filter(bucket=bucket).first()
