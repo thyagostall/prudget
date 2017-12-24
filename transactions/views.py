@@ -92,6 +92,13 @@ class UpdateBucketView(LoginRequiredMixin, UpdateView):
     template_name = 'transactions/generic_form.html'
     form_class = BucketForm
 
+    def get_initial(self):
+        bucket_value = services.get_bucket_value(bucket=self.get_object())
+        if bucket_value:
+            return {'amount_per_month': bucket_value.amount}
+
+        return None
+
     def get_queryset(self):
         return self.model.objects.filter(owner=self.request.user)
 
