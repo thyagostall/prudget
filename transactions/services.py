@@ -1,10 +1,11 @@
 import hashlib
 import time
 
+import datetime
 from django.contrib.auth.models import User
 from django.db import transaction
 
-from transactions.models import Transaction, Account
+from transactions.models import Transaction, Account, BucketValue
 
 
 def create_group_id(prefix=''):
@@ -74,3 +75,7 @@ def get_inbox_account(user: User) -> Account:
         raise Exception("This user doesn't have an associated inbox account")
 
     return result.account
+
+
+def create_bucket_value(bucket, amount_per_month):
+    BucketValue.objects.create(bucket=bucket, amount=amount_per_month, start_period=datetime.date.today(), owner=bucket.owner)
