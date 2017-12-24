@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 
 from transactions import services
-from transactions.forms import TransactionForm, TransferToUserForm, TransferToAccountForm
+from transactions.forms import TransactionForm, TransferToUserForm, TransferToAccountForm, BucketForm
 from transactions.models import Transaction, Account, Bucket, InboxAccount
 from transactions.services import create_group_id
 
@@ -71,24 +71,36 @@ class ListBucketView(LoginRequiredMixin, ListView):
 
 
 class CreateBucketView(LoginRequiredMixin, CreateView):
-    model = Bucket
-    fields = ['name']
     success_url = reverse_lazy('bucket-list')
     template_name = 'transactions/generic_form.html'
+    form_class = BucketForm
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+
+        amount_per_month = form.cleaned_data.pop('amount_per_month')
+        if amount_per_month:
+            form.save()
+            services.create_bucket_value(form.instance, amount_per_month)
+
         return super().form_valid(form)
 
 
 class UpdateBucketView(LoginRequiredMixin, UpdateView):
     model = Bucket
-    fields = ['name']
     success_url = reverse_lazy('bucket-list')
     template_name = 'transactions/generic_form.html'
+    form_class = BucketForm
 
     def get_queryset(self):
         return self.model.objects.filter(owner=self.request.user)
+
+    def form_valid(self, form):
+        amount_per_month = form.cleaned_data.pop('amount_per_month')
+        if amount_per_month:
+            services.create_bucket_value(form.instance, amount_per_month)
+
+        return super().form_valid(form)
 
 
 @login_required

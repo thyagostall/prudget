@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h1>Accounts</h1>
+    <h1>Buckets</h1>
 
     <a href="{% url 'create-bucket' %}">New</a>
 
@@ -10,6 +10,7 @@
         <thead>
         <tr>
             <th>Bucket</th>
+            <th>Balance</th>
             <th>Edit</th>
         </tr>
 
@@ -18,6 +19,7 @@
         {% for bucket in object_list %}
             <tr>
                 <td>{{ bucket }}</td>
+                <td>{{ bucket.balance }}</td>
                 <td><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
             </tr>
         {% endfor %}
