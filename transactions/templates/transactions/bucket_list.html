@@ -2,54 +2,58 @@
 
 {% block content %}
 
-    <h1>Buckets</h1>
+    <div class="container">
 
-    <a href="{% url 'create-bucket' %}">New</a>
+        <h1>Buckets</h1>
 
-    <h2>Balance</h2>
+        <a href="{% url 'create-bucket' %}">New</a>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Bucket</th>
-            <th>Balance</th>
-            <th>Edit</th>
-        </tr>
+        <h2>Balance</h2>
 
-        </thead>
-        <tbody>
-        {% for bucket in object_list %}
-            {% if bucket.show_balance %}
-                <tr>
-                    <td>{{ bucket }}</td>
-                    <td>{{ bucket.balance }}</td>
-                    <td><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
-                </tr>
-            {% endif %}
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table-full-width">
+            <thead>
+            <tr>
+                <th class="table-cell-title">Bucket</th>
+                <th class="table-cell-currency">Balance</th>
+                <th class="table-cell-actions">Edit</th>
+            </tr>
 
-    <h2>Other buckets</h2>
+            </thead>
+            <tbody>
+            {% for bucket in object_list %}
+                {% if bucket.show_balance %}
+                    <tr>
+                        <td class="table-cell-title">{{ bucket }}</td>
+                        <td class="table-cell-currency">{{ bucket.balance }}</td>
+                        <td class="table-cell-actions"><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Bucket</th>
-            <th>Edit</th>
-        </tr>
+        <h2>Other buckets</h2>
 
-        </thead>
-        <tbody>
-        {% for bucket in object_list %}
-            {% if not bucket.show_balance %}
-                <tr>
-                    <td>{{ bucket }}</td>
-                    <td><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
-                </tr>
-            {% endif %}
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table-full-width">
+            <thead>
+            <tr>
+                <th class="table-cell-title">Bucket</th>
+                <th class="table-cell-actions">Edit</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {% for bucket in object_list %}
+                {% if not bucket.show_balance %}
+                    <tr>
+                        <td class="table-cell-title">{{ bucket }}</td>
+                        <td class="table-cell-actions"><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
 
 {% endblock %}

@@ -1,0 +1,26 @@
+.table-cell-title {
+    text-align: left;
+}
+
+.table-cell-currency {
+    text-align: right;
+}
+
+.table-cell-actions {
+    text-align: center;
+}
+
+.table-full-width {
+    width: 100%;
+}
+
+.table-half-width {
+    width: 50%;
+    max-width: 512px;
+    margin: auto;
+}
+
+.container {
+    max-width: 768px;
+    margin: auto;
+}
