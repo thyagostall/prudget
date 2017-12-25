@@ -49,3 +49,7 @@ class BucketForm(forms.ModelForm):
     class Meta:
         model = Bucket
         fields = ['name', 'amount_per_month', 'show_balance']
+
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
