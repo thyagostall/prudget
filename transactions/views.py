@@ -8,7 +8,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 
 from transactions import services
-from transactions.forms import TransactionForm, TransferToUserForm, TransferToAccountForm, BucketForm, UploadFileForm
+from transactions.forms import TransactionForm, TransferToUserForm, TransferToAccountForm, BucketForm, UploadFileForm, \
+    InboxAccountForm
 from transactions.models import Transaction, Account, Bucket, InboxAccount
 from transactions.services import create_group_id
 
@@ -56,9 +57,12 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
 
 class UpdateInboxAccountView(LoginRequiredMixin, UpdateView):
     model = InboxAccount
-    fields = ['account']
     success_url = reverse_lazy('account-list')
     template_name = 'transactions/generic_form.html'
+    form_class = InboxAccountForm
+
+    def get_form(self, form_class=None):
+        return self.get_form_class()(self.request.user, **self.get_form_kwargs())
 
     def get_queryset(self):
         return self.model.objects.filter(owner=self.request.user)

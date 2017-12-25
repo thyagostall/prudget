@@ -2,11 +2,21 @@ from datetime import datetime
 
 from django import forms
 
-from transactions.models import Bucket, Account, Transaction
+from transactions.models import Bucket, Account, Transaction, InboxAccount
 
 
 class DateInput(forms.DateInput):
     input_type = 'date'
+
+
+class InboxAccountForm(forms.ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['account'].queryset = Account.objects.filter(owner=user)
+
+    class Meta:
+        model = InboxAccount
+        fields = ['account']
 
 
 class TransactionForm(forms.ModelForm):
