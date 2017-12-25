@@ -100,8 +100,8 @@ def import_file(file, encoding, user):
             transaction.description = row['description']
             transaction.date = resolve_date(row['date'])
             transaction.amount = resolve_amount(row['income'], row['outcome'])
-            transaction.account = resolve_account(row['account'])
-            transaction.bucket = resolve_bucket(row['bucket'])
+            transaction.account = resolve_account(row['account'], user)
+            transaction.bucket = resolve_bucket(row['bucket'], user)
             transaction.group_id = create_group_id('IMPORT')
             transaction.owner = user
             transaction.save()
@@ -124,15 +124,15 @@ def resolve_amount(income, outcome):
         return Decimal('-%s' % outcome)
 
 
-def resolve_account(account_name):
+def resolve_account(account_name, user):
     if not account_name:
         return None
 
-    return Account.objects.filter(name=account_name).get()
+    return Account.objects.filter(owner=user).filter(name=account_name).get()
 
 
-def resolve_bucket(bucket_name):
+def resolve_bucket(bucket_name, user):
     if not bucket_name:
         return None
 
-    return Bucket.objects.filter(name=bucket_name).get()
+    return Bucket.objects.filter(owner=user).filter(name=bucket_name).get()
