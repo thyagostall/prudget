@@ -1,11 +1,15 @@
-import hashlib
-import time
-
+import csv
 import datetime
+import hashlib
+import re
+import time
+from decimal import Decimal
+from io import TextIOWrapper
+
 from django.contrib.auth.models import User
 from django.db import transaction
 
-from transactions.models import Transaction, Account, BucketValue
+from transactions.models import Transaction, Account, BucketValue, Bucket
 
 
 def create_group_id(prefix=''):
@@ -83,3 +87,47 @@ def create_bucket_value(bucket, amount_per_month):
 
 def get_bucket_value(bucket):
     return BucketValue.objects.filter(bucket=bucket).first()
+
+
+def import_file(file, encoding, user):
+    file = TextIOWrapper(file, encoding=encoding)
+    rows = csv.DictReader(file)
+    for row in rows:
+        print(row)
+        transaction = Transaction()
+        transaction.description = row['description']
+        transaction.date = resolve_date(row['date'])
+        transaction.amount = resolve_amount(row['income'], row['outcome'])
+        transaction.account = resolve_account(row['account'])
+        transaction.bucket = resolve_bucket(row['bucket'])
+        transaction.group_id = create_group_id('IMPORT')
+        transaction.owner = user
+        transaction.save()
+
+
+def resolve_date(date):
+    return datetime.datetime.strptime(date, '%m/%d/%Y').date()
+
+
+def resolve_amount(income, outcome):
+    chars_to_keep = r'[^\d.]'
+    income = re.sub(chars_to_keep, '', income)
+    outcome = re.sub(chars_to_keep, '', outcome)
+    if income:
+        return Decimal(income)
+    else:
+        return Decimal('-%s' % outcome)
+
+
+def resolve_account(account_name):
+    if not account_name:
+        return None
+
+    return Account.objects.filter(name=account_name).get()
+
+
+def resolve_bucket(bucket_name):
+    if not bucket_name:
+        return None
+
+    return Bucket.objects.filter(name=bucket_name).get()
