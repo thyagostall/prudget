@@ -3,6 +3,7 @@ import datetime
 import hashlib
 import re
 import time
+import traceback
 from decimal import Decimal
 from io import TextIOWrapper
 
@@ -93,16 +94,20 @@ def import_file(file, encoding, user):
     file = TextIOWrapper(file, encoding=encoding)
     rows = csv.DictReader(file)
     for row in rows:
-        print(row)
-        transaction = Transaction()
-        transaction.description = row['description']
-        transaction.date = resolve_date(row['date'])
-        transaction.amount = resolve_amount(row['income'], row['outcome'])
-        transaction.account = resolve_account(row['account'])
-        transaction.bucket = resolve_bucket(row['bucket'])
-        transaction.group_id = create_group_id('IMPORT')
-        transaction.owner = user
-        transaction.save()
+        try:
+            print(row)
+            transaction = Transaction()
+            transaction.description = row['description']
+            transaction.date = resolve_date(row['date'])
+            transaction.amount = resolve_amount(row['income'], row['outcome'])
+            transaction.account = resolve_account(row['account'])
+            transaction.bucket = resolve_bucket(row['bucket'])
+            transaction.group_id = create_group_id('IMPORT')
+            transaction.owner = user
+            transaction.save()
+        except:
+            traceback.print_exc()
+            raise
 
 
 def resolve_date(date):
