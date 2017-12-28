@@ -14,7 +14,7 @@ class TransferTestCase(TestCase):
 
         source = create_account(user, 'Itaú', 'BRL')
         destination = create_account(user, 'Carteira', 'BRL')
-        transaction = create_transaction(user, source)
+        transaction = create_transaction(user, source, amount=Decimal('-10.00'))
 
         transaction, transfer_transaction = transfer_to_account(transaction, destination)
 
@@ -35,7 +35,7 @@ class TransferTestCase(TestCase):
 
         source = create_account(user, 'Cartão Nacional', 'BRL')
         destination = create_account(user, 'International Card', 'USD')
-        transaction = create_transaction(user, source)
+        transaction = create_transaction(user, source, amount=Decimal('-10.00'))
 
         with self.assertRaises(ValueError):
             transfer_to_account(transaction, destination)

@@ -33,6 +33,9 @@ def transfer_to_account(transaction, destination):
     if source.currency != destination.currency:
         raise ValueError('Same currency type required')
 
+    if transaction.amount > 0:
+        raise ValueError('Origin transaction amount must be negative')
+
     group_id = create_group_id(prefix='TRANSF-ACCOUNT')
     transaction.group_id = group_id
     transaction.save()
