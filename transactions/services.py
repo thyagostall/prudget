@@ -55,6 +55,9 @@ def transfer_to_user(transaction: Transaction, receiver: User) -> (Transaction, 
     if destination_account.currency != source_account.currency:
         raise ValueError('Same currency type required')
 
+    if transaction.amount > 0:
+        raise ValueError('Origin transaction amount must be negative')
+
     description = transaction.description + ' ({})'
 
     group_id = create_group_id(prefix='TRANSF-USER')
