@@ -34,6 +34,7 @@ class TransactionForm(forms.ModelForm):
 
 
 class TransferToUserForm(TransactionForm):
+    amount = forms.DecimalField(validators=[MinValueValidator(0)])
     destination_user = forms.CharField(max_length=150)
 
     class Meta:

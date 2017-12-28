@@ -48,7 +48,7 @@ class TransferTestCase(TestCase):
         create_account(destination_user, 'Inbox Account', 'BRL')
         destination_account = get_inbox_account(destination_user)
 
-        transaction = create_transaction(source_user, account)
+        transaction = create_transaction(source_user, account, amount=Decimal('-10.00'))
 
         transaction, transfer_transaction = transfer_to_user(transaction, destination_user)
 
@@ -66,7 +66,7 @@ class TransferTestCase(TestCase):
         account = create_account(source_user, 'Itaú', 'BRL')
         destination_user = create_user('destination.user', 'destination@email.com')
 
-        transaction = create_transaction(source_user, account)
+        transaction = create_transaction(source_user, account, amount=Decimal('-10.00'))
 
         with self.assertRaises(Exception):
             transfer_to_user(transaction, destination_user)
