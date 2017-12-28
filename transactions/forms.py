@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django import forms
+from django.core.validators import MinValueValidator
 
 from transactions.models import Bucket, Account, Transaction, InboxAccount
 
@@ -41,6 +42,7 @@ class TransferToUserForm(TransactionForm):
 
 
 class TransferToAccountForm(TransactionForm):
+    amount = forms.DecimalField(validators=[MinValueValidator(0)])
     destination_account = forms.ModelChoiceField(queryset=Account.objects.none())
 
     def __init__(self, user, *args, **kwargs):
