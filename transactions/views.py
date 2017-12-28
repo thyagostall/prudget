@@ -157,10 +157,10 @@ def new_transfer_to_account(request):
 
     if form.is_valid():
         destination_account = form.cleaned_data.pop('destination_account')
-        print(destination_account)
 
         transaction = Transaction(**form.cleaned_data)
         transaction.owner = request.user
+        transaction.amount = -transaction.amount
 
         services.transfer_to_account(transaction, destination_account)
         return redirect('dashboard')
