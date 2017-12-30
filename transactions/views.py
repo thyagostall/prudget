@@ -26,7 +26,7 @@ class ListAccountView(LoginRequiredMixin, ListView):
     model = Account
 
     def get_queryset(self):
-        return Account.objects.filter(owner=self.request.user)
+        return super().get_queryset().filter(owner=self.request.user)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
@@ -52,7 +52,7 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
     template_name = 'transactions/generic_form.html'
 
     def get_queryset(self):
-        return Account.objects.filter(owner=self.request.user)
+        return super().get_queryset().filter(owner=self.request.user)
 
 
 class UpdateInboxAccountView(LoginRequiredMixin, UpdateView):
@@ -65,14 +65,14 @@ class UpdateInboxAccountView(LoginRequiredMixin, UpdateView):
         return self.get_form_class()(self.request.user, **self.get_form_kwargs())
 
     def get_queryset(self):
-        return self.model.objects.filter(owner=self.request.user)
+        return super().get_queryset().filter(owner=self.request.user)
 
 
 class ListBucketView(LoginRequiredMixin, ListView):
     model = Bucket
 
     def get_queryset(self):
-        return self.model.objects.filter(owner=self.request.user)
+        return super().get_queryset().filter(owner=self.request.user)
 
 
 class CreateBucketView(LoginRequiredMixin, CreateView):
@@ -105,7 +105,7 @@ class UpdateBucketView(LoginRequiredMixin, UpdateView):
         return None
 
     def get_queryset(self):
-        return self.model.objects.filter(owner=self.request.user)
+        return super().get_queryset().filter(owner=self.request.user)
 
     def form_valid(self, form):
         amount_per_month = form.cleaned_data.pop('amount_per_month')
