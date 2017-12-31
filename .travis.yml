@@ -12,6 +12,10 @@ script:
   - python manage.py collectstatic
   - python manage.py test
 
+branches:
+  only:
+  - master
+
 deploy:
   provider: heroku
   api_key: $DEPLOY_API_KEY
