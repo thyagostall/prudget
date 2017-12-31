@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.test import TestCase
 
 from transactions.services import transfer_to_account, get_inbox_account, transfer_to_user
-from transactions.testdata import create_user, create_account, create_transaction
+from transactions.tests.data import create_user, create_account, create_transaction
 
 
 class TransferTestCase(TestCase):

@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from transactions.testdata import create_user, create_account, create_bucket, create_transaction
+from transactions.tests.data import create_user, create_account, create_bucket, create_transaction
 
 
 class TransactionViewTestCase(TestCase):
