@@ -37,7 +37,7 @@ class BucketBalanceTestCase(TestCase):
         bucket = create_bucket(user, 'MyBucket')
         account = create_account(user, 'Checkings', 'BRL')
 
-        past_date = datetime.date.today() - datetime.timedelta(days=30)
+        past_date = datetime.date.today() - datetime.timedelta(days=40)
         create_transaction(user, account=account, amount=Decimal(-100), bucket=bucket, date=past_date)
         create_transaction(user, account=account, amount=Decimal(-50), bucket=bucket)
 
@@ -51,7 +51,7 @@ class BucketBalanceTestCase(TestCase):
         bucket = create_bucket(user, 'MyBucket')
         account = create_account(user, 'Checkings', 'BRL')
 
-        past_date = datetime.date.today() - datetime.timedelta(days=30)
+        past_date = datetime.date.today() - datetime.timedelta(days=40)
         create_transaction(user, account=account, amount=Decimal(-100), bucket=bucket, date=past_date)
         create_transaction(user, account=account, amount=Decimal(-50), bucket=bucket)
         create_bucket_value(bucket, amount=Decimal(400))
