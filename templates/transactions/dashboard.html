@@ -40,7 +40,7 @@
                 <th class="table-cell-currency">Amount</th>
                 <th class="table-cell-title">Bucket</th>
                 <th class="table-cell-title">Account</th>
-                <th class="table-cell-actions">Edit</th>
+                <th class="table-cell-item">Edit</th>
             </tr>
             </thead>
             <tbody>
@@ -51,7 +51,7 @@
                     <td class="table-cell-currency">{{ transaction.amount }}</td>
                     <td class="table-cell-title">{{ transaction.bucket }}</td>
                     <td class="table-cell-title">{{ transaction.account }}</td>
-                    <td class="table-cell-actions"><a href="{% url 'edit_transaction' transaction.id %}">Edit</a></td>
+                    <td class="table-cell-item"><a href="{% url 'edit_transaction' transaction.id %}">Edit</a></td>
                 </tr>
             {% endfor %}
             </tbody>

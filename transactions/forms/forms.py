@@ -3,7 +3,7 @@ from datetime import datetime
 from django import forms
 from django.core.validators import MinValueValidator
 
-from transactions.models import Bucket, Account, Transaction, InboxAccount
+from transactions.models import Bucket, Account, Transaction, InboxAccount, Expense
 
 
 class DateInput(forms.DateInput):
@@ -27,10 +27,11 @@ class TransactionForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['bucket'].queryset = Bucket.objects.filter(owner=user)
         self.fields['account'].queryset = Account.objects.filter(owner=user)
+        self.fields['expense'].queryset = Expense.objects.filter(owner=user)
 
     class Meta:
         model = Transaction
-        fields = ['description', 'date', 'amount', 'bucket', 'account']
+        fields = ['description', 'date', 'amount', 'bucket', 'account', 'expense']
 
 
 class TransferToUserForm(TransactionForm):
@@ -39,7 +40,7 @@ class TransferToUserForm(TransactionForm):
 
     class Meta:
         model = Transaction
-        fields = ['description', 'date', 'amount', 'bucket', 'account', 'destination_user']
+        fields = ['description', 'date', 'amount', 'bucket', 'account', 'destination_user', 'expense']
 
 
 class TransferToAccountForm(TransactionForm):
@@ -52,7 +53,7 @@ class TransferToAccountForm(TransactionForm):
 
     class Meta:
         model = Transaction
-        fields = ['description', 'date', 'amount', 'bucket', 'account', 'destination_account']
+        fields = ['description', 'date', 'amount', 'bucket', 'account', 'destination_account', 'expense']
 
 
 class BucketForm(forms.ModelForm):

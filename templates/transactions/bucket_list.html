@@ -15,7 +15,7 @@
             <tr>
                 <th class="table-cell-title">Bucket</th>
                 <th class="table-cell-currency">Balance</th>
-                <th class="table-cell-actions">Edit</th>
+                <th class="table-cell-item">Edit</th>
             </tr>
 
             </thead>
@@ -25,7 +25,7 @@
                     <tr>
                         <td class="table-cell-title">{{ bucket }}</td>
                         <td class="table-cell-currency">{{ bucket.balance }}</td>
-                        <td class="table-cell-actions"><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
+                        <td class="table-cell-item"><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
                     </tr>
                 {% endif %}
             {% endfor %}
@@ -38,7 +38,7 @@
             <thead>
             <tr>
                 <th class="table-cell-title">Bucket</th>
-                <th class="table-cell-actions">Edit</th>
+                <th class="table-cell-item">Edit</th>
             </tr>
 
             </thead>
@@ -47,7 +47,7 @@
                 {% if not bucket.show_balance %}
                     <tr>
                         <td class="table-cell-title">{{ bucket }}</td>
-                        <td class="table-cell-actions"><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
+                        <td class="table-cell-item"><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
                     </tr>
                 {% endif %}
             {% endfor %}
