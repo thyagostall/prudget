@@ -5,12 +5,10 @@ from transactions.models import UserModel
 
 
 class Expense(UserModel):
-    WEEKLY = 'WK'
     MONTHLY = 'MO'
     BIMONTHLY = 'BI'
     ANNUALLY = 'AN'
     EXPENSE_PERIODICITY = (
-        (WEEKLY, 'Weekly'),
         (MONTHLY, 'Monthly'),
         (BIMONTHLY, 'Bimonthly'),
         (ANNUALLY, 'Annually'),
@@ -31,7 +29,6 @@ class Expense(UserModel):
     estimated = models.BooleanField(blank=True)
 
     due_day = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1), MaxValueValidator(28)])
-    due_weekday = models.IntegerField(blank=True, null=True, choices=WEEKDAYS)
     periodicity = models.CharField(max_length=2, choices=EXPENSE_PERIODICITY, default=MONTHLY)
 
     def __str__(self):
