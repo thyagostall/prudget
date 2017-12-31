@@ -21,7 +21,7 @@
             {% for account in object_list %}
                 <tr>
                     <td class="table-cell-title">{{ account }}</td>
-                    <td class="table-cell-currency">{{ account.balance }}</td>
+                    <td class="table-cell-currency">{{ account.balance|floatformat:2 }}</td>
                     <td class="table-cell-item"><a href="{% url 'update-account' pk=account.id %}">Edit</a></td>
                 </tr>
             {% endfor %}

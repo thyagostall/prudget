@@ -18,7 +18,7 @@
             {% for account in accounts %}
                 <tr>
                     <td class="table-cell-title">{{ account }}</td>
-                    <td class="table-cell-currency">{{ account.balance }}</td>
+                    <td class="table-cell-currency">{{ account.balance|floatformat:2 }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -48,8 +48,8 @@
                 <tr>
                     <td class="table-cell-title">{{ transaction.date }}</td>
                     <td class="table-cell-title">{{ transaction.description }}</td>
-                    <td class="table-cell-currency">{{ transaction.amount }}</td>
-                    <td class="table-cell-title">{{ transaction.bucket }}</td>
+                    <td class="table-cell-currency">{{ transaction.amount|floatformat:2 }}</td>
+                    <td class="table-cell-title">{{ transaction.bucket|default_if_none:'' }}</td>
                     <td class="table-cell-title">{{ transaction.account }}</td>
                     <td class="table-cell-item"><a href="{% url 'edit_transaction' transaction.id %}">Edit</a></td>
                 </tr>
