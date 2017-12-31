@@ -17,6 +17,5 @@ class ExpenseForm(ModelForm):
                   'amount',
                   'estimated',
                   'due_day',
-                  'due_weekday',
                   'periodicity',
                   ]
