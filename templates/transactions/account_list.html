@@ -13,7 +13,7 @@
             <tr>
                 <th class="table-cell-title">Account</th>
                 <th class="table-cell-currency">Balance</th>
-                <th class="table-cell-actions">Edit</th>
+                <th class="table-cell-item">Edit</th>
             </tr>
 
             </thead>
@@ -22,7 +22,7 @@
                 <tr>
                     <td class="table-cell-title">{{ account }}</td>
                     <td class="table-cell-currency">{{ account.balance }}</td>
-                    <td class="table-cell-actions"><a href="{% url 'update-account' pk=account.id %}">Edit</a></td>
+                    <td class="table-cell-item"><a href="{% url 'update-account' pk=account.id %}">Edit</a></td>
                 </tr>
             {% endfor %}
             </tbody>
