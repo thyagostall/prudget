@@ -38,7 +38,7 @@ class CreateAccountView(LoginRequiredMixin, CreateView):
     model = Account
     fields = ['name', 'currency']
     success_url = reverse_lazy('account-list')
-    template_name = 'transactions/generic_form.html'
+    template_name = 'generic_form.html'
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -49,7 +49,7 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
     model = Account
     fields = ['name', 'currency']
     success_url = reverse_lazy('account-list')
-    template_name = 'transactions/generic_form.html'
+    template_name = 'generic_form.html'
 
     def get_queryset(self):
         return super().get_queryset().filter(owner=self.request.user)
@@ -58,7 +58,7 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
 class UpdateInboxAccountView(LoginRequiredMixin, UpdateView):
     model = InboxAccount
     success_url = reverse_lazy('account-list')
-    template_name = 'transactions/generic_form.html'
+    template_name = 'generic_form.html'
     form_class = InboxAccountForm
 
     def get_form(self, form_class=None):
@@ -77,7 +77,7 @@ class ListBucketView(LoginRequiredMixin, ListView):
 
 class CreateBucketView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('bucket-list')
-    template_name = 'transactions/generic_form.html'
+    template_name = 'generic_form.html'
     form_class = BucketForm
 
     def form_valid(self, form):
@@ -94,7 +94,7 @@ class CreateBucketView(LoginRequiredMixin, CreateView):
 class UpdateBucketView(LoginRequiredMixin, UpdateView):
     model = Bucket
     success_url = reverse_lazy('bucket-list')
-    template_name = 'transactions/generic_form.html'
+    template_name = 'generic_form.html'
     form_class = BucketForm
 
     def get_initial(self):
@@ -126,7 +126,7 @@ def new_transaction(request):
         transaction.save()
         return redirect('dashboard')
 
-    return render(request, 'transactions/generic_form.html', context={
+    return render(request, 'generic_form.html', context={
         'form': form,
     })
 
@@ -147,7 +147,7 @@ def new_transfer_to_user(request):
         services.transfer_to_user(transaction, user)
         return redirect('dashboard')
 
-    return render(request, 'transactions/generic_form.html', context={
+    return render(request, 'generic_form.html', context={
         'form': form,
     })
 
@@ -166,7 +166,7 @@ def new_transfer_to_account(request):
         services.transfer_to_account(transaction, destination_account)
         return redirect('dashboard')
 
-    return render(request, 'transactions/generic_form.html', context={
+    return render(request, 'generic_form.html', context={
         'form': form,
     })
 
@@ -181,7 +181,7 @@ def edit_transaction(request, pk):
         transaction.save()
         return redirect('dashboard')
 
-    return render(request, 'transactions/generic_form.html', context={
+    return render(request, 'generic_form.html', context={
         'form': form,
     })
 
