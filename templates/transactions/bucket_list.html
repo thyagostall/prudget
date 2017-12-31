@@ -24,7 +24,7 @@
                 {% if bucket.show_balance %}
                     <tr>
                         <td class="table-cell-title">{{ bucket }}</td>
-                        <td class="table-cell-currency">{{ bucket.balance }}</td>
+                        <td class="table-cell-currency">{{ bucket.balance|floatformat:2 }}</td>
                         <td class="table-cell-item"><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
                     </tr>
                 {% endif %}
