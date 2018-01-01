@@ -49,7 +49,7 @@ class ListExpenseView(ListView):
 
         result['buckets'] = buckets_query_set = services.get_bucket_queryset(self.request.user)
 
-        total_buckets = services.sum_bucket_balance(buckets_query_set)
+        total_buckets = services.sum_bucket_values(buckets_query_set)
         result['total_buckets'] = total_buckets
 
         total_income = Decimal(0)
