@@ -35,6 +35,10 @@ def sum_expenses_amounts(expense_queryset):
 
 
 def calculate_profit_or_loss(total_income, total_buckets, total_expenses):
+    total_income = total_income or Decimal(0)
+    total_buckets = total_buckets or Decimal(0)
+    total_expenses = total_expenses or Decimal(0)
+
     return total_income - (total_buckets + total_expenses)
 
 
