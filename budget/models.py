@@ -14,16 +14,6 @@ class Expense(UserModel):
         (ANNUALLY, 'Annually'),
     )
 
-    WEEKDAYS = (
-        (0, 'Sunday'),
-        (1, 'Monday'),
-        (2, 'Tuesday'),
-        (3, 'Wednesday'),
-        (4, 'Thursday'),
-        (5, 'Friday'),
-        (6, 'Saturday'),
-    )
-
     description = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
     estimated = models.BooleanField(blank=True)
