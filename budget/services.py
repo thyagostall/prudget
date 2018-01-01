@@ -15,7 +15,7 @@ def sum_total_income_for_month(user, date):
     from transactions.models import Transaction, Bucket
 
     try:
-        income_bucket = Bucket.objects.get(name='Income')
+        income_bucket = Bucket.objects.filter(owner=user).get(name='Income')
     except ObjectDoesNotExist:
         return Decimal(0)
 
