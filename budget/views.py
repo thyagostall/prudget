@@ -1,4 +1,6 @@
 from decimal import Decimal
+
+import datetime
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 
@@ -42,17 +44,21 @@ class ListExpenseView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         result = super().get_context_data(object_list=object_list, **kwargs)
+
         expense_queryset = self.get_queryset()
 
+        buckets_query_set = services.get_bucket_queryset(self.request.user)
+
+        total_income = services.sum_total_income_for_month(self.request.user, datetime.datetime.today())
         total_expenses = services.sum_expenses_amounts(expense_queryset)
-        result['total_expenses'] = total_expenses
-
-        result['buckets'] = buckets_query_set = services.get_bucket_queryset(self.request.user)
-
         total_buckets = services.sum_bucket_values(buckets_query_set)
+
+        result['buckets'] = buckets_query_set
+
+        result['total_income'] = total_income
+        result['total_expenses'] = total_expenses
         result['total_buckets'] = total_buckets
 
-        total_income = Decimal(0)
         result['profit_or_loss'] = services.calculate_profit_or_loss(total_income, total_buckets, total_expenses)
 
         return result
