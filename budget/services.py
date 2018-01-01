@@ -1,5 +1,7 @@
 import datetime
 
+from decimal import Decimal
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum, Q
 
 from transactions.models import Bucket
@@ -7,6 +9,21 @@ from transactions.models import Bucket
 
 def get_bucket_queryset(user):
     return Bucket.objects.filter(owner=user).filter(show_balance=True)
+
+
+def sum_total_income_for_month(user, date):
+    from transactions.models import Transaction, Bucket
+
+    try:
+        income_bucket = Bucket.objects.get(name='Income')
+    except ObjectDoesNotExist:
+        return Decimal(0)
+
+    return Transaction.objects.filter(owner=user) \
+        .filter(date__month=date.month) \
+        .filter(date__year=date.year) \
+        .filter(bucket=income_bucket) \
+        .aggregate(total=Sum('amount'))['total'] or Decimal(0)
 
 
 def sum_bucket_values(bucket_queryset):
