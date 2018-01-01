@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
+from budget import services
 from transactions.models import UserModel
 
 
@@ -23,3 +24,6 @@ class Expense(UserModel):
 
     def __str__(self):
         return '{} ({})'.format(self.description, self.amount)
+
+    def was_paid(self):
+        return services.was_expense_paid(self)
