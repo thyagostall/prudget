@@ -9,8 +9,8 @@ def get_bucket_queryset(user):
     return Bucket.objects.filter(owner=user).filter(show_balance=True)
 
 
-def sum_bucket_balance(bucket_queryset):
-    return sum([bucket.get_bucket_balance() for bucket in bucket_queryset])
+def sum_bucket_values(bucket_queryset):
+    return sum([bucket.get_bucket_value() for bucket in bucket_queryset])
 
 
 def sum_expenses_amounts(expense_queryset):

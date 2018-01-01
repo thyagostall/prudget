@@ -50,7 +50,6 @@
             <tr>
                 <th class="table-cell-title">Name</th>
                 <th class="table-cell-currency">Total</th>
-                <th class="table-cell-currency">Balance</th>
             </tr>
 
             </thead>
@@ -59,15 +58,13 @@
                 <tr>
                     <td class="table-cell-title">{{ bucket.name }}</td>
                     <td class="table-cell-currency">{{ bucket.get_bucket_value|floatformat:2 }}</td>
-                    <td class="table-cell-currency">{{ bucket.get_bucket_balance|floatformat:2 }}</td>
                 </tr>
             {% endfor %}
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="2" class="table-cell-summary">Total</td>
+                <td class="table-cell-summary">Total</td>
                 <td class="table-cell-currency">{{ total_buckets|floatformat:2 }}</td>
-                <td></td>
             </tr>
             </tfoot>
         </table>
@@ -86,24 +83,20 @@
             <tr>
                 <td class="table-cell-title">Total Income</td>
                 <td class="table-cell-currency">Soon!</td>
-                <td></td>
             </tr>
             <tr>
                 <td class="table-cell-title">Expenses</td>
                 <td class="table-cell-currency">{{ total_expenses|floatformat:2 }}</td>
-                <td></td>
             </tr>
             <tr>
                 <td class="table-cell-title">Buckets</td>
                 <td class="table-cell-currency">{{ total_buckets|floatformat:2 }}</td>
-                <td></td>
             </tr>
             </tbody>
             <tfoot>
             <tr>
                 <td class="table-cell-title">Total</td>
                 <td class="table-cell-currency">{{ profit_or_loss|floatformat:2 }}</td>
-                <td></td>
             </tr>
             </tfoot>
         </table>
