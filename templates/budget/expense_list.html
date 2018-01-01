@@ -17,6 +17,7 @@
                 <th class="table-cell-item">Due Day</th>
                 <th class="table-cell-item">Periodicity</th>
                 <th class="table-cell-currency">Estimated Amount</th>
+                <th class="table-cell-item">Paid</th>
                 <th class="table-cell-item">Edit</th>
             </tr>
 
@@ -28,6 +29,7 @@
                     <td class="table-cell-item">{{ expense.due_day }}</td>
                     <td class="table-cell-item">{{ expense.get_periodicity_display }}</td>
                     <td class="table-cell-currency">{{ expense.amount|floatformat:2 }}</td>
+                    <td class="table-cell-item">{% if expense.was_paid %}&#10003{% endif %}</td>
                     <td class="table-cell-item"><a href="{% url 'budget:update-expense' pk=expense.id %}">Edit</a></td>
                 </tr>
             {% endfor %}
