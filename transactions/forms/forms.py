@@ -22,6 +22,7 @@ class InboxAccountForm(forms.ModelForm):
 
 class TransactionForm(forms.ModelForm):
     date = forms.DateField(widget=DateInput(), initial=datetime.today())
+    reference_date = forms.DateField(widget=DateInput(), required=False)
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -31,7 +32,7 @@ class TransactionForm(forms.ModelForm):
 
     class Meta:
         model = Transaction
-        fields = ['description', 'date', 'amount', 'bucket', 'account', 'expense']
+        fields = ['description', 'date', 'reference_date', 'amount', 'bucket', 'account', 'expense']
 
 
 class TransferToUserForm(TransactionForm):
@@ -40,7 +41,7 @@ class TransferToUserForm(TransactionForm):
 
     class Meta:
         model = Transaction
-        fields = ['description', 'date', 'amount', 'bucket', 'account', 'destination_user', 'expense']
+        fields = ['description', 'date', 'reference_date', 'amount', 'bucket', 'account', 'destination_user', 'expense']
 
 
 class TransferToAccountForm(TransactionForm):
@@ -53,7 +54,7 @@ class TransferToAccountForm(TransactionForm):
 
     class Meta:
         model = Transaction
-        fields = ['description', 'date', 'amount', 'bucket', 'account', 'destination_account', 'expense']
+        fields = ['description', 'date', 'reference_date', 'amount', 'bucket', 'account', 'destination_account', 'expense']
 
 
 class BucketForm(forms.ModelForm):
