@@ -3,6 +3,7 @@ import datetime
 from decimal import Decimal
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum, Q
+from django.db.models.functions import Coalesce
 
 from transactions.models import Bucket
 
@@ -15,13 +16,16 @@ def sum_total_income_for_month(user, date):
     from transactions.models import Transaction, Bucket
 
     try:
-        income_bucket = Bucket.objects.filter(owner=user).get(name='Income')
+        income_bucket = Bucket.objects\
+            .filter(owner=user)\
+            .get(name='Income')
     except ObjectDoesNotExist:
         return Decimal(0)
 
     return Transaction.objects.filter(owner=user) \
-        .filter(date__month=date.month) \
-        .filter(date__year=date.year) \
+        .annotate(real_reference_date=Coalesce('reference_date', 'date')) \
+        .filter(real_reference_date__month=date.month) \
+        .filter(real_reference_date__year=date.year) \
         .filter(bucket=income_bucket) \
         .aggregate(total=Sum('amount'))['total'] or Decimal(0)
 
@@ -46,32 +50,30 @@ def was_expense_paid(expense):
     from transactions.models import Transaction
 
     current_date = datetime.datetime.today()
+    user_expenses = Transaction.objects \
+        .filter(owner=expense.owner) \
+        .filter(expense=expense) \
+        .annotate(real_reference_date=Coalesce('reference_date', 'date'))
 
     if expense.periodicity == expense.MONTHLY:
-        return Transaction.objects. \
-            filter(owner=expense.owner) \
-            .filter(expense=expense) \
-            .filter(date__year=current_date.year) \
-            .filter(date__month=current_date.month) \
+        return user_expenses \
+            .filter(real_reference_date__year=current_date.year) \
+            .filter(real_reference_date__month=current_date.month) \
             .exists()
     elif expense.periodicity == expense.BIMONTHLY:
         previous_month_date = previous_month_from_date(current_date)
-        return Transaction.objects. \
-            filter(owner=expense.owner) \
-            .filter(expense=expense) \
+        return user_expenses \
             .filter((
-                        Q(date__month=current_date.month) &
-                        Q(date__year=current_date.year)
+                        Q(real_reference_date__month=current_date.month) &
+                        Q(real_reference_date__year=current_date.year)
                     ) | (
-                        Q(date__month=previous_month_date.month) &
-                        Q(date__year=previous_month_date.year)
+                        Q(real_reference_date__month=previous_month_date.month) &
+                        Q(real_reference_date__year=previous_month_date.year)
                     )) \
             .exists()
     else:
-        return Transaction.objects. \
-            filter(owner=expense.owner) \
-            .filter(expense=expense) \
-            .filter(date__year=current_date.year) \
+        return user_expenses \
+            .filter(real_reference_date__year=current_date.year) \
             .exists()
 
 
