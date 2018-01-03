@@ -188,7 +188,7 @@ def edit_transaction(request, pk):
 
 @login_required
 def dashboard(request):
-    transactions = Transaction.objects.filter(owner=request.user).order_by('-date')
+    transactions = Transaction.objects.filter(owner=request.user).order_by('-date', '-id')
     accounts = Account.objects.filter(owner=request.user)
 
     context = {
