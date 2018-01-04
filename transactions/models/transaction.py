@@ -1,6 +1,5 @@
 from django.db import models
 
-from budget.models import Expense
 from transactions.models import UserModel, Account, Bucket
 
 
@@ -12,4 +11,3 @@ class Transaction(UserModel):
     account = models.ForeignKey(Account, on_delete=models.DO_NOTHING)
     bucket = models.ForeignKey(Bucket, blank=True, null=True, on_delete=models.DO_NOTHING)
     group_id = models.CharField(max_length=50)
-    expense = models.ForeignKey(Expense, blank=True, null=True, on_delete=models.DO_NOTHING)
