@@ -82,12 +82,6 @@ class CreateBucketView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
-
-        amount_per_month = form.cleaned_data.pop('amount_per_month')
-        if amount_per_month:
-            form.save()
-            services.create_bucket_value(form.instance, amount_per_month)
-
         return super().form_valid(form)
 
 
@@ -97,22 +91,8 @@ class UpdateBucketView(LoginRequiredMixin, UpdateView):
     template_name = 'generic_form.html'
     form_class = BucketForm
 
-    def get_initial(self):
-        bucket_value = services.get_bucket_value(bucket=self.get_object())
-        if bucket_value:
-            return {'amount_per_month': bucket_value.amount}
-
-        return None
-
     def get_queryset(self):
         return super().get_queryset().filter(owner=self.request.user)
-
-    def form_valid(self, form):
-        amount_per_month = form.cleaned_data.pop('amount_per_month')
-        if amount_per_month:
-            services.create_bucket_value(form.instance, amount_per_month)
-
-        return super().form_valid(form)
 
 
 @login_required

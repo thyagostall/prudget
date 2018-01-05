@@ -3,7 +3,7 @@ from datetime import datetime
 from decimal import Decimal
 from django.contrib.auth.models import User
 
-from transactions.models import Account, Transaction, Bucket, BucketValue
+from transactions.models import Account, Transaction, Bucket
 from transactions.services import create_group_id
 
 
@@ -28,18 +28,7 @@ def create_bucket(user, name):
                                  )
 
 
-def create_bucket_value(bucket, **kwargs):
-    amount = kwargs.get('amount', Decimal('400.00'))
-    start_period = kwargs.get('start_period', datetime.today())
-
-    return BucketValue.objects.create(bucket=bucket,
-                                      amount=amount,
-                                      start_period=start_period,
-                                      owner=bucket.owner,
-                                      )
-
-
-def create_transaction(user, account, amount=Decimal('129.99'), bucket=None, date=None):
+def create_transaction(user, account=None, amount=Decimal('129.99'), bucket=None, date=None):
     description = 'Some transaction'
     date = date or datetime.today()
     account = account

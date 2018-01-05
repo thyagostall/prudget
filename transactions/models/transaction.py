@@ -8,6 +8,6 @@ class Transaction(UserModel):
     date = models.DateField()
     reference_date = models.DateField(blank=True, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    account = models.ForeignKey(Account, on_delete=models.DO_NOTHING)
+    account = models.ForeignKey(Account, blank=True, null=True, on_delete=models.DO_NOTHING)
     bucket = models.ForeignKey(Bucket, blank=True, null=True, on_delete=models.DO_NOTHING)
     group_id = models.CharField(max_length=50)
