@@ -3,12 +3,11 @@ from decimal import Decimal
 from django.db import models
 from django.db.models import Sum
 
-from transactions.models import UserModel, Currency
+from transactions.models import UserModel
 
 
 class Account(UserModel):
     name = models.CharField(max_length=30)
-    currency = models.ForeignKey(Currency, on_delete=models.DO_NOTHING)
 
     def balance(self):
         result = self.transaction_set.aggregate(balance=Sum('amount'))

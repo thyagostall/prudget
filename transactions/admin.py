@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from transactions.models import Account, Bucket, Currency
+from transactions.models import Account, Bucket
 
 
 class LoggedUserModelAdmin(admin.ModelAdmin):
@@ -23,7 +23,6 @@ class LoggedUserModelAdmin(admin.ModelAdmin):
 
 admin.site.register(Account, LoggedUserModelAdmin)
 admin.site.register(Bucket, LoggedUserModelAdmin)
-admin.site.register(Currency, LoggedUserModelAdmin)
 
 admin.site.site_header = 'Prudget'
 admin.site.site_title = 'Prudget'

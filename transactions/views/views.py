@@ -36,7 +36,7 @@ class ListAccountView(LoginRequiredMixin, ListView):
 
 class CreateAccountView(LoginRequiredMixin, CreateView):
     model = Account
-    fields = ['name', 'currency']
+    fields = ['name']
     success_url = reverse_lazy('account-list')
     template_name = 'generic_form.html'
 
@@ -47,7 +47,7 @@ class CreateAccountView(LoginRequiredMixin, CreateView):
 
 class UpdateAccountView(LoginRequiredMixin, UpdateView):
     model = Account
-    fields = ['name', 'currency']
+    fields = ['name']
     success_url = reverse_lazy('account-list')
     template_name = 'generic_form.html'
 

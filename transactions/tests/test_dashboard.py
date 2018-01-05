@@ -36,8 +36,8 @@ class DashboardViewTestCase(TestCase):
         first_user = create_user('first', 'first@email.com', 'password')
         second_user = create_user('second', 'second@email.com', 'password')
 
-        first_account = create_account(first_user, 'Itaú', 'BRL')
-        second_account = create_account(second_user, 'Itaú', 'BRL')
+        first_account = create_account(first_user, 'Itaú')
+        second_account = create_account(second_user, 'Itaú')
 
         first_amount = Decimal('129.99')
         second_amount = Decimal('-75.77')

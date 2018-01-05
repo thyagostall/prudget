@@ -29,10 +29,6 @@ def create_group_id(prefix=''):
 
 @transaction.atomic
 def transfer_to_account(transaction, destination):
-    source = transaction.account
-    if source.currency != destination.currency:
-        raise ValueError('Same currency type required')
-
     if transaction.amount > 0:
         raise ValueError('Origin transaction amount must be negative')
 
@@ -53,11 +49,6 @@ def transfer_to_account(transaction, destination):
 
 @transaction.atomic
 def transfer_to_user(transaction: Transaction, receiver: User) -> (Transaction, Transaction):
-    destination_account = get_inbox_account(receiver)
-    source_account = transaction.account
-    if destination_account.currency != source_account.currency:
-        raise ValueError('Same currency type required')
-
     if transaction.amount > 0:
         raise ValueError('Origin transaction amount must be negative')
 
