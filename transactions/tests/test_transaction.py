@@ -25,7 +25,7 @@ class TransactionViewTestCase(TestCase):
         user = create_user(password=password)
         self.client.login(username=user.username, password=password)
 
-        account = create_account(user, name='Account', currency_code='BRL')
+        account = create_account(user, name='Account')
         bucket = create_bucket(user, name='Bucket')
 
         name = 'Some transaction'
@@ -55,7 +55,7 @@ class TransactionViewTestCase(TestCase):
         user = create_user(password=password)
         self.client.login(username=user.username, password=password)
 
-        account = create_account(user, name='Account', currency_code='BRL')
+        account = create_account(user, name='Account')
         bucket = create_bucket(user, name='Bucket')
         transaction = create_transaction(user, account)
 

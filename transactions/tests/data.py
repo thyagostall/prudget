@@ -3,7 +3,7 @@ from datetime import datetime
 from decimal import Decimal
 from django.contrib.auth.models import User
 
-from transactions.models import Currency, Account, Transaction, Bucket, BucketValue
+from transactions.models import Account, Transaction, Bucket, BucketValue
 from transactions.services import create_group_id
 
 
@@ -16,10 +16,8 @@ def create_user(username='username', email='any@email.com', password='password')
     return user
 
 
-def create_account(user, name, currency_code):
-    currency, _ = Currency.objects.get_or_create(code=currency_code)
+def create_account(user, name):
     return Account.objects.create(name=name,
-                                  currency=currency,
                                   owner=user,
                                   )
 
