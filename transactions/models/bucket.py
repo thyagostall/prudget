@@ -8,7 +8,6 @@ from transactions.models import UserModel
 
 class Bucket(UserModel):
     name = models.CharField(max_length=30)
-    show_balance = models.BooleanField(default=False)
 
     def balance(self):
         return self.get_bucket_balance()

@@ -58,11 +58,10 @@ class TransferToAccountForm(TransactionForm):
 
 class BucketForm(forms.ModelForm):
     amount_per_month = forms.DecimalField(min_value=0, decimal_places=True, required=False)
-    show_balance = forms.BooleanField(required=False, initial=False)
 
     class Meta:
         model = Bucket
-        fields = ['name', 'amount_per_month', 'show_balance']
+        fields = ['name']
 
 
 class UploadFileForm(forms.Form):
