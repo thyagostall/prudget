@@ -21,39 +21,14 @@
             </thead>
             <tbody>
             {% for bucket in object_list %}
-                {% if bucket.show_balance %}
-                    <tr>
-                        <td class="table-cell-title">{{ bucket }}</td>
-                        <td class="table-cell-currency">{{ bucket.balance|floatformat:2 }}</td>
-                        <td class="table-cell-item"><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
-                    </tr>
-                {% endif %}
+                <tr>
+                    <td class="table-cell-title">{{ bucket }}</td>
+                    <td class="table-cell-currency">{{ bucket.balance|floatformat:2 }}</td>
+                    <td class="table-cell-item"><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
-
-        <h2>Other buckets</h2>
-
-        <table class="table-full-width">
-            <thead>
-            <tr>
-                <th class="table-cell-title">Bucket</th>
-                <th class="table-cell-item">Edit</th>
-            </tr>
-
-            </thead>
-            <tbody>
-            {% for bucket in object_list %}
-                {% if not bucket.show_balance %}
-                    <tr>
-                        <td class="table-cell-title">{{ bucket }}</td>
-                        <td class="table-cell-item"><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-            </tbody>
-        </table>
-
     </div>
 
 {% endblock %}
