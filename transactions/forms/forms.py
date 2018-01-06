@@ -57,8 +57,6 @@ class TransferToAccountForm(TransactionForm):
 
 
 class BucketForm(forms.ModelForm):
-    amount_per_month = forms.DecimalField(min_value=0, decimal_places=True, required=False)
-
     class Meta:
         model = Bucket
         fields = ['name']
