@@ -4,7 +4,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.getenv('SECRET_KEY', '')
 
-DEBUG = False
+DEBUG = bool(os.getenv('PRUDGET_DEBUG', ''))
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
