@@ -7,6 +7,7 @@ from .views import UpdateInboxAccountView
 from .views import ListBucketView
 from .views import CreateBucketView
 from .views import UpdateBucketView
+from .views import CreateTransferToBucketView
 
 from .views import new_transaction
 from .views import new_transfer_to_user

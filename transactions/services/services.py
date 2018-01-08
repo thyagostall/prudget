@@ -28,6 +28,25 @@ def create_group_id(prefix=''):
 
 
 @transaction.atomic
+def transfer_to_bucket(transaction, destination):
+    transaction.amount = -abs(transaction.amount)
+
+    group_id = create_group_id(prefix='TRANSF-BUCKET')
+    transaction.group_id = group_id
+    transaction.save()
+
+    transfer_transaction = Transaction.objects.create(description=transaction.description,
+                                                      date=transaction.date,
+                                                      amount=-transaction.amount,
+                                                      account=transaction.account,
+                                                      group_id=group_id,
+                                                      bucket=destination,
+                                                      owner=transaction.owner,
+                                                      )
+    return transaction, transfer_transaction
+
+
+@transaction.atomic
 def transfer_to_account(transaction, destination):
     if transaction.amount > 0:
         raise ValueError('Origin transaction amount must be negative')
