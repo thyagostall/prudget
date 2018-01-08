@@ -3,6 +3,7 @@ from datetime import datetime
 from django import forms
 from django.core.validators import MinValueValidator
 
+from transactions import services
 from transactions.models import Bucket, Account, Transaction, InboxAccount
 
 
@@ -54,6 +55,26 @@ class TransferToAccountForm(TransactionForm):
     class Meta:
         model = Transaction
         fields = ['description', 'date', 'reference_date', 'amount', 'bucket', 'account', 'destination_account']
+
+
+class TransferToBucketForm(TransactionForm):
+    amount = forms.DecimalField(validators=[MinValueValidator(0)])
+    destination_bucket = forms.ModelChoiceField(queryset=Bucket.objects.none())
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(user, *args, **kwargs)
+        self.user = user
+        self.fields['destination_bucket'].queryset = Bucket.objects.filter(owner=self.user)
+
+    def save(self, commit=True):
+        self.instance.owner = self.user
+        destination_bucket = Bucket.objects.get(id=self.data['destination_bucket'])
+        services.transfer_to_bucket(self.instance, destination_bucket)
+        return super().save(commit)
+
+    class Meta:
+        model = Transaction
+        fields = ['description', 'date', 'reference_date', 'amount', 'bucket', 'account', 'destination_bucket']
 
 
 class BucketForm(forms.ModelForm):

@@ -2,8 +2,9 @@ from decimal import Decimal
 
 from django.test import TestCase
 
+from transactions import services
 from transactions.services import transfer_to_account, get_inbox_account, transfer_to_user
-from transactions.tests.data import create_user, create_account, create_transaction
+from transactions.tests.data import create_user, create_account, create_transaction, create_bucket
 
 
 class TransferTestCase(TestCase):
@@ -27,6 +28,26 @@ class TransferTestCase(TestCase):
         self.assertEqual(transaction.date, transfer_transaction.date)
         self.assertEqual(transaction.amount, -transfer_transaction.amount)
         self.assertEqual(transaction.bucket, transfer_transaction.bucket)
+
+    def test_can_transfer_between_buckets(self):
+        user = create_user()
+
+        source_bucket = create_bucket(user, name='Source')
+        destination_bucket = create_bucket(user, name='Destinatin')
+        transaction = create_transaction(user, amount=Decimal('10.00'), bucket=source_bucket)
+
+        transaction, transfer_transaction = services.transfer_to_bucket(transaction, destination_bucket)
+
+        self.assertTrue(transaction.group_id.startswith('TRANSF-BUCKET-'))
+        self.assertTrue(transfer_transaction.group_id.startswith('TRANSF-BUCKET-'))
+        self.assertEqual(transfer_transaction.group_id, transaction.group_id)
+
+        self.assertEqual(transaction.bucket, source_bucket)
+        self.assertEqual(transfer_transaction.bucket, destination_bucket)
+
+        self.assertEqual(transaction.description, transfer_transaction.description)
+        self.assertEqual(transaction.date, transfer_transaction.date)
+        self.assertEqual(transaction.amount, -transfer_transaction.amount)
 
     def test_transfer_to_another_user_transaction(self):
         source_user = create_user('source.user', 'source@email.com')

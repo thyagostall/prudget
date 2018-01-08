@@ -10,6 +10,7 @@ from django.views.generic import CreateView, UpdateView, ListView
 from transactions import services
 from transactions.forms import TransactionForm, TransferToUserForm, TransferToAccountForm, BucketForm, UploadFileForm, \
     InboxAccountForm
+from transactions.forms.forms import TransferToBucketForm
 from transactions.models import Transaction, Account, Bucket, InboxAccount
 from transactions.services import create_group_id
 
@@ -90,6 +91,19 @@ class UpdateBucketView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('bucket-list')
     template_name = 'generic_form.html'
     form_class = BucketForm
+
+    def get_queryset(self):
+        return super().get_queryset().filter(owner=self.request.user)
+
+
+class CreateTransferToBucketView(LoginRequiredMixin, CreateView):
+    model = Transaction
+    success_url = reverse_lazy('dashboard')
+    template_name = 'generic_form.html'
+    form_class = TransferToBucketForm
+
+    def get_form(self, form_class=None):
+        return self.get_form_class()(self.request.user, **self.get_form_kwargs())
 
     def get_queryset(self):
         return super().get_queryset().filter(owner=self.request.user)

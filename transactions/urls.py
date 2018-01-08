@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^transaction/$', views.new_transaction, name='new_transaction'),
     url(r'^transfer/user/$', views.new_transfer_to_user, name='transfer-user'),
     url(r'^transfer/account/$', views.new_transfer_to_account, name='transfer-account'),
+    url(r'^transfer/bucket/$', views.CreateTransferToBucketView.as_view(), name='transfer-bucket'),
     url(r'^transaction/(?P<pk>\d+)/$', views.edit_transaction, name='edit_transaction'),
     url(r'^accounts/$', views.ListAccountView.as_view(), name='account-list'),
     url(r'^account/$', views.CreateAccountView.as_view(), name='create-account'),
