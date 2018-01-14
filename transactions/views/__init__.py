@@ -14,4 +14,3 @@ from .views import new_transfer_to_user
 from .views import new_transfer_to_account
 from .views import edit_transaction
 from .views import dashboard
-from .views import import_upload

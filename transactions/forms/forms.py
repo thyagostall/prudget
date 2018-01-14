@@ -81,7 +81,3 @@ class BucketForm(forms.ModelForm):
     class Meta:
         model = Bucket
         fields = ['name']
-
-
-class UploadFileForm(forms.Form):
-    file = forms.FileField()

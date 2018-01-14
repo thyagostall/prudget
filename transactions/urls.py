@@ -19,6 +19,5 @@ urlpatterns = [
     url(r'^buckets/$', views.ListBucketView.as_view(), name='bucket-list'),
     url(r'^bucket/$', views.CreateBucketView.as_view(), name='create-bucket'),
     url(r'^bucket/(?P<pk>\d+)/$', views.UpdateBucketView.as_view(), name='update-bucket'),
-    url(r'^import/$', views.import_upload, name='import'),
     url(r'^$', RedirectView.as_view(pattern_name='dashboard'))
 ]
