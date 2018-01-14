@@ -24,6 +24,7 @@ class InboxAccountForm(forms.ModelForm):
 class TransactionForm(forms.ModelForm):
     date = forms.DateField(widget=DateInput(), initial=datetime.today())
     reference_date = forms.DateField(widget=DateInput(), required=False)
+    amount = forms.DecimalField(validators=[MinValueValidator(0)])
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -41,8 +42,6 @@ class TransactionForm(forms.ModelForm):
 
 
 class DebitTransactionForm(TransactionForm):
-    amount = forms.DecimalField(validators=[MinValueValidator(0)])
-
     def save(self, commit=True):
         self.instance.amount = -abs(self.instance.amount)
         return super().save(commit=commit)

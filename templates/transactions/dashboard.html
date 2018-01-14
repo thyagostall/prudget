@@ -26,13 +26,15 @@
 
         <h1>Transactions</h1>
 
-        <a href="{% url 'new_transaction' %}">New Transaction</a>
-
-        <a href="{% url 'transfer-bucket' %}">New Transfer (to bucket)</a>
-
-        <a href="{% url 'transfer-user' %}">New Transfer (to user)</a>
-
-        <a href="{% url 'transfer-account' %}">New Transfer (to account)</a>
+        <nav>
+            <ul>
+                <li><a href="{% url 'new-debit-transaction' %}">New Debit Transaction</a></li>
+                <li><a href="{% url 'new-credit-transaction' %}">New Credit Transaction</a></li>
+                <li><a href="{% url 'transfer-bucket' %}">New Transfer (to bucket)</a></li>
+                <li><a href="{% url 'transfer-user' %}">New Transfer (to user)</a></li>
+                <li><a href="{% url 'transfer-account' %}">New Transfer (to account)</a></li>
+            </ul>
+        </nav>
 
         <table class="table-full-width">
             <thead>
@@ -53,7 +55,7 @@
                     <td class="table-cell-currency">{{ transaction.amount|floatformat:2 }}</td>
                     <td class="table-cell-title">{{ transaction.bucket|default_if_none:'' }}</td>
                     <td class="table-cell-title">{{ transaction.account|default_if_none:'' }}</td>
-                    <td class="table-cell-item"><a href="{% url 'edit_transaction' transaction.id %}">Edit</a></td>
+                    <td class="table-cell-item"><a href="{% url 'update-transaction' transaction.id %}">Edit</a></td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -9,9 +9,11 @@ from .views import CreateBucketView
 from .views import UpdateBucketView
 from .views import CreateTransferToBucketView
 from .views import CreateDebitTransactionView
+from .views import UpdateDebitTransactionView
+from .views import CreateCreditTransactionView
+from .views import UpdateCreditTransactionView
 
-from .views import new_transaction
 from .views import new_transfer_to_user
 from .views import new_transfer_to_account
-from .views import edit_transaction
+from .views import update_transaction
 from .views import dashboard

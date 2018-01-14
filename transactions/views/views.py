@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -5,12 +7,12 @@ from django.contrib.auth.views import LoginView as AuthLoginView, LogoutView as 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic.edit import ModelFormMixin
 
 from transactions import services
 from transactions.forms import TransactionForm, TransferToUserForm, TransferToAccountForm, BucketForm, InboxAccountForm
 from transactions.forms.forms import TransferToBucketForm, DebitTransactionForm
 from transactions.models import Transaction, Account, Bucket, InboxAccount
-from transactions.services import create_group_id
 
 
 class LoginView(AuthLoginView):
@@ -107,11 +109,16 @@ class CreateTransferToBucketView(LoginRequiredMixin, CreateView):
         return super().get_queryset().filter(owner=self.request.user)
 
 
-class CreateDebitTransactionView(LoginRequiredMixin, CreateView):
+class DebitTransactionViewMixin(LoginRequiredMixin, ModelFormMixin):
     model = Transaction
     success_url = reverse_lazy('dashboard')
     template_name = 'generic_form.html'
     form_class = DebitTransactionForm
+
+    def get_context_data(self, **kwargs):
+        if 'title' not in kwargs:
+            kwargs['title'] = 'Debit Transaction'
+        return super().get_context_data(**kwargs)
 
     def get_form(self, form_class=None):
         return self.get_form_class()(self.request.user, **self.get_form_kwargs())
@@ -120,20 +127,41 @@ class CreateDebitTransactionView(LoginRequiredMixin, CreateView):
         return super().get_queryset().filter(owner=self.request.user)
 
 
-@login_required
-def new_transaction(request):
-    form = TransactionForm(request.user, request.POST or None)
+class CreateDebitTransactionView(DebitTransactionViewMixin, CreateView):
+    pass
 
-    if form.is_valid():
-        transaction = Transaction(**form.cleaned_data)
-        transaction.owner = request.user
-        transaction.group_id = create_group_id('COMMON')
-        transaction.save()
-        return redirect('dashboard')
 
-    return render(request, 'generic_form.html', context={
-        'form': form,
-    })
+class UpdateDebitTransactionView(DebitTransactionViewMixin, UpdateView):
+    def get_object(self, queryset=None):
+        result = super().get_object(queryset)
+        result.amount = abs(result.amount)
+        return result
+
+
+class CreditTransactionView(LoginRequiredMixin, ModelFormMixin):
+    model = Transaction
+    success_url = reverse_lazy('dashboard')
+    template_name = 'generic_form.html'
+    form_class = TransactionForm
+
+    def get_context_data(self, **kwargs):
+        if 'title' not in kwargs:
+            kwargs['title'] = 'Credit Transaction'
+        return super().get_context_data(**kwargs)
+
+    def get_form(self, form_class=None):
+        return self.get_form_class()(self.request.user, **self.get_form_kwargs())
+
+    def get_queryset(self):
+        return super().get_queryset().filter(owner=self.request.user)
+
+
+class CreateCreditTransactionView(CreditTransactionView, CreateView):
+    pass
+
+
+class UpdateCreditTransactionView(CreditTransactionView, UpdateView):
+    pass
 
 
 @login_required
@@ -177,18 +205,12 @@ def new_transfer_to_account(request):
 
 
 @login_required
-def edit_transaction(request, pk):
+def update_transaction(request, pk):
     transaction = get_object_or_404(Transaction, pk=pk)
-    form = TransactionForm(request.user, request.POST or None, instance=transaction)
-
-    if form.is_valid():
-        transaction = form.instance
-        transaction.save()
-        return redirect('dashboard')
-
-    return render(request, 'generic_form.html', context={
-        'form': form,
-    })
+    if transaction.amount > Decimal('0'):
+        return redirect('update-credit-transaction', pk=pk)
+    else:
+        return redirect('update-debit-transaction', pk=pk)
 
 
 @login_required
