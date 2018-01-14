@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
     url(r'^transaction/$', views.new_transaction, name='new_transaction'),
+    url(r'^transaction/debit$', views.CreateDebitTransactionView.as_view(), name='new-debit-transaction'),
     url(r'^transfer/user/$', views.new_transfer_to_user, name='transfer-user'),
     url(r'^transfer/account/$', views.new_transfer_to_account, name='transfer-account'),
     url(r'^transfer/bucket/$', views.CreateTransferToBucketView.as_view(), name='transfer-bucket'),

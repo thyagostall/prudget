@@ -27,12 +27,25 @@ class TransactionForm(forms.ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['bucket'].queryset = Bucket.objects.filter(owner=user)
-        self.fields['account'].queryset = Account.objects.filter(owner=user)
+        self.owner = user
+        self.fields['bucket'].queryset = Bucket.objects.filter(owner=self.owner)
+        self.fields['account'].queryset = Account.objects.filter(owner=self.owner)
+
+    def save(self, commit=True):
+        self.instance.owner = self.owner
+        return super().save(commit=commit)
 
     class Meta:
         model = Transaction
         fields = ['description', 'date', 'reference_date', 'amount', 'bucket', 'account']
+
+
+class DebitTransactionForm(TransactionForm):
+    amount = forms.DecimalField(validators=[MinValueValidator(0)])
+
+    def save(self, commit=True):
+        self.instance.amount = -abs(self.instance.amount)
+        return super().save(commit=commit)
 
 
 class TransferToUserForm(TransactionForm):

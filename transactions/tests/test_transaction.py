@@ -1,6 +1,9 @@
+import datetime
+from decimal import Decimal
 from django.test import TestCase
 from django.urls import reverse
 
+from transactions.models import Transaction
 from transactions.tests.data import create_user, create_account, create_bucket, create_transaction
 
 
@@ -80,3 +83,22 @@ class TransactionViewTestCase(TestCase):
         self.assertContains(response_dasboard, 'Feb. 12, 2017')
         self.assertContains(response_dasboard, bucket.name)
         self.assertContains(response_dasboard, account.name)
+
+    def test_debit_transaction_form_only_creates_negative_values(self):
+        password = 'password'
+        user = create_user(password=password)
+        self.client.login(username=user.username, password=password)
+
+        description = 'Debit Transaction'
+        amount = '90.00'
+        date = '02/12/2017'
+        data = {
+            'description': description,
+            'amount': amount,
+            'date': date,
+        }
+
+        self.client.post(reverse('new-debit-transaction'), data=data)
+
+        transaction = Transaction.objects.first()
+        self.assertEqual(transaction.amount, -Decimal(amount))
