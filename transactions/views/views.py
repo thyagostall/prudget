@@ -7,8 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 
 from transactions import services
-from transactions.forms import TransactionForm, TransferToUserForm, TransferToAccountForm, BucketForm, UploadFileForm, \
-    InboxAccountForm
+from transactions.forms import TransactionForm, TransferToUserForm, TransferToAccountForm, BucketForm, InboxAccountForm
 from transactions.forms.forms import TransferToBucketForm
 from transactions.models import Transaction, Account, Bucket, InboxAccount
 from transactions.services import create_group_id
@@ -189,18 +188,3 @@ def dashboard(request):
         'accounts': accounts,
     }
     return render(request, 'transactions/dashboard.html', context=context)
-
-
-@login_required
-def import_upload(request):
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            services.import_file(request.FILES['file'], request.encoding, request.user)
-            return HttpResponse('File uploaded')
-    else:
-        form = UploadFileForm()
-
-    return render(request, 'transactions/upload_form.html', context={
-        'form': form
-    })
