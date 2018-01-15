@@ -26,6 +26,12 @@
                 </tr>
             {% endfor %}
             </tbody>
+            <tfoot>
+                <tr>
+                    <td class="table-cell-summary">Total</td>
+                    <td class="table-cell-currency">{{ total|floatformat:2 }}</td>
+                </tr>
+            </tfoot>
         </table>
 
         {% if inbox_account %}

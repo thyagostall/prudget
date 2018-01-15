@@ -31,6 +31,7 @@ class ListAccountView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
+        context['total'] = services.get_query_set_balance(self.get_queryset())
         context['inbox_account'] = self.request.user.inboxaccount_set.first()
         return context
 
