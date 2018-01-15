@@ -8,3 +8,4 @@ from .services import resolve_date
 from .services import resolve_amount
 from .services import resolve_account
 from .services import resolve_bucket
+from .services import get_query_set_balance
