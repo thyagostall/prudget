@@ -5,30 +5,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Prudget</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'transactions/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'transactions/navbar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'transactions/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'transactions/navbar.css' %}"/>
 
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 </head>
 <body>
 
-    {% if not user.is_anonymous %}
-    <nav>
-        <ul>
-            <li><a href="{% url 'dashboard' %}">Home</a></li>
-            <li><a href="{% url 'account-list' %}">Accounts</a></li>
-            <li><a href="{% url 'bucket-list' %}">Buckets</a></li>
-        </ul>
+{% if not user.is_anonymous %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'dashboard' %}">Home</a></li>
+                <li><a href="{% url 'account-list' %}">Accounts</a></li>
+                <li><a href="{% url 'bucket-list' %}">Buckets</a></li>
+            </ul>
+        </div>
     </nav>
 
     <p class="user-box">Logged user: {{ user }}</p>
-    {% endif %}
+{% endif %}
 
-    {% block content %}
-    {% endblock content %}
+{% block content %}
+{% endblock content %}
 </body>
 </html>
