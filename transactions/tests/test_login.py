@@ -6,6 +6,6 @@ class LoginTestCase(TestCase):
     def test_render_login(self):
         response = self.client.get(reverse('login'))
 
-        self.assertContains(response, 'Username:')
-        self.assertContains(response, 'Password:')
+        self.assertContains(response, 'Username')
+        self.assertContains(response, 'Password')
         self.assertContains(response, 'Login')
