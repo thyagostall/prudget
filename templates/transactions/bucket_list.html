@@ -2,40 +2,41 @@
 
 {% block content %}
 
-    <div class="container">
+    <h1>Buckets</h1>
 
-        <h1>Buckets</h1>
-
-        <a href="{% url 'create-bucket' %}">New</a>
-
-        <h2>Balance</h2>
-
-        <table class="table-full-width table table-striped">
-            <thead>
-            <tr>
-                <th class="table-cell-title">Bucket</th>
-                <th class="table-cell-currency">Balance</th>
-                <th class="table-cell-item">Edit</th>
-            </tr>
-
-            </thead>
-            <tbody>
-            {% for bucket in object_list %}
-                <tr>
-                    <td class="table-cell-title">{{ bucket }}</td>
-                    <td class="table-cell-currency">{{ bucket.balance|floatformat:2 }}</td>
-                    <td class="table-cell-item"><a href="{% url 'update-bucket' pk=bucket.id %}">Edit</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th class="table-cell-title">Total</th>
-                    <th class="table-cell-currency">{{ total|floatformat:2 }}</th>
-                    <th></th>
-                </tr>
-            </tfoot>
-        </table>
+    <div class="btn-group" role="group">
     </div>
+
+    <a href="{% url 'create-bucket' %}" type="button" class="btn btn-default">New</a>
+
+    <h2>Balance</h2>
+
+    <table class="table-full-width table table-striped">
+        <thead>
+        <tr>
+            <th class="table-cell-title">Bucket</th>
+            <th class="table-cell-currency">Balance</th>
+            <th class="table-cell-item">Edit</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        {% for bucket in object_list %}
+            <tr>
+                <td class="table-cell-title">{{ bucket }}</td>
+                <td class="table-cell-currency">{{ bucket.balance|floatformat:2 }}</td>
+                <td class="table-cell-item"><a href="{% url 'update-bucket' pk=bucket.id %}"><span
+                        class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th class="table-cell-title">Total</th>
+            <th class="table-cell-currency">{{ total|floatformat:2 }}</th>
+            <th></th>
+        </tr>
+        </tfoot>
+    </table>
 
 {% endblock %}

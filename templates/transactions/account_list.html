@@ -2,45 +2,53 @@
 
 {% block content %}
 
-    <div class="container">
+    <h1>Accounts</h1>
 
-        <h1>Accounts</h1>
+    <a href="{% url 'create-account' %}" type="button" class="btn btn-default">New</a>
 
-        <a href="{% url 'create-account' %}">New</a>
+    <table class="table-full-width table table-striped">
+        <thead>
+        <tr>
+            <th class="table-cell-title">Account</th>
+            <th class="table-cell-currency">Balance</th>
+            <th class="table-cell-item">Edit</th>
+        </tr>
 
-        <table class="table-full-width table table-striped">
-            <thead>
+        </thead>
+        <tbody>
+        {% for account in object_list %}
             <tr>
-                <th class="table-cell-title">Account</th>
-                <th class="table-cell-currency">Balance</th>
-                <th class="table-cell-item">Edit</th>
+                <td class="table-cell-title">{{ account }}</td>
+                <td class="table-cell-currency">{{ account.balance|floatformat:2 }}</td>
+                <td class="table-cell-item"><a href="{% url 'update-account' pk=account.id %}"><span
+                        class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
             </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th class="table-cell-summary">Total</th>
+            <th class="table-cell-currency">{{ total|floatformat:2 }}</th>
+            <th></th>
+        </tr>
+        </tfoot>
+    </table>
 
-            </thead>
-            <tbody>
-            {% for account in object_list %}
-                <tr>
-                    <td class="table-cell-title">{{ account }}</td>
-                    <td class="table-cell-currency">{{ account.balance|floatformat:2 }}</td>
-                    <td class="table-cell-item"><a href="{% url 'update-account' pk=account.id %}">Edit</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th class="table-cell-summary">Total</th>
-                    <th class="table-cell-currency">{{ total|floatformat:2 }}</th>
-                    <th></th>
-                </tr>
-            </tfoot>
-        </table>
+    {% if inbox_account %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Inbox Account</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    <a type="button" class="btn btn-default" aria-label="Left Align"
+                       href="{% url 'update-inbox-account' pk=inbox_account.id %}">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
 
-        {% if inbox_account %}
-            <h2>Inbox Account</h2>
-
-            {{ inbox_account.account }} <a href="{% url 'update-inbox-account' pk=inbox_account.id %}">Change</a>
-        {% endif %}
-
-    </div>
+                    {{ inbox_account.account }}</p>
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}
