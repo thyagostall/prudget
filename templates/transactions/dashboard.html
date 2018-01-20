@@ -2,52 +2,97 @@
 
 {% block content %}
 
-    <h1>Balance</h1>
+    <div class="col-md-6">
 
-    <table class="table-half-width">
-        <thead>
-        <tr>
-            <th class="table-cell-title">Account</th>
-            <th class="table-cell-currency">Balance</th>
-        </tr>
+        <h1>Buckets</h1>
 
-        </thead>
-        <tbody>
-        {% for account in accounts %}
+        <table class="table">
+            <thead>
             <tr>
-                <td class="table-cell-title">{{ account }}</td>
-                <td class="table-cell-currency">{{ account.balance|floatformat:2 }}</td>
+                <th class="table-cell-title">Bucket</th>
+                <th class="table-cell-currency">Balance</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <h1>Transactions</h1>
-
-    <table class="table-full-width table table-striped">
-        <thead>
-        <tr>
-            <th class="table-cell-title">Date</th>
-            <th class="table-cell-title">Description</th>
-            <th class="table-cell-currency">Amount</th>
-            <th class="table-cell-title">Bucket</th>
-            <th class="table-cell-title">Account</th>
-            <th class="table-cell-item">Edit</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for transaction in transactions %}
+            </thead>
+            <tbody>
+            {% for bucket in buckets %}
+                <tr>
+                    <td class="table-cell-title">{{ bucket }}</td>
+                    <td class="table-cell-currency">{{ bucket.balance|floatformat:2 }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
             <tr>
-                <td class="table-cell-title">{{ transaction.date }}</td>
-                <td class="table-cell-title">{{ transaction.description }}</td>
-                <td class="table-cell-currency">{{ transaction.amount|floatformat:2 }}</td>
-                <td class="table-cell-title">{{ transaction.bucket|default_if_none:'' }}</td>
-                <td class="table-cell-title">{{ transaction.account|default_if_none:'' }}</td>
-                <td class="table-cell-item"><a href="{% url 'update-transaction' transaction.id %}"><span
-                        class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+                <th class="table-cell-title">Total</th>
+                <th class="table-cell-currency">{{ bucket_total|floatformat:2 }}</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </tfoot>
+        </table>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <h1>Accounts</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="table-cell-title">Account</th>
+                <th class="table-cell-currency">Balance</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {% for account in accounts %}
+                <tr>
+                    <td class="table-cell-title">{{ account }}</td>
+                    <td class="table-cell-currency">{{ account.balance|floatformat:2 }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <th class="table-cell-title">Total</th>
+                <th class="table-cell-currency">{{ account_total|floatformat:2 }}</th>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+
+
+    <div class="col-md-12">
+
+        <h1>Transactions</h1>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="table-cell-title">Date</th>
+                <th class="table-cell-title">Description</th>
+                <th class="table-cell-currency">Amount</th>
+                <th class="table-cell-title">Bucket</th>
+                <th class="table-cell-title">Account</th>
+                <th class="table-cell-item">Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for transaction in transactions %}
+                <tr>
+                    <td class="table-cell-title">{{ transaction.date }}</td>
+                    <td class="table-cell-title">{{ transaction.description }}</td>
+                    <td class="table-cell-currency">{{ transaction.amount|floatformat:2 }}</td>
+                    <td class="table-cell-title">{{ transaction.bucket|default_if_none:'' }}</td>
+                    <td class="table-cell-title">{{ transaction.account|default_if_none:'' }}</td>
+                    <td class="table-cell-item"><a href="{% url 'update-transaction' transaction.id %}"><span
+                            class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
 
 {% endblock content %}
