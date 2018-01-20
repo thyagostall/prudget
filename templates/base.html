@@ -17,7 +17,7 @@
 <body>
 
 {% if not user.is_anonymous %}
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -49,6 +49,16 @@
                         </ul>
                     </li>
                 </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="true"><i class="glyphicon glyphicon-user"></i> User <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -56,18 +66,10 @@
 
 <div class="container">
 
-{% block content %}
-{% endblock content %}
+    {% block content %}
+    {% endblock content %}
 
 </div>
-
-<footer class="footer">
-    <div class="container">
-        {% if not user.is_anonymous %}
-            <p class="user-box">Logged as {{ user }} <a href="{% url 'logout' %}">(Logout)</a></p>
-        {% endif %}
-    </div>
-</footer>
 
 </body>
 </html>
