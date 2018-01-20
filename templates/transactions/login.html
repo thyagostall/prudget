@@ -4,12 +4,16 @@
 
 {% block content %}
 
-    <h1>Login</h1>
+    <h1>Prudget</h1>
 
-    <form action="{% url 'login' %}" method="post" class="form">
-        {% csrf_token %}
-        {{ form|as_bootstrap }}
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+    <div class="col-sm-6 col-md-4 well">
+
+        <form action="{% url 'login' %}" method="post" class="form">
+            {% csrf_token %}
+            {{ form|as_bootstrap }}
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+    </div>
 
 {% endblock content %}
