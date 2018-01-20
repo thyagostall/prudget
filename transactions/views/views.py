@@ -76,7 +76,7 @@ class ListBucketView(LoginRequiredMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(object_list=object_list, **kwargs)
         total = services.get_query_set_balance(self.get_queryset())
-        return {**context_data, 'total': total}
+        return {**context_data, 'bucket_total': total}
 
     def get_queryset(self):
         return super().get_queryset().filter(owner=self.request.user)
@@ -222,10 +222,19 @@ def update_transaction(request, pk):
 @login_required
 def dashboard(request):
     transactions = Transaction.objects.filter(owner=request.user).order_by('-date', '-id')
+
+    buckets = Bucket.objects.filter(owner=request.user)
     accounts = Account.objects.filter(owner=request.user)
+
+    bucket_total = services.get_query_set_balance(buckets)
+    account_total = services.get_query_set_balance(accounts)
 
     context = {
         'transactions': transactions,
+        'buckets': buckets,
         'accounts': accounts,
+
+        'bucket_total': bucket_total,
+        'account_total': account_total,
     }
     return render(request, 'transactions/dashboard.html', context=context)
