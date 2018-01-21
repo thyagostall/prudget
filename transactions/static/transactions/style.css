@@ -2,6 +2,10 @@ body {
     padding-bottom: 80px;
 }
 
+.table-overflow {
+    overflow-x: auto;
+}
+
 .table-cell-title {
     text-align: left;
 }
@@ -12,14 +16,4 @@ body {
 
 .table-cell-item {
     text-align: center;
-}
-
-.table-full-width {
-    width: 100%;
-}
-
-.table-half-width {
-    width: 50%;
-    max-width: 512px;
-    margin: auto;
 }
