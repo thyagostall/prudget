@@ -15,7 +15,10 @@ APPEND_SLASH = True
 
 ALLOWED_HOSTS = [
     'prudget.thyago.com',
-    'prudget.herokuapp.com'
+]
+
+CSRF_COOKIE_DOMAIN = [
+    'prudget.thyago.com',
 ]
 
 INSTALLED_APPS = [
