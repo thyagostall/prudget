@@ -1,10 +1,14 @@
 import os
 
+import environ
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+env = environ.Env(PRUDGET_DEBUG=(bool, False), PRUDGET_ALLOWED_HOSTS=(list, []))
+environ.Env.read_env(os.path.join(os.path.dirname(BASE_DIR), '.env'))
 
-SECRET_KEY = os.getenv('SECRET_KEY', '')
+SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = bool(os.getenv('PRUDGET_DEBUG', ''))
+DEBUG = env('PRUDGET_DEBUG')
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
@@ -13,10 +17,7 @@ USE_THOUSAND_SEPARATOR = True
 
 APPEND_SLASH = True
 
-ALLOWED_HOSTS = [
-    'prudget.thyago.com',
-    'prudget.herokuapp.com'
-]
+ALLOWED_HOSTS = env('PRUDGET_ALLOWED_HOSTS')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
