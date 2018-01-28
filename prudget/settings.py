@@ -1,8 +1,9 @@
 import os
 
+import dj_database_url
 import environ
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 env = environ.Env(PRUDGET_DEBUG=(bool, False), PRUDGET_ALLOWED_HOSTS=(list, []))
 environ.Env.read_env(os.path.join(os.path.dirname(BASE_DIR), '.env'))
 
@@ -95,6 +96,10 @@ STATICFILES_DIRS = (
 )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+DATABASES = {
+    'default': dj_database_url.config()
+}
 
 LOGGING = {
     'version': 1,

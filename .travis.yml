@@ -2,11 +2,11 @@ language: python
 python:
   - "3.6"
 
-env:
-  - DJANGO_SETTINGS_MODULE=prudget.settings.local
-
 install:
   - pip install -r requirements.txt
+
+env:
+  - DATABASE_URL=sqlite:////db.sqlite3
 
 script:
   - python manage.py collectstatic
