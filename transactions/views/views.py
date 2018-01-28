@@ -42,6 +42,10 @@ class CreateAccountView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('account-list')
     template_name = 'generic_form.html'
 
+    def get_context_data(self, **kwargs):
+        kwargs['title'] = 'Create Account'
+        return super().get_context_data(**kwargs)
+
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
@@ -52,6 +56,10 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
     fields = ['name']
     success_url = reverse_lazy('account-list')
     template_name = 'generic_form.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['title'] = 'Update Account'
+        return super().get_context_data(**kwargs)
 
     def get_queryset(self):
         return super().get_queryset().filter(owner=self.request.user)
@@ -87,6 +95,10 @@ class CreateBucketView(LoginRequiredMixin, CreateView):
     template_name = 'generic_form.html'
     form_class = BucketForm
 
+    def get_context_data(self, **kwargs):
+        kwargs['title'] = 'Create Bucket'
+        return super().get_context_data(**kwargs)
+
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
@@ -98,6 +110,10 @@ class UpdateBucketView(LoginRequiredMixin, UpdateView):
     template_name = 'generic_form.html'
     form_class = BucketForm
 
+    def get_context_data(self, **kwargs):
+        kwargs['title'] = 'Update Bucket'
+        return super().get_context_data(**kwargs)
+
     def get_queryset(self):
         return super().get_queryset().filter(owner=self.request.user)
 
@@ -107,6 +123,10 @@ class CreateTransferToBucketView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('dashboard')
     template_name = 'generic_form.html'
     form_class = TransferToBucketForm
+
+    def get_context_data(self, **kwargs):
+        kwargs['title'] = 'Transfer to Bucket'
+        return super().get_context_data(**kwargs)
 
     def get_form(self, form_class=None):
         return self.get_form_class()(self.request.user, **self.get_form_kwargs())
@@ -187,6 +207,7 @@ def new_transfer_to_user(request):
         return redirect('dashboard')
 
     return render(request, 'generic_form.html', context={
+        'title': 'Transfer to User',
         'form': form,
     })
 
@@ -206,6 +227,7 @@ def new_transfer_to_account(request):
         return redirect('dashboard')
 
     return render(request, 'generic_form.html', context={
+        'title': 'Transfer to Account',
         'form': form,
     })
 
