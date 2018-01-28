@@ -1,5 +1,5 @@
 # Prudget
 
-[![Build Status](https://travis-ci.com/thyagostall/prudget.svg?token=eLsBaxXdpjDpQFnqzRQU&branch=master)](https://travis-ci.com/thyagostall/prudget)
+[![Build Status](https://travis-ci.org/thyagostall/prudget.svg?branch=master)](https://travis-ci.org/thyagostall/prudget)
 
 Simple way for tracking every penny.
