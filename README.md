@@ -11,7 +11,7 @@ Buckets are virtual accounts, similar to envelopes on the [Envelope Budgeting Sy
 It requires python3 and pip to be installed. To set it up for development, you must:
 
 - Install the dependencies; `pip install -r requirements.txt`
-- And set the environment variables: `SECRET_KEY=your-secret-key`, `DJANGO_SETTINGS_MODULE=prudget.settings.local` _(`DJANGO_SETTINGS_MODULE=prudget.settings.prod` in production)_
+- Create an file called `.env` at the root directory of the project, following the examples on `env.sample`.
 
 ## Contributing
 
