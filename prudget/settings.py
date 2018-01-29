@@ -41,6 +41,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'prudget.middleware.CurrentUserMiddleware',
 ]
 
 ROOT_URLCONF = 'prudget.urls'
