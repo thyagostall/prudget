@@ -1,6 +1,6 @@
 from django.db import models
 
-from transactions.models import UserModel, Account, Bucket
+from core.models import UserModel, Account, Bucket
 
 
 class Transaction(UserModel):

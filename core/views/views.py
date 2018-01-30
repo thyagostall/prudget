@@ -9,18 +9,18 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 from django.views.generic.edit import ModelFormMixin
 
-from transactions import services
-from transactions.forms import TransactionForm, TransferToUserForm, TransferToAccountForm, BucketForm, InboxAccountForm
-from transactions.forms.forms import TransferToBucketForm, DebitTransactionForm
-from transactions.models import Transaction, Account, Bucket, InboxAccount
+from core import services
+from core.forms import TransactionForm, TransferToUserForm, TransferToAccountForm, BucketForm, InboxAccountForm
+from core.forms.forms import TransferToBucketForm, DebitTransactionForm
+from core.models import Transaction, Account, Bucket, InboxAccount
 
 
 class LoginView(AuthLoginView):
-    template_name = 'transactions/login.html'
+    template_name = 'core/login.html'
 
 
 class LogoutView(AuthLogoutView):
-    template_name = 'transactions/logout.html'
+    template_name = 'core/logout.html'
 
 
 class ListAccountView(LoginRequiredMixin, ListView):
@@ -259,4 +259,4 @@ def dashboard(request):
         'bucket_total': bucket_total,
         'account_total': account_total,
     }
-    return render(request, 'transactions/dashboard.html', context=context)
+    return render(request, 'core/dashboard.html', context=context)

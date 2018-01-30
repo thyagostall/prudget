@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.db import models
 from django.db.models import Sum
 
-from transactions.models import UserModel
+from core.models import UserModel
 
 
 class Account(UserModel):

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from transactions.models import Account, Bucket
+from core.models import Account, Bucket
 
 
 class LoggedUserModelAdmin(admin.ModelAdmin):

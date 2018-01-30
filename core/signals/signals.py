@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from transactions.models import Account, InboxAccount
+from core.models import Account, InboxAccount
 
 
 @receiver(post_save, sender=Account)

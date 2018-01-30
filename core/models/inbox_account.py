@@ -1,6 +1,6 @@
 from django.db import models
 
-from transactions.models import UserModel, Account
+from core.models import UserModel, Account
 
 
 class InboxAccount(UserModel):

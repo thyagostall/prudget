@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
             name='InboxAccount',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('account', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='transactions.Account')),
+                ('account', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='core.Account')),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -53,8 +53,8 @@ class Migration(migrations.Migration):
                 ('reference_date', models.DateField(blank=True, null=True)),
                 ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('group_id', models.CharField(max_length=50)),
-                ('account', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='transactions.Account')),
-                ('bucket', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='transactions.Bucket')),
+                ('account', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='core.Account')),
+                ('bucket', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='core.Bucket')),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
             ],
             options={
