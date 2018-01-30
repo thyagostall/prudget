@@ -10,7 +10,7 @@ from io import TextIOWrapper
 from django.contrib.auth.models import User
 from django.db import transaction
 
-from transactions.models import Transaction, Account, Bucket
+from core.models import Transaction, Account, Bucket
 
 
 def create_group_id(prefix=''):

@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.test import TestCase
 from django.urls import reverse
 
-from transactions.tests.data import create_user, create_account, create_transaction
+from core.tests.data import create_user, create_account, create_transaction
 
 
 class DashboardViewTestCase(TestCase):

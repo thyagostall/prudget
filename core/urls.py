@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.views.generic import RedirectView
 
-from transactions import views
+from core import views
 
 urlpatterns = [
     url(r'^login/$', views.LoginView.as_view(), name='login'),

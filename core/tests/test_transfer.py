@@ -2,9 +2,9 @@ from decimal import Decimal
 
 from django.test import TestCase
 
-from transactions import services
-from transactions.services import transfer_to_account, get_inbox_account, transfer_to_user
-from transactions.tests.data import create_user, create_account, create_transaction, create_bucket
+from core import services
+from core.services import transfer_to_account, get_inbox_account, transfer_to_user
+from core.tests.data import create_user, create_account, create_transaction, create_bucket
 
 
 class TransferTestCase(TestCase):

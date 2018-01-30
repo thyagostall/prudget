@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from django.test import TestCase
 
-from transactions.tests.data import create_user, create_account, create_transaction
+from core.tests.data import create_user, create_account, create_transaction
 
 
 class AccountTestCase(TestCase):

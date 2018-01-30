@@ -3,8 +3,8 @@ from datetime import datetime
 from decimal import Decimal
 from django.contrib.auth.models import User
 
-from transactions.models import Account, Transaction, Bucket
-from transactions.services import create_group_id
+from core.models import Account, Transaction, Bucket
+from core.services import create_group_id
 
 
 def create_user(username='username', email='any@email.com', password='password'):
