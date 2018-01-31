@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 from django.views.generic.edit import ModelFormMixin
 
+import core.services.transfer
 from core import services
 from core.forms import TransactionForm, TransferToUserForm, TransferToAccountForm, BucketForm, InboxAccountForm
 from core.forms.forms import TransferToBucketForm, DebitTransactionForm
@@ -203,7 +204,7 @@ def new_transfer_to_user(request):
 
         user = get_object_or_404(User, username=destination_username)
 
-        services.transfer_to_user(transaction, user)
+        core.services.transfer.transfer_to_user(transaction, user)
         return redirect('dashboard')
 
     return render(request, 'generic_form.html', context={
@@ -223,7 +224,7 @@ def new_transfer_to_account(request):
         transaction.owner = request.user
         transaction.amount = -transaction.amount
 
-        services.transfer_to_account(transaction, destination_account)
+        core.services.transfer.transfer_to_account(transaction, destination_account)
         return redirect('dashboard')
 
     return render(request, 'generic_form.html', context={
