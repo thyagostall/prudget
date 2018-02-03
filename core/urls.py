@@ -1,12 +1,13 @@
 from django.conf.urls import url
+from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import RedirectView
 
 from core import views
 
 urlpatterns = [
-    url(r'^login/$', views.LoginView.as_view(), name='login'),
-    url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
+    url(r'^login/$', LoginView.as_view(template_name='core/login.html'), name='login'),
+    url(r'^logout/$', LogoutView.as_view(template_name='core/logout.html'), name='logout'),
 
     url(r'^transaction/debit/$', views.CreateDebitTransactionView.as_view(), name='new-debit-transaction'),
     url(r'^transaction/debit/(?P<pk>\d+)/$', views.UpdateDebitTransactionView.as_view(), name='update-debit-transaction'),
