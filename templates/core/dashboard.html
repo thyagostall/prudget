@@ -81,7 +81,7 @@
             <tbody>
             {% for transaction in transactions %}
                 <tr>
-                    <td class="table-cell-title">{{ transaction.date }}</td>
+                    <td class="table-cell-title">{{ transaction.date|date:'Y/m/d' }}</td>
                     <td class="table-cell-title">{{ transaction.description }}</td>
                     <td class="table-cell-currency">{{ transaction.amount|floatformat:2 }}</td>
                     <td class="table-cell-title">{{ transaction.bucket|default_if_none:'' }}</td>
