@@ -52,7 +52,7 @@ class TransactionViewTestCase(TestCase):
 
         name = 'Some transaction'
         amount = '-90.00'
-        date = '02/12/2017'
+        date = '11/15/2017'
         data = {
             'description': name,
             'amount': '90.00',
@@ -68,7 +68,7 @@ class TransactionViewTestCase(TestCase):
 
         self.assertContains(response_dashboard, name)
         self.assertContains(response_dashboard, amount)
-        self.assertContains(response_dashboard, 'Feb. 12, 2017')
+        self.assertContains(response_dashboard, '2017/11/15')
         self.assertContains(response_dashboard, bucket.name)
         self.assertContains(response_dashboard, account.name)
 
@@ -83,7 +83,7 @@ class TransactionViewTestCase(TestCase):
 
         name = 'Another transaction'
         amount = '90.00'
-        date = '02/12/2017'
+        date = '11/15/2017'
         data = {
             'description': name,
             'amount': amount,
@@ -99,7 +99,7 @@ class TransactionViewTestCase(TestCase):
 
         self.assertContains(response_dashboard, name)
         self.assertContains(response_dashboard, amount)
-        self.assertContains(response_dashboard, 'Feb. 12, 2017')
+        self.assertContains(response_dashboard, '2017/11/15')
         self.assertContains(response_dashboard, bucket.name)
         self.assertContains(response_dashboard, account.name)
 
