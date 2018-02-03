@@ -4,10 +4,13 @@
 
     <h1>Buckets</h1>
 
-    <div class="btn-group" role="group">
-    </div>
-
-    <a href="{% url 'create-bucket' %}" type="button" class="btn btn-default">New</a>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'create-bucket' %}">New</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <h2>Balance</h2>
 
