@@ -15,13 +15,13 @@ def create_user(username='username', email='any@email.com', password='password')
     return user
 
 
-def create_account(user, name):
+def create_account(user, name='Checkings'):
     return Account.objects.create(name=name,
                                   owner=user,
                                   )
 
 
-def create_bucket(user, name):
+def create_bucket(user, name='Bucket'):
     return Bucket.objects.create(name=name,
                                  owner=user
                                  )
@@ -30,9 +30,6 @@ def create_bucket(user, name):
 def create_transaction(user, account=None, amount=Decimal('129.99'), bucket=None, date=None):
     description = 'Some transaction'
     date = date or datetime.today()
-    account = account
-    if not bucket:
-        bucket = create_bucket(user, 'Some bucket')
 
     return Transaction.objects.create(description=description,
                                       date=date,
