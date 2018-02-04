@@ -17,6 +17,7 @@ class TransferToBucketForm(TransactionForm):
 
     def save(self, commit=True):
         self.instance.owner = self.user
+        self.instance.amount = -abs(self.instance.amount)
         destination_bucket = Bucket.objects.get(id=self.data['destination_bucket'])
         core.services.transfer.transfer_to_bucket(self.instance, destination_bucket)
         return super().save(commit)

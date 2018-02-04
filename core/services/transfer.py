@@ -9,6 +9,9 @@ def transfer_to_bucket(source_transaction, destination):
     if source_transaction.amount > 0:
         raise ValueError('Origin transaction amount must be negative')
 
+    if not source_transaction.bucket:
+        raise ValueError('Source bucket must not be empty')
+
     destination_transaction = Transaction.objects.create(description=source_transaction.description,
                                                          date=source_transaction.date,
                                                          amount=-source_transaction.amount,
@@ -27,6 +30,9 @@ def transfer_to_bucket(source_transaction, destination):
 def transfer_to_account(source_transaction, destination):
     if source_transaction.amount > 0:
         raise ValueError('Origin transaction amount must be negative')
+
+    if not source_transaction.account:
+        raise ValueError('Source account must not be empty')
 
     destination_transaction = Transaction.objects.create(description=source_transaction.description,
                                                          date=source_transaction.date,

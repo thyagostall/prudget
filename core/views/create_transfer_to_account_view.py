@@ -15,7 +15,7 @@ def new_transfer_to_account(request):
 
         transaction = Transaction(**form.cleaned_data)
         transaction.owner = request.user
-        transaction.amount = -transaction.amount
+        transaction.amount = -abs(transaction.amount)
 
         core.services.transfer.transfer_to_account(transaction, destination_account)
         return redirect('dashboard')

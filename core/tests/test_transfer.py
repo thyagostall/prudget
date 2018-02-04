@@ -83,3 +83,21 @@ class TransferTestCase(TestCase):
         with self.assertRaises(Exception):
             transfer_to_user(transaction, destination_user)
             self.fail('Should raise exception')
+
+    def test_transfer_between_accounts_raise_when_source_account_is_empty(self):
+        user = create_user()
+        source_transaction = create_transaction(user, account=None, amount=Decimal('-10.00'))
+        destination_account = create_account(user)
+
+        with self.assertRaises(ValueError):
+            transfer_to_account(source_transaction, destination_account)
+            self.fail('Should raise exception')
+
+    def test_transfer_between_buckets_raise_when_source_bucket_is_empty(self):
+        user = create_user()
+        source_transaction = create_transaction(user, bucket=None, amount=Decimal('-10.00'))
+        destination_bucket = create_bucket(user)
+
+        with self.assertRaises(ValueError):
+            transfer_to_bucket(source_transaction, destination_bucket)
+            self.fail('Should raise exception')
