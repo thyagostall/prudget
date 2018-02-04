@@ -7,7 +7,7 @@ from core.models import Transaction, Bucket, Account
 
 @login_required
 def dashboard(request):
-    transactions = Transaction.objects.filter(owner=request.user).order_by('-date', '-id')
+    transactions = Transaction.objects.filter(owner=request.user).order_by('-date', '-id').select_related('bucket', 'account')
 
     buckets = Bucket.objects.filter(owner=request.user)
     accounts = Account.objects.filter(owner=request.user)
