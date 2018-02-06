@@ -17,6 +17,7 @@ def new_transfer_to_user(request):
         transaction = Transaction(**form.cleaned_data)
         transaction.owner = request.user
         transaction.amount = -transaction.amount
+        transaction.save()
 
         user = get_object_or_404(User, username=destination_username)
 
