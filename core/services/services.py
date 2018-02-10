@@ -3,3 +3,8 @@ def get_query_set_balance(queryset):
     for item in queryset:
         total_balance += item.balance()
     return total_balance
+
+
+def toggle_credit_debit_and_save(transaction):
+    transaction.amount = -transaction.amount
+    transaction.save()
