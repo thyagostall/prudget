@@ -15,3 +15,4 @@ from core.views.create_transfer_to_user_view import new_transfer_to_user
 from core.views.create_transfer_to_account_view import new_transfer_to_account
 from core.views.update_transaction_view import update_transaction
 from core.views.dashboard_view import dashboard
+from core.views.toggle_credit_debit import toggle_credit_debit
