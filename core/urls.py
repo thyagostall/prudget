@@ -33,6 +33,8 @@ urlpatterns = [
     url(r'^transaction/credit/(?P<pk>\d+)/$', core.views.update_credit_transaction_view.UpdateCreditTransactionView.as_view(), name='update-credit-transaction'),
     url(r'^transaction/(?P<pk>\d+)/$', core.views.update_transaction_view.update_transaction, name='update-transaction'),
 
+    url(r'^transaction/toggle/(?P<pk>\d+)/$', core.views.toggle_credit_debit, name='toggle-credit-debit'),
+
     url(r'^transfer/user/$', core.views.create_transfer_to_user_view.new_transfer_to_user, name='transfer-user'),
     url(r'^transfer/account/$', core.views.create_transfer_to_account_view.new_transfer_to_account, name='transfer-account'),
     url(r'^transfer/bucket/$', core.views.create_transfer_to_bucket_view.CreateTransferToBucketView.as_view(), name='transfer-bucket'),

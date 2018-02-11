@@ -9,7 +9,7 @@ from core.models import Transaction
 class DebitTransactionViewMixin(LoginRequiredMixin, ModelFormMixin):
     model = Transaction
     success_url = reverse_lazy('dashboard')
-    template_name = 'generic_form.html'
+    template_name = 'core/transaction_form.html'
     form_class = DebitTransactionForm
 
     def get_context_data(self, **kwargs):
