@@ -14,8 +14,22 @@ script:
 
 branches:
   only:
-  - master
+    - master
+
+before_deploy:
+  - zappa package production -o prudget-release.zip
 
 deploy:
-  provider: heroku
-  api_key: $DEPLOY_API_KEY
+  provider: lambda
+  function_name: "prudget-production"
+  region: "us-east-1"
+  role: $ROLE_DEPLOY
+  handler_name: "lambda_handler"
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  runtime: "python3.6"
+  module_name: "handler"
+  skip_cleanup: true
+  zip: prudget-release.zip
+  timeout: 15
+  memory_size: 512
