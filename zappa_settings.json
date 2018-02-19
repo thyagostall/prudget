@@ -5,6 +5,7 @@
         "profile_name": "default",
         "project_name": "prudget",
         "runtime": "python3.6",
-        "s3_bucket": "prudget-thyago"
+        "s3_bucket": "prudget-thyago",
+        "keep_warm": false
     }
 }
