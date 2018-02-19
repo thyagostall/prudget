@@ -9,8 +9,8 @@ from core.models import Transaction, Bucket, Account
 def dashboard(request):
     transactions = Transaction.objects.filter(owner=request.user).order_by('-date', '-id').select_related('bucket', 'account')
 
-    buckets = Bucket.objects.filter(owner=request.user)
-    accounts = Account.objects.filter(owner=request.user)
+    buckets = list(filter(lambda bucket: bucket.balance() != 0, Bucket.objects.filter(owner=request.user)))
+    accounts = list(filter(lambda bucket: bucket.balance() != 0, Account.objects.filter(owner=request.user)))
 
     bucket_total = services.get_query_set_balance(buckets)
     account_total = services.get_query_set_balance(accounts)
