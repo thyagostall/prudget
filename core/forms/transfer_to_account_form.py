@@ -1,18 +1,32 @@
+from datetime import datetime
+
 from django import forms
 from django.core.validators import MinValueValidator
 
-from core.forms import TransactionForm
+import core.services
+from core.forms import DateInput
 from core.models import Account, Transaction
 
 
-class TransferToAccountForm(TransactionForm):
+class TransferToAccountForm(forms.ModelForm):
+    date = forms.DateField(widget=DateInput(), initial=datetime.today())
     amount = forms.DecimalField(validators=[MinValueValidator(0)])
     destination_account = forms.ModelChoiceField(queryset=Account.objects.none())
 
     def __init__(self, user, *args, **kwargs):
-        super().__init__(user, *args, **kwargs)
+        super().__init__(*args, **kwargs)
+        self.user = user
         self.fields['destination_account'].queryset = Account.objects.filter(owner=user)
+        self.fields['account'].queryset = Account.objects.filter(owner=self.user)
+
+    def save(self, commit=True):
+        self.instance.owner = self.user
+        self.instance.amount = -abs(self.instance.amount)
+        self.instance.save()
+        destination_account = Account.objects.get(id=self.data['destination_account'])
+        core.services.transfer.transfer_to_account(self.instance, destination_account)
+        return super().save(commit)
 
     class Meta:
         model = Transaction
-        fields = ['description', 'date', 'amount', 'bucket', 'account', 'destination_account']
+        fields = ['description', 'date', 'amount', 'account', 'destination_account']
