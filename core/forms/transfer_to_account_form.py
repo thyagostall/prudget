@@ -16,7 +16,7 @@ class TransferToAccountForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
-        self.fields['destination_account'].queryset = Account.objects.filter(owner=user)
+        self.fields['destination_account'].queryset = Account.objects.filter(owner=self.user)
         self.fields['account'].queryset = Account.objects.filter(owner=self.user)
 
     def save(self, commit=True):
