@@ -41,7 +41,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'core.services.session_store.ThreadLocalMiddleware',
+    'core.session_store.ThreadLocalMiddleware',
 ]
 
 if DEBUG:

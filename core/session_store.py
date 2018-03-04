@@ -2,6 +2,7 @@ from threading import local
 
 
 _thread_locals = local()
+user_override = None
 
 
 def get_current_request():
@@ -12,6 +13,13 @@ def get_current_user():
     request = get_current_request()
     if request:
         return getattr(request, 'user', None)
+    else:
+        return user_override
+
+
+def set_user_override(user):
+    global user_override
+    user_override = user
 
 
 class ThreadLocalMiddleware:
