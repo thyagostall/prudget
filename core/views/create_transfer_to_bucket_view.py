@@ -4,6 +4,7 @@ from django.views.generic import CreateView
 
 from core.forms import TransferToBucketForm
 from core.models import Transaction
+from core.session_store import get_current_user
 
 
 class CreateTransferToBucketView(LoginRequiredMixin, CreateView):
@@ -17,7 +18,7 @@ class CreateTransferToBucketView(LoginRequiredMixin, CreateView):
         return super().get_context_data(**kwargs)
 
     def get_form(self, form_class=None):
-        return self.get_form_class()(self.request.user, **self.get_form_kwargs())
+        return self.get_form_class()(get_current_user(), **self.get_form_kwargs())
 
     def get_queryset(self):
-        return super().get_queryset().filter(owner=self.request.user)
+        return super().get_queryset().filter(owner=get_current_user())

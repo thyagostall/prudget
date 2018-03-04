@@ -1,13 +1,18 @@
-import datetime
 from decimal import Decimal
+
 from django.test import TestCase
 from django.urls import reverse
 
+from core import session_store
 from core.models import Transaction
+from core.session_store import set_user_override
 from core.tests.data import create_user, create_account, create_bucket, create_transaction
 
 
 class TransactionViewTestCase(TestCase):
+    def tearDown(self):
+        set_user_override(None)
+
     def test_debit_form_is_being_displayed_correctly(self):
         password = 'password'
         user = create_user(password=password)
@@ -107,6 +112,7 @@ class TransactionViewTestCase(TestCase):
         password = 'password'
         user = create_user(password=password)
         self.client.login(username=user.username, password=password)
+        session_store.set_user_override(user)
 
         description = 'Debit Transaction'
         amount = '90.00'
@@ -128,6 +134,7 @@ class TransactionViewTestCase(TestCase):
         password = 'password'
         user = create_user(password=password)
         self.client.login(username=user.username, password=password)
+        session_store.set_user_override(user)
 
         description = 'Credit Transaction'
         amount = '90.00'

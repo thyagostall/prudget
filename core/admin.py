@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from core.models import Account, Bucket
+from core.session_store import get_current_user
 
 
 class LoggedUserModelAdmin(admin.ModelAdmin):
@@ -10,11 +11,11 @@ class LoggedUserModelAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         query_set = super().get_queryset(request)
-        return query_set.filter(owner=request.user)
+        return query_set.filter(owner=get_current_user())
 
     def save_model(self, request, obj, form, change):
         try:
-            obj.owner = request.user
+            obj.owner = get_current_user()
         except AttributeError:
             pass
 

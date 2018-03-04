@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from core.models import Account
+from core.session_store import get_current_user
 
 
 class CreateAccountView(LoginRequiredMixin, CreateView):
@@ -16,5 +17,5 @@ class CreateAccountView(LoginRequiredMixin, CreateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
-        form.instance.owner = self.request.user
+        form.instance.owner = get_current_user()
         return super().form_valid(form)

@@ -3,6 +3,7 @@ from django.views.generic import ListView
 
 from core import services
 from core.models import Bucket
+from core.session_store import get_current_user
 
 
 class ListBucketView(LoginRequiredMixin, ListView):
@@ -14,4 +15,4 @@ class ListBucketView(LoginRequiredMixin, ListView):
         return {**context_data, 'bucket_total': total}
 
     def get_queryset(self):
-        return super().get_queryset().filter(owner=self.request.user)
+        return super().get_queryset().filter(owner=get_current_user())

@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 
 from core.models import Account
+from core.session_store import get_current_user
 
 
 class UpdateAccountView(LoginRequiredMixin, UpdateView):
@@ -16,4 +17,4 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
         return super().get_context_data(**kwargs)
 
     def get_queryset(self):
-        return super().get_queryset().filter(owner=self.request.user)
+        return super().get_queryset().filter(owner=get_current_user())
