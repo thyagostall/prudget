@@ -7,7 +7,9 @@ from core.session_store import get_current_user
 class UserManager(models.Manager):
     def get_queryset(self):
         current_user = get_current_user()
-        return super().get_queryset().filter(owner=current_user)
+        if current_user:
+            return super().get_queryset().filter(owner=current_user)
+        return super().get_queryset().none()
 
 
 class UserModel(models.Model):
@@ -18,3 +20,4 @@ class UserModel(models.Model):
 
     class Meta:
         abstract = True
+        default_manager_name = 'objects'
