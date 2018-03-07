@@ -55,7 +55,7 @@ def transfer_to_user(source_transaction, receiver):
         raise ValueError('Origin transaction amount must be negative')
 
     destination_account = get_inbox_account(receiver)
-    destination_transaction = Transaction.objects.create(description=source_transaction.description,
+    destination_transaction = Transaction.all_objects.create(description=source_transaction.description,
                                                          date=source_transaction.date,
                                                          amount=-source_transaction.amount,
                                                          account=destination_account,
@@ -69,7 +69,7 @@ def transfer_to_user(source_transaction, receiver):
 
 
 def get_inbox_account(user):
-    result = user.inboxaccount_set.first()
+    result = InboxAccount.all_objects.get(owner=user)
     if not result:
         raise Exception("This user doesn't have an associated inbox account")
 

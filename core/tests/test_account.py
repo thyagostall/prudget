@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from django.test import TestCase
 
+from core.session_store import set_user_override
 from core.tests.data import create_user, create_account, create_transaction
 
 
@@ -14,6 +15,7 @@ class AccountTestCase(TestCase):
 
     def test_get_account_balance(self):
         user = create_user()
+        set_user_override(user)
 
         first_amount = Decimal('129.99')
         second_amount = Decimal('-75.77')
