@@ -1,7 +1,8 @@
 from django.db import transaction
 
 from core.models import Transaction
-from core.models.transaction_link import TransactionLink
+from core.models import TransactionLink
+from core.models import InboxAccount
 
 
 @transaction.atomic
