@@ -13,6 +13,3 @@ class ListBucketView(LoginRequiredMixin, ListView):
         context_data = super().get_context_data(object_list=object_list, **kwargs)
         total = services.get_query_set_balance(self.get_queryset())
         return {**context_data, 'bucket_total': total}
-
-    def get_queryset(self):
-        return super().get_queryset().filter(owner=get_current_user())

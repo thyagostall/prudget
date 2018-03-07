@@ -9,9 +9,6 @@ from core.session_store import get_current_user
 class ListAccountView(LoginRequiredMixin, ListView):
     model = Account
 
-    def get_queryset(self):
-        return super().get_queryset().filter(owner=get_current_user())
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
         context['total'] = services.get_query_set_balance(self.get_queryset())

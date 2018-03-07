@@ -15,6 +15,3 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         kwargs['title'] = 'Update Account'
         return super().get_context_data(**kwargs)
-
-    def get_queryset(self):
-        return super().get_queryset().filter(owner=get_current_user())

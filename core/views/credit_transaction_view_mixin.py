@@ -20,6 +20,3 @@ class CreditTransactionMixin(LoginRequiredMixin, ModelFormMixin):
 
     def get_form(self, form_class=None):
         return self.get_form_class()(get_current_user(), **self.get_form_kwargs())
-
-    def get_queryset(self):
-        return super().get_queryset().filter(owner=get_current_user())

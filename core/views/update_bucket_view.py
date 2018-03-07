@@ -17,5 +17,3 @@ class UpdateBucketView(LoginRequiredMixin, UpdateView):
         kwargs['title'] = 'Update Bucket'
         return super().get_context_data(**kwargs)
 
-    def get_queryset(self):
-        return super().get_queryset().filter(owner=get_current_user())
