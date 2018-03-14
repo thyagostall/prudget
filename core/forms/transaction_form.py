@@ -14,8 +14,8 @@ class TransactionForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.owner = user
-        self.fields['bucket'].queryset = Bucket.objects.filter(owner=self.owner)
-        self.fields['account'].queryset = Account.objects.filter(owner=self.owner)
+        self.fields['bucket'].queryset = Bucket.objects.all()
+        self.fields['account'].queryset = Account.objects.all()
 
     def save(self, commit=True):
         self.instance.owner = self.owner

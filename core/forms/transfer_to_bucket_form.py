@@ -16,8 +16,8 @@ class TransferToBucketForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
-        self.fields['destination_bucket'].queryset = Bucket.objects.filter(owner=self.user)
-        self.fields['bucket'].queryset = Bucket.objects.filter(owner=self.user)
+        self.fields['destination_bucket'].queryset = Bucket.objects.all()
+        self.fields['bucket'].queryset = Bucket.objects.all()
 
     def save(self, commit=True):
         self.instance.owner = self.user

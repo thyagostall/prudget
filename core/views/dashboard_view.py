@@ -8,12 +8,10 @@ from core.session_store import get_current_user
 
 @login_required
 def dashboard(request):
-    user = get_current_user()
+    transactions = Transaction.objects.order_by('-date', '-id').select_related('bucket', 'account')
 
-    transactions = Transaction.objects.filter(owner=user).order_by('-date', '-id').select_related('bucket', 'account')
-
-    buckets = list(filter(lambda bucket: bucket.balance() != 0, Bucket.objects.filter(owner=user)))
-    accounts = list(filter(lambda bucket: bucket.balance() != 0, Account.objects.filter(owner=user)))
+    buckets = list(filter(lambda bucket: bucket.balance() != 0, Bucket.objects.all()))
+    accounts = list(filter(lambda bucket: bucket.balance() != 0, Account.objects.all()))
 
     bucket_total = services.get_query_set_balance(buckets)
     account_total = services.get_query_set_balance(accounts)
