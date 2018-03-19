@@ -8,10 +8,14 @@ Buckets are virtual accounts, similar to envelopes on the [Envelope Budgeting Sy
 
 ## Setup
 
-It requires python3 and pip to be installed. To set it up for development, you must:
+The current version of Prudget is made using Elixir. To set it up:
 
-- Install the dependencies; `pip install -r requirements.txt`
-- Create an file called `.env` at the root directory of the project, following the examples on `env.sample`.
+  * Install dependencies with `mix deps.get`
+  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
+  * Install Node.js dependencies with `cd assets && npm install`
+  * Start Phoenix endpoint with `mix phx.server`
+
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ## Contributing
 
