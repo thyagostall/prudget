@@ -6,3 +6,4 @@ from core.forms.transfer_to_account_form import TransferToAccountForm
 from core.forms.bucket_form import BucketForm
 from core.forms.debit_transaction_form import DebitTransactionForm
 from core.forms.transfer_to_bucket_form import TransferToBucketForm
+from core.forms.transfer_v2_form import TransferBucketFormV2
