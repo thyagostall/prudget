@@ -1,4 +1,4 @@
-from core.forms.date_input import DateInput
+from core.forms.util.date_input import DateInput
 from core.forms.inbox_account_form import InboxAccountForm
 from core.forms.transaction_form import TransactionForm
 from core.forms.transfer_to_user_form import TransferToUserForm
