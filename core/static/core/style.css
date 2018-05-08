@@ -17,3 +17,7 @@ body {
 .table-cell-item {
     text-align: center;
 }
+
+.balance-attention {
+    color: #ff3635;
+}

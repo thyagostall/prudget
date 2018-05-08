@@ -22,5 +22,7 @@ def dashboard(request):
 
         'bucket_total': bucket_total,
         'account_total': account_total,
+
+        'balances_dont_match': 'balance-attention' if bucket_total != account_total else ''
     }
     return render(request, 'core/dashboard.html', context=context)
