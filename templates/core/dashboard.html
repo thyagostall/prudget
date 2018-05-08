@@ -24,8 +24,8 @@
             </tbody>
             <tfoot>
             <tr>
-                <th class="table-cell-title">Total</th>
-                <th class="table-cell-currency">{{ bucket_total|floatformat:2 }}</th>
+                <th class="table-cell-title {{ balances_dont_match }}">Total</th>
+                <th class="table-cell-currency {{ balances_dont_match }}">{{ bucket_total|floatformat:2 }}</th>
             </tr>
             </tfoot>
         </table>
@@ -54,8 +54,8 @@
             </tbody>
             <tfoot>
             <tr>
-                <th class="table-cell-title">Total</th>
-                <th class="table-cell-currency">{{ account_total|floatformat:2 }}</th>
+                <th class="table-cell-title {{ balances_dont_match }}">Total</th>
+                <th class="table-cell-currency {{ balances_dont_match }}">{{ account_total|floatformat:2 }}</th>
             </tr>
             </tfoot>
         </table>
