@@ -70,9 +70,15 @@
                 <ul class="pagination">
                     {% if transactions.has_previous %}
                         <li class="page-item">
+                            <a class="page-link" href="?p=1">First</a>
+                        </li>
+                        <li class="page-item">
                             <a class="page-link" href="?p={{ transactions.previous_page_number }}">Previous</a>
                         </li>
                     {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="?p=1">First</a>
+                        </li>
                         <li class="page-item disabled">
                             <a class="page-link" href="#">Previous</a>
                         </li>
@@ -81,9 +87,15 @@
                         <li class="page-item">
                             <a class="page-link" href="?p={{ transactions.next_page_number }}">Next</a>
                         </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?p={{ transactions.paginator.num_pages }}">Last</a>
+                        </li>
                     {% else %}
                         <li class="page-item disabled">
                             <a class="page-link" href="#">Next</a>
+                        </li>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="?p={{ transactions.paginator.num_pages }}">Last</a>
                         </li>
                     {% endif %}
                 </ul>
