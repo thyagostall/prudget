@@ -66,6 +66,9 @@
     <div class="col-md-12 table-overflow">
 
         {% if transactions.has_other_pages %}
+            <span class="current">
+                Page {{ transactions.number }} of {{ transactions.paginator.num_pages }}.
+            </span>
             <nav aria-label="Navigation">
                 <ul class="pagination">
                     {% if transactions.has_previous %}
