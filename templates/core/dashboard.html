@@ -18,7 +18,7 @@
             {% for bucket in buckets %}
                 <tr>
                     <td class="table-cell-title">{{ bucket }}</td>
-                    <td class="table-cell-currency">{{ bucket.balance|floatformat:2 }}</td>
+                    <td class="table-cell-currency">{{ bucket.current_balance|floatformat:2 }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -48,7 +48,7 @@
             {% for account in accounts %}
                 <tr>
                     <td class="table-cell-title">{{ account }}</td>
-                    <td class="table-cell-currency">{{ account.balance|floatformat:2 }}</td>
+                    <td class="table-cell-currency">{{ account.current_balance|floatformat:2 }}</td>
                 </tr>
             {% endfor %}
             </tbody>
