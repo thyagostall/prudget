@@ -16,7 +16,7 @@ def dashboard(request):
     accounts = list(filter(lambda account: account.current_balance != 0, account_balance_queryset(request)))
 
     bucket_total = reduce(lambda accumulator, bucket: bucket.current_balance + accumulator, buckets, 0)
-    account_total = reduce(lambda accumulator, account: account.current_balance + accumulator, buckets, 0)
+    account_total = reduce(lambda accumulator, account: account.current_balance + accumulator, accounts, 0)
 
     paginator = Paginator(all_transactions, 50)
 
