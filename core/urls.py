@@ -39,8 +39,6 @@ urlpatterns = [
     url(r'^transfer/account/$', core.views.create_transfer_to_account_view.new_transfer_to_account, name='transfer-account'),
     url(r'^transfer/bucket/$', core.views.create_transfer_to_bucket_view.CreateTransferToBucketView.as_view(), name='transfer-bucket'),
 
-    url(r'^v2/transfer/bucket/$', core.views.CreateTransferToBucketV2View.as_view(), name='transfer-bucket-v2'),
-
     url(r'^accounts/$', core.views.list_account_view.ListAccountView.as_view(), name='account-list'),
     url(r'^account/$', core.views.create_account_view.CreateAccountView.as_view(), name='create-account'),
     url(r'^account/(?P<pk>\d+)/$', core.views.update_account_view.UpdateAccountView.as_view(), name='update-account'),

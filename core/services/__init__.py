@@ -7,5 +7,3 @@ from .transfer import get_inbox_account
 from .transfer import transfer_to_account
 from .transfer import transfer_to_bucket
 from .transfer import transfer_to_user
-
-from .transfer_v2 import transfer_bucket
