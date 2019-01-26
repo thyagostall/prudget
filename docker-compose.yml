@@ -11,7 +11,7 @@ services:
       - ./database:/var/lib/postgresql/data
   prudget.local:
     build: .
-    command: ./init.sh
+    command: ./init-dev.sh
     volumes:
       - .:/code
     ports:
