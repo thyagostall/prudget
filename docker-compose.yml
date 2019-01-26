@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  db:
+  postgres.prudget.local:
     image: postgres
     environment:
       POSTGRES_PASSWORD: 'prudget_password'
@@ -9,7 +9,7 @@ services:
       POSTGRES_DB: 'prudget'
     volumes:
       - ./database:/var/lib/postgresql/data
-  web:
+  prudget.local:
     build: .
     command: ./init.sh
     volumes:
@@ -17,6 +17,6 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - postgres.prudget.local
     environment:
-      DATABASE_URL: 'postgres://prudget:prudget_password@db/prudget'
+      DATABASE_URL: 'postgres://prudget:prudget_password@postgres.prudget.local/prudget'

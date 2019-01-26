@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./wait-for-it.sh db:5432 -t 300
+./wait-for-it.sh postgres.prudget.local:5432 -t 300
 sleep 10
 
 echo "Postgres is up"
