@@ -8,11 +8,11 @@ Buckets are virtual accounts, similar to envelopes on the [Envelope Budgeting Sy
 
 ## Setup
 
-It requires python3 and pip to be installed. To set it up for development, you must:
+Run `openssl req -x509 -out ./nginx/certs/prudget_local.crt -keyout ./nginx/certs/prudget_local.key -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -extensions EXT -config <(printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")` to create self signed certificates in order the run Prudget locally over HTTPS.
 
-- Install the dependencies; `pip install -r requirements.txt`
-- Create an file called `.env` at the root directory of the project, following the examples on `env.sample`.
+Run `docker-compose up` to create and run all containers needed for this project.
 
 ## Contributing
 
 Pull requests must target `master` and must not break any tests and keep the app working.
+

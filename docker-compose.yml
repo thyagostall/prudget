@@ -23,9 +23,10 @@ services:
   web.prudget.local:
     image: nginx
     ports:
-      - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/certs:/etc/certs
       - ./prudget/staticfiles:/data/staticfiles
     depends_on:
       - app.prudget.local
