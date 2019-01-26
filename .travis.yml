@@ -9,7 +9,7 @@ env:
   - DATABASE_URL=sqlite:////db.sqlite3
 
 script:
-  - python manage.py collectstatic
+  - python manage.py collectstatic --noinput
   - python manage.py test
 
 branches:
