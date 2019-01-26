@@ -9,7 +9,7 @@ services:
       POSTGRES_DB: 'prudget'
     volumes:
       - ./database:/var/lib/postgresql/data
-  prudget.local:
+  app.prudget.local:
     build: .
     command: ./init-dev.sh
     volumes:
@@ -20,3 +20,12 @@ services:
       - postgres.prudget.local
     environment:
       DATABASE_URL: 'postgres://prudget:prudget_password@postgres.prudget.local/prudget'
+  web.prudget.local:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./prudget/staticfiles:/data/staticfiles
+    depends_on:
+      - app.prudget.local
