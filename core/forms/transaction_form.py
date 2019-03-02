@@ -8,7 +8,7 @@ from core.models import Bucket, Account, Transaction
 
 
 class TransactionForm(forms.ModelForm):
-    date = forms.DateField(widget=DateInput(), initial=datetime.today())
+    date = forms.DateField(widget=DateInput())
     amount = forms.DecimalField(validators=[MinValueValidator(0)])
 
     def __init__(self, user, *args, **kwargs):
@@ -16,6 +16,7 @@ class TransactionForm(forms.ModelForm):
         self.owner = user
         self.fields['bucket'].queryset = Bucket.objects.filter(owner=self.owner)
         self.fields['account'].queryset = Account.objects.filter(owner=self.owner)
+        self.fields['date'].initial = datetime.today()
 
     def save(self, commit=True):
         self.instance.owner = self.owner
