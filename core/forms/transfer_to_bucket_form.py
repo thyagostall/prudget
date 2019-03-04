@@ -9,7 +9,7 @@ from core.models import Bucket, Transaction
 
 
 class TransferToBucketForm(forms.ModelForm):
-    date = forms.DateField(widget=DateInput(), initial=datetime.today())
+    date = forms.DateField(widget=DateInput())
     amount = forms.DecimalField(validators=[MinValueValidator(0)])
     destination_bucket = forms.ModelChoiceField(queryset=Bucket.objects.none())
 
@@ -18,6 +18,7 @@ class TransferToBucketForm(forms.ModelForm):
         self.user = user
         self.fields['destination_bucket'].queryset = Bucket.objects.filter(owner=self.user)
         self.fields['bucket'].queryset = Bucket.objects.filter(owner=self.user)
+        self.fields['date'].initial = datetime.today()
 
     def save(self, commit=True):
         self.instance.owner = self.user

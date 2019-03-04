@@ -9,7 +9,7 @@ from core.models import Account, Transaction
 
 
 class TransferToAccountForm(forms.ModelForm):
-    date = forms.DateField(widget=DateInput(), initial=datetime.today())
+    date = forms.DateField(widget=DateInput())
     amount = forms.DecimalField(validators=[MinValueValidator(0)])
     destination_account = forms.ModelChoiceField(queryset=Account.objects.none())
 
@@ -18,6 +18,7 @@ class TransferToAccountForm(forms.ModelForm):
         self.user = user
         self.fields['destination_account'].queryset = Account.objects.filter(owner=self.user)
         self.fields['account'].queryset = Account.objects.filter(owner=self.user)
+        self.fields['date'].initial = datetime.today()
 
     def save(self, commit=True):
         self.instance.owner = self.user
