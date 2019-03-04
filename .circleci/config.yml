@@ -36,3 +36,12 @@ jobs:
       - store_artifacts:
           path: test-reports
           destination: test-reports
+
+      - add_ssh_keys:
+          fingerprints:
+            - "fc:f7:3d:42:46:04:3e:3d:b2:4f:3b:76:49:1a:c0:0c"
+
+      - run:
+          name: Deploy to Bathala
+          command: |
+            ssh -o StrictHostKeyChecking=no $SSH_DEPLOY_USER@$SSH_DEPLOY_HOST -p $SSH_DEPLOY_PORT "$DEPLOY_COMMAND"
