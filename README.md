@@ -1,6 +1,7 @@
 # Prudget
 
 [![Build Status](https://travis-ci.org/thyagostall/prudget.svg?branch=master)](https://travis-ci.org/thyagostall/prudget)
+[![CircleCI](https://circleci.com/gh/thyagostall/prudget.svg?style=svg)](https://circleci.com/gh/thyagostall/prudget)
 
 Simple way for tracking every penny. Prudget relies on abstracting all money from your accounts into what is called **buckets**, in order to remove the complexity of managing your money, checking and savings account, credit card, and others.
 
