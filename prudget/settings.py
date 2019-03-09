@@ -5,7 +5,7 @@ import environ
 import git
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-env = environ.Env(PRUDGET_DEBUG=(bool, False), PRUDGET_ALLOWED_HOSTS=(list, []), SECURE_SSL_REDIRECT=(bool, False))
+env = environ.Env(PRUDGET_DEBUG=(bool, False), PRUDGET_ALLOWED_HOSTS=(list, []), SECURE_SSL_REDIRECT=(bool, False), PRUDGET_STATIC_FILES_DIR=(str, ''))
 environ.Env.read_env(os.path.join(os.path.dirname(BASE_DIR), '.env'))
 
 repo = git.Repo(search_parent_directories=True)
@@ -103,7 +103,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = env('PRUDGET_STATIC_FILES_DIR') or os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
