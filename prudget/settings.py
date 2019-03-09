@@ -2,10 +2,14 @@ import os
 
 import dj_database_url
 import environ
+import git
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 env = environ.Env(PRUDGET_DEBUG=(bool, False), PRUDGET_ALLOWED_HOSTS=(list, []), SECURE_SSL_REDIRECT=(bool, False))
 environ.Env.read_env(os.path.join(os.path.dirname(BASE_DIR), '.env'))
+
+repo = git.Repo(search_parent_directories=True)
+VERSION = repo.head.object.hexsha
 
 SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')
 
