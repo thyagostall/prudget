@@ -8,11 +8,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Prudget</title>
 
-    {% bootstrap_css %}
+    <link href="{% static 'core/bootstrap.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'core/style.css' %}"/>
 
-    <script src="{% bootstrap_jquery_url %}"></script>
-    {% bootstrap_javascript %}
+    <script src="{% static 'core/jquery.min.js' %}"></script>
+    <script src="{% static 'core/bootstrap.min.js' %}"></script>
+
+    <style>
+      @font-face {
+        font-family: 'Glyphicons Halflings';
+        src: url('{% static 'core/glyphicons-halflings-regular.woff2' %}') format('woff2');
+      }
+    </style>
 </head>
 <body>
 
