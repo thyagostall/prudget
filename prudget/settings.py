@@ -26,6 +26,8 @@ APPEND_SLASH = True
 
 ALLOWED_HOSTS = env('PRUDGET_ALLOWED_HOSTS')
 
+CLOUDFLARE_PUSH_FILTER = lambda x: x.endswith('.css') or x.endswith('.js')
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'core.session_store.ThreadLocalMiddleware',
+    'django_cloudflare_push.middleware.push_middleware',
 ]
 
 if DEBUG:
