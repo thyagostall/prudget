@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 from functools import reduce
 
 from django.contrib.auth.decorators import login_required
@@ -11,11 +10,7 @@ from prudget import settings
 
 @login_required
 def dashboard(request):
-    transactions = Transaction.objects\
-        .filter(owner=request.user)\
-        .filter(date__gte=datetime.now() - timedelta(days=180))\
-        .order_by('-date', '-id')\
-        .select_related('bucket', 'account')
+    transactions = Transaction.objects.filter(owner=request.user).order_by('-date', '-id').select_related('bucket', 'account')
 
     buckets = list(filter(lambda bucket: bucket.current_balance != 0, bucket_balance_queryset(request)))
     accounts = list(filter(lambda account: account.current_balance != 0, account_balance_queryset(request)))
