@@ -39,7 +39,7 @@ jobs:
 
       - add_ssh_keys:
           fingerprints:
-            - "fc:f7:3d:42:46:04:3e:3d:b2:4f:3b:76:49:1a:c0:0c"
+            - "b7:ec:38:ab:f0:e5:34:a0:74:e2:76:8d:f3:ab:81:3f"
 
       - run:
           name: Deploy to Bathala
